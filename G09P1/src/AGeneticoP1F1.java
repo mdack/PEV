@@ -67,8 +67,20 @@ public class AGeneticoP1F1 extends AGenetico {
 
 	@Override
 	public void mutacion() {
-		// TODO Auto-generated method stub
-
+		para cada i desde 0 hasta tam_pob hacer{
+			mutado = false;
+			para cada j desde 0 hasta lcrom hacer{
+			// se genera un numero aleatorio en [0 1)
+			prob = alea();
+			// mutan los genes con prob<prob_mut
+			si (prob<prob_mut){
+			pob[i].genes[j] = not( pob[i].genes[j]);
+			mutado = true;
+			}
+			si (mutado)
+			pob[i].aptitud = pob[i].evalua();
+			}
+			}
 	}
 
 }
