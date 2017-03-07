@@ -67,7 +67,11 @@ public class AGeneticoP1F1 extends AGenetico {
 
 	@Override
 	public void mutacion() {
-		para cada i desde 0 hasta tam_pob hacer{
+		booleano mutado;
+		int i, j;
+		real prob;
+		
+		for(i = 0; i < this.){
 			mutado = false;
 			para cada j desde 0 hasta lcrom hacer{
 			// se genera un numero aleatorio en [0 1)
