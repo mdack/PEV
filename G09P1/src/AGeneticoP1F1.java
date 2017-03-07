@@ -59,6 +59,7 @@ public class AGeneticoP1F1 extends AGenetico {
 				selSuperv[i] = posSuperv;
 			}
 		}
+		if(true)
 	}
 	
 	private void seleccionTorneo(){
