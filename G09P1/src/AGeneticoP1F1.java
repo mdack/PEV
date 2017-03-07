@@ -47,7 +47,18 @@ public class AGeneticoP1F1 extends AGenetico {
 	}
 	
 	private void seleccionRuleta(){
-		
+		int selSuperv[] = new int[tamPob]; // Supervivientes
+		float prob; // Probabilidad de supervivencia
+		int posSuperv; // Posicion del superviviente
+		for(int i = 0; i < tamPob; i++){
+			Random rnd = new Random();
+			prob = rnd.nextFloat();
+			while((prob > poblacion[posSuperv].puntAcum) && (posSuperv < tamPob))
+			{
+				posSuperv++;
+				selSuperv[i] = posSuperv;
+			}
+		}
 	}
 	
 	private void seleccionTorneo(){
