@@ -103,7 +103,7 @@ public class AGeneticoP1F1 extends AGenetico {
 		int i, j;
 		real prob;
 		
-		for(i = 0; i < this.){
+		for(i = 0; i < this.tamPob; i++){
 			mutado = false;
 			para cada j desde 0 hasta lcrom hacer{
 			// se genera un numero aleatorio en [0 1)
