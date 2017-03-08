@@ -90,9 +90,9 @@ public class VistaPrincipal extends JFrame{
 
 	private void addEast() {
 		JPanel panel = new JPanel();
-		panel.setLayout(new BorderLayout());
+		panel.setLayout(new FlowLayout());
 		
-		panel.add(area, BorderLayout.CENTER);
+		panel.add(area);
 		
 		window.add(panel, BorderLayout.EAST);		
 	}
@@ -136,9 +136,9 @@ public class VistaPrincipal extends JFrame{
 
 	private void addBottom() {
 		JPanel panel = new JPanel();
-		panel.setLayout(new BorderLayout());
+		panel.setLayout(new FlowLayout());
 		
-		panel.add(button, BorderLayout.CENTER);
+		panel.add(button);
 		
 		window.add(panel, BorderLayout.SOUTH);
 	}
