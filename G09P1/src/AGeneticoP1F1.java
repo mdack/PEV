@@ -1,3 +1,4 @@
+import java.util.Random;
 
 public class AGeneticoP1F1 extends AGenetico {
 	
@@ -47,7 +48,7 @@ public class AGeneticoP1F1 extends AGenetico {
 	}
 	
 	private void seleccionRuleta(){
-		int selSuperv[] = new int[tamPob](-1); // Supervivientes
+		int selSuperv[] = new int[tamPob]; // Supervivientes
 		float prob; // Probabilidad de supervivencia
 		int posSuperv = 0; // Posicion del superviviente
 		for(int i = 0; i < tamPob; i++){
@@ -59,7 +60,7 @@ public class AGeneticoP1F1 extends AGenetico {
 				posSuperv++;
 			}
 		}
-		CromosomaP1F1 nuevaPob[] = new CromosomaP1F1[tamPob];
+		Cromosoma nuevaPob[] = new CromosomaP1F1[tamPob];
 		for(int i = 0; i < tamPob; i++){
 			if(selSuperv[i] != -1)
 				nuevaPob[i] = poblacion[selSuperv[i]];
@@ -71,15 +72,15 @@ public class AGeneticoP1F1 extends AGenetico {
 	}
 	
 	public void reproduccion(){
-		int selCruce[] = new int[tamPob](-1);
+		int selCruce[] = new int[tamPob];
 		
 		int numSelCruce = 0;
 		int puntoCruce;
 		float prob;
 		CromosomaP1F1 hijo1, hijo2;
+		Random rnd = new Random();
 		
 		for(int i = 0; i < tamPob; i++){
-			Random rnd = new Random();
 			prob = rnd.nextFloat();
 			if(prob < probCruce){
 				selCruce[numSelCruce] = i;
@@ -88,35 +89,35 @@ public class AGeneticoP1F1 extends AGenetico {
 		}
 		if((numSelCruce % 2) == 1) numSelCruce--;
 		
-		puntoCruce = rnd.nextInt(0, 9);
+		puntoCruce = rnd.nextInt(9);
 		for(int i = 0; i < numSelCruce; i += 2)
 		{
-			cruce(pob[selCruce[i]], pob[selCruce[i]], hijo1, hijo2, puntoCruce);
-			pob[selCruce[i]] = hijo1;
-			pob[selCruce[i+1]] = hijo2;
+			cruce(poblacion[selCruce[i]], poblacion[selCruce[i]], hijo1, hijo2, puntoCruce);
+			poblacion[selCruce[i]] = hijo1;
+			poblacion[selCruce[i+1]] = hijo2;
 		}
 	}
 
 	@Override
 	public void mutacion() {
-		booleano mutado;
-		int i, j;
-		real prob;
-		
-		for(i = 0; i < this.tamPob; i++){
-			mutado = false;
-			para cada j desde 0 hasta lcrom hacer{
-			// se genera un numero aleatorio en [0 1)
-			prob = alea();
-			// mutan los genes con prob<prob_mut
-			si (prob<prob_mut){
-			pob[i].genes[j] = not( pob[i].genes[j]);
-			mutado = true;
-			}
-			si (mutado)
-			pob[i].aptitud = pob[i].evalua();
-			}
-			}
+//		booleano mutado;
+//		int i, j;
+//		real prob;
+//		
+//		for(i = 0; i < this.tamPob; i++){
+//			mutado = false;
+//			para cada j desde 0 hasta lcrom hacer{
+//			// se genera un numero aleatorio en [0 1)
+//			prob = alea();
+//			// mutan los genes con prob<prob_mut
+//			si (prob<prob_mut){
+//			pob[i].genes[j] = not( pob[i].genes[j]);
+//			mutado = true;
+//			}
+//			si (mutado)
+//			pob[i].aptitud = pob[i].evalua();
+//			}
+//			}
 	}
 
 }
