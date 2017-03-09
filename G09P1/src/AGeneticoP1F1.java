@@ -77,7 +77,8 @@ public class AGeneticoP1F1 extends AGenetico {
 		int numSelCruce = 0;
 		int puntoCruce;
 		float prob;
-		CromosomaP1F1 hijo1, hijo2;
+		Cromosoma hijo1 = new CromosomaP1F1();
+		Cromosoma hijo2 = new CromosomaP1F1();
 		Random rnd = new Random();
 		
 		for(int i = 0; i < tamPob; i++){
@@ -92,32 +93,38 @@ public class AGeneticoP1F1 extends AGenetico {
 		puntoCruce = rnd.nextInt(9);
 		for(int i = 0; i < numSelCruce; i += 2)
 		{
-			cruce(poblacion[selCruce[i]], poblacion[selCruce[i]], hijo1, hijo2, puntoCruce);
+			cruce(poblacion[selCruce[i]], poblacion[selCruce[i+1]], hijo1, hijo2, puntoCruce);
 			poblacion[selCruce[i]] = hijo1;
 			poblacion[selCruce[i+1]] = hijo2;
 		}
 	}
+	
+	private void cruce(Cromosoma padre1, Cromosoma padre2, Cromosoma hijo1, Cromosoma hijo2, int puntoCruce)
+	{
+		
+	}
 
 	@Override
 	public void mutacion() {
-//		booleano mutado;
-//		int i, j;
-//		real prob;
-//		
-//		for(i = 0; i < this.tamPob; i++){
-//			mutado = false;
-//			para cada j desde 0 hasta lcrom hacer{
-//			// se genera un numero aleatorio en [0 1)
-//			prob = alea();
-//			// mutan los genes con prob<prob_mut
-//			si (prob<prob_mut){
-//			pob[i].genes[j] = not( pob[i].genes[j]);
-//			mutado = true;
-//			}
-//			si (mutado)
-//			pob[i].aptitud = pob[i].evalua();
-//			}
-//			}
+		boolean mutado;
+		int i, j;
+		float prob;
+		Random rnd = new Random();
+		
+		for(i = 0; i < this.tamPob; i++){
+			mutado = false;
+			for(j = 0; j < 9; j++)
+			{
+				prob = rnd.nextFloat();
+			// mutan los genes con prob<prob_mut
+			if (prob < probMut){
+				// Modificar un bit del alelo.
+				//poblacion[i].genes[j] = !(poblacion[i].genes[j]);
+				mutado = true;
+			}
+			if (mutado)
+				poblacion[i].fitness = poblacion[i].evalua();
+			}
+		}
 	}
-
 }
