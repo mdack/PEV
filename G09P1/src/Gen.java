@@ -22,6 +22,10 @@ public class Gen {
 		}
 	}
 	
+	public void setAlelo(boolean[] alelo){
+		this.alelo = alelo;
+	}
+	
 	public boolean[] getAlelo(){ return alelo; }
 	public int getLongAlelo(){ return longAlelo; }
 }

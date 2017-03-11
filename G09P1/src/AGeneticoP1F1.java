@@ -101,7 +101,49 @@ public class AGeneticoP1F1 extends AGenetico {
 	
 	private void cruce(Cromosoma padre1, Cromosoma padre2, Cromosoma hijo1, Cromosoma hijo2, int puntoCruce)
 	{
-		
+		int i = 0; // Contador de gen.
+		int j = 0; // Contador de bit dentro de gen.
+		int k = 0; // Contador de posicion general en cromosoma.
+		// Primera fase
+		for(i = 0; i < CromosomaP1F1.numGenes && k < puntoCruce; i++)
+		{
+			boolean[] aleloHijo1 = hijo1.genes[i].getAlelo();
+			boolean[] aleloHijo2 = hijo2.genes[i].getAlelo();
+			boolean[] aleloPadre1 = padre1.genes[i].getAlelo();
+			boolean[] aleloPadre2 = padre2.genes[i].getAlelo();
+			if(k < puntoCruce)
+			{
+				for(j = 0; j < hijo1.genes[i].getLongAlelo() && k < puntoCruce; j++)
+				{
+					aleloHijo1[j] = aleloPadre1[j];
+					aleloHijo2[j] = aleloPadre2[j];
+					k++;
+				}
+			}
+			hijo1.genes[i].setAlelo(aleloHijo1);
+			hijo2.genes[i].setAlelo(aleloHijo2);
+		}
+		// Segunda fase
+		while(i < CromosomaP1F1.numGenes)
+		{
+			boolean[] aleloHijo1 = hijo1.genes[i].getAlelo();
+			boolean[] aleloHijo2 = hijo2.genes[i].getAlelo();
+			boolean[] aleloPadre1 = padre1.genes[i].getAlelo();
+			boolean[] aleloPadre2 = padre2.genes[i].getAlelo();
+			while(j < hijo1.genes[i].getLongAlelo())
+			{
+				aleloHijo1[j] = aleloPadre2[j];
+				aleloHijo2[j] = aleloPadre1[j];
+				j++;
+			}
+			hijo1.genes[i].setAlelo(aleloHijo1);
+			hijo2.genes[i].setAlelo(aleloHijo2);
+			i++;
+			j = 0;
+		}
+		// Evaluacion
+		hijo1.evalua();
+		hijo2.evalua();
 	}
 
 	@Override
