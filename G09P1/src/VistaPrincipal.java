@@ -150,7 +150,7 @@ public class VistaPrincipal extends JFrame{
 		panel.setLayout(new FlowLayout());
 		
 		panel.add(button);
-		button.addActionListener(new ALVistaPrincipal(tnGen, ttamPob,tproCruce, tproMutacion, tprecision, cseleccion, celitismo, this));
+		button.addActionListener(new ALVistaPrincipal(tnGen, ttamPob,tproCruce, tproMutacion, tprecision, cseleccion, celitismo, cFuncion));
 		
 		window.add(panel, BorderLayout.SOUTH);
 	}

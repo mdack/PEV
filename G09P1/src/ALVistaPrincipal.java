@@ -8,15 +8,13 @@ import javax.swing.JTextField;
 
 public class ALVistaPrincipal implements ActionListener{
 	
-	int nGeneracion, tamPoblacion;
+	int nGeneracion, tamPoblacion, funcion;
 	float probCruce, probMutacion, precision;
 	boolean esRuleta = true, elitismo = true;
-	VistaPrincipal window;
 	
 	
 	public ALVistaPrincipal(JTextField tnGen, JTextField ttamPob, JTextField tproCruce, JTextField tproMutacion,
-			JTextField tprecision, JComboBox<String> cseleccion, JComboBox<String> celitismo,
-			VistaPrincipal vistaPrincipal) {
+			JTextField tprecision, JComboBox<String> cseleccion,JComboBox<String> celitismo,   JComboBox<String> cfuncion) {
 		try{
 			nGeneracion = Integer.parseInt(tnGen.getText());
 			tamPoblacion = Integer.parseInt(ttamPob.getText());
@@ -33,7 +31,7 @@ public class ALVistaPrincipal implements ActionListener{
 					if(celitismo.getSelectedIndex() == 1){
 						elitismo = false;
 					}
-					window = vistaPrincipal;					
+					funcion = cfuncion.getSelectedIndex();					
 				}else{
 					JOptionPane.showMessageDialog(new JFrame(),
 						    "El porcentaje debe de ser entre 0 y 100%",
@@ -58,7 +56,18 @@ public class ALVistaPrincipal implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
+		switch(funcion){
+		case 0:
+			break;
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		}
 		
 	}
 
