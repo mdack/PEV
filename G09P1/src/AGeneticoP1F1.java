@@ -38,13 +38,15 @@ public class AGeneticoP1F1 extends AGenetico {
 	}
 
 	@Override
-	public void seleccion() {
-		int seleccion = 1; // Entraria por parametro; seleccionaria el tipo de seleccion.
-		if(seleccion == 1) // Ruleta
+	public void seleccion(int tipo) {
+		switch(tipo){
+		case 0:
 			seleccionRuleta();
-		else if(seleccion == 2) // Otra seleccion
+			break;
+		case 1:
 			seleccionTorneo();
-		// ...
+			break;
+		}
 	}
 	
 	private void seleccionRuleta(){

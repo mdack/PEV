@@ -22,7 +22,7 @@ public abstract class AGenetico {
 	
 	public abstract void evaluar();
 	
-	public abstract void seleccion();
+	public abstract void seleccion(int tipo);
 	
 	public abstract void mutacion();
 }
