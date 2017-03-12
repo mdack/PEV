@@ -69,7 +69,27 @@ public class AGeneticoP1F1 extends AGenetico {
 	}
 	
 	private void seleccionTorneo(){
+		Cromosoma subpoblacion[] = new Cromosoma[2]; //Conjunto a valorar
+		Cromosoma poblacionAux[] = new Cromosoma[tamPob]; //Nueva generación
+		Random rnd = new Random();
+		int posElegida;
 		
+		for(int j = 0; j < tamPob; j++){
+			
+			for(int i = 0; i < 2; i++){ //Seleccionamos 2 individuos al azar
+				posElegida = (rnd.nextInt() * tamPob);
+				subpoblacion[i] = poblacion[posElegida];
+			}
+			
+			if(subpoblacion[0].fitness > subpoblacion[1].fitness){
+				poblacionAux[j] = subpoblacion[0];
+			}
+			else{
+				poblacionAux[j] = subpoblacion[1];
+			}
+		}
+		
+		poblacion = poblacionAux;
 	}
 	
 	public void reproduccion(){
