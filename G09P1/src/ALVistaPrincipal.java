@@ -11,10 +11,12 @@ public class ALVistaPrincipal implements ActionListener{
 	int nGeneracion, tamPoblacion, funcion;
 	float probCruce, probMutacion, precision;
 	boolean esRuleta = true, elitismo = true;
+	VistaPrincipal window;
 	
 	
 	public ALVistaPrincipal(JTextField tnGen, JTextField ttamPob, JTextField tproCruce, JTextField tproMutacion,
-			JTextField tprecision, JComboBox<String> cseleccion,JComboBox<String> celitismo,   JComboBox<String> cfuncion) {
+			JTextField tprecision, JComboBox<String> cseleccion,JComboBox<String> celitismo,   JComboBox<String> cfuncion,
+			VistaPrincipal ventana) {
 		try{
 			nGeneracion = Integer.parseInt(tnGen.getText());
 			tamPoblacion = Integer.parseInt(ttamPob.getText());
@@ -31,7 +33,8 @@ public class ALVistaPrincipal implements ActionListener{
 					if(celitismo.getSelectedIndex() == 1){
 						elitismo = false;
 					}
-					funcion = cfuncion.getSelectedIndex();					
+					funcion = cfuncion.getSelectedIndex();	
+					window = ventana;
 				}else{
 					JOptionPane.showMessageDialog(new JFrame(),
 						    "El porcentaje debe de ser entre 0 y 100%",
@@ -56,8 +59,10 @@ public class ALVistaPrincipal implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		AGenetico algoritmo = null;
 		switch(funcion){
 		case 0:
+			algoritmo = new AGeneticoP1F1(this.tamPoblacion, this.nGeneracion, this.probCruce, this.probMutacion, this.precision);
 			break;
 		case 1:
 			break;

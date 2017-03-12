@@ -17,7 +17,7 @@ public class VistaPrincipal extends JFrame{
 	private JScrollPane scroll;
 	private JProgressBar progressBar;
 	Plot2DPanel plot;
-	JPanel window;
+	JPanel window, panelN, panelS, panelE, panelW;
 	
 	public VistaPrincipal(){
 		initComponents();
@@ -33,12 +33,17 @@ public class VistaPrincipal extends JFrame{
 
 	private void initComponents() {
 		this.setTitle("Practica 1 - PEV");
-		this.setMinimumSize(new Dimension(1000,700));	
+		this.setResizable(false);
+		this.setMinimumSize(new Dimension(1500,650));	
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);	
 		this.setLocationRelativeTo(null);
 				
 		window = new JPanel();
 		window.setLayout(new BorderLayout());
+		panelE = new JPanel();
+		panelN = new JPanel();
+		panelW = new JPanel();
+		panelS = new JPanel();
 		
 		//label
 		lnGen = new JLabel("Número de Generaciones:");
@@ -49,8 +54,7 @@ public class VistaPrincipal extends JFrame{
 		lfuncion = new JLabel("Función a optimizar:");
 		lvalorN = new JLabel("Valor de n:");
 		lseleccion = new JLabel("Tipo de selección");
-		lelitismo = new JLabel("Selección por elitismo");
-		
+		lelitismo = new JLabel("Selección por elitismo");		
 	
 		//texto
 		tnGen = new JTextField();
@@ -73,7 +77,7 @@ public class VistaPrincipal extends JFrame{
 		
 		cvalorN = new JComboBox<String>();
 		cvalorN.addItem("1");
-		
+
 		celitismo = new JComboBox<String>();
 		celitismo.addItem("Si");
 		celitismo.addItem("No");
@@ -84,7 +88,7 @@ public class VistaPrincipal extends JFrame{
 		//textArea
 		area = new JTextArea();
 		area.setColumns(20);
-		area.setRows(40);
+		area.setRows(31);
 		scroll = new JScrollPane();
 		scroll.setViewportView(area);
 		
@@ -93,50 +97,49 @@ public class VistaPrincipal extends JFrame{
 		
 		//barra de progreso
 		progressBar = new JProgressBar();
-
 	}
 
 	private void addEast() {
-		JPanel panel = new JPanel();
-		panel.setLayout(new FlowLayout());
+		panelE.setLayout(new FlowLayout());
+		panelE.setBorder(BorderFactory.createTitledBorder("Descripción"));
 		
-		panel.add(area);
+		panelE.add(area);
 		
-		window.add(panel, BorderLayout.EAST);		
+		window.add(panelE, BorderLayout.EAST);		
 	}
 
 	private void addWest() {
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(9, 2, 25, 25));
+		panelW.setLayout(new GridLayout(9, 2, 35, 35));
+		panelW.setBorder(BorderFactory.createTitledBorder("Parámetros"));
 		
-		panel.add(lnGen);
-		panel.add(tnGen);
+		panelW.add(lnGen);
+		panelW.add(tnGen);
 		
-		panel.add(ltamPob);
-		panel.add(ttamPob);
+		panelW.add(ltamPob);
+		panelW.add(ttamPob);
 		
-		panel.add(lproCruce);
-		panel.add(tproCruce);
+		panelW.add(lproCruce);
+		panelW.add(tproCruce);
 		
-		panel.add(lproMutacion);
-		panel.add(tproMutacion);
+		panelW.add(lproMutacion);
+		panelW.add(tproMutacion);
 		
-		panel.add(lprecision);
-		panel.add(tprecision);
+		panelW.add(lprecision);
+		panelW.add(tprecision);
 		
-		panel.add(lfuncion);
-		panel.add(cFuncion);
+		panelW.add(lfuncion);
+		panelW.add(cFuncion);
 		
-		panel.add(lvalorN);
-		panel.add(cvalorN);
+		panelW.add(lvalorN);
+		panelW.add(cvalorN);
 		
-		panel.add(lseleccion);
-		panel.add(cseleccion);
+		panelW.add(lseleccion);
+		panelW.add(cseleccion);
 		
-		panel.add(lelitismo);
-		panel.add(celitismo);
+		panelW.add(lelitismo);
+		panelW.add(celitismo);
 		
-		window.add(panel, BorderLayout.WEST);
+		window.add(panelW, BorderLayout.WEST);
 	}
 
 	private void addCenter() {
@@ -146,13 +149,12 @@ public class VistaPrincipal extends JFrame{
 	}
 
 	private void addBottom() {
-		JPanel panel = new JPanel();
-		panel.setLayout(new FlowLayout());
+		panelS.setLayout(new FlowLayout());
 		
-		panel.add(button);
-		button.addActionListener(new ALVistaPrincipal(tnGen, ttamPob,tproCruce, tproMutacion, tprecision, cseleccion, celitismo, cFuncion));
+		button.addActionListener(new ALVistaPrincipal(tnGen, ttamPob,tproCruce, tproMutacion, tprecision, cseleccion, celitismo, cFuncion, this));
+		panelS.add(button);
 		
-		window.add(panel, BorderLayout.SOUTH);
+		window.add(panelS, BorderLayout.SOUTH);
 	}
 
 	private void addTop() {
