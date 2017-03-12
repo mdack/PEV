@@ -1,13 +1,12 @@
 
 public abstract class Cromosoma {
-
-	protected float fenotipo;
-	public float getFenotipo() {
-		return fenotipo;
-	}
-	public void setFenotipo(float fenotipo) {
-		this.fenotipo = fenotipo;
-	}
+	
+	protected float fitness;
+	protected float punt;
+	protected float puntAcum;
+	protected Gen[] genes;
+	protected double fenotipo;
+	
 	public float getFitness() {
 		return fitness;
 	}
@@ -32,11 +31,7 @@ public abstract class Cromosoma {
 	public void setGenes(Gen[] genes) {
 		this.genes = genes;
 	}
-	protected float fitness;
-	protected float punt;
-	protected float puntAcum;
-	protected Gen[] genes;
 	
-	public abstract float fenotipo();
+	public abstract double fenotipo();
 	public abstract float evalua();
 }

@@ -9,13 +9,14 @@ public abstract class AGenetico {
 	protected int posMejor; // Posicion en la poblacion
 	protected float probCruce; // Probabilidad de cruce
 	protected float probMut; // Probabilidad de mutacion
-	protected float tolerancia; // Tolerancia
+	protected double tolerancia; // Tolerancia
 	
-	public AGenetico(int poblacion, int generaciones, float porcCruces, float porcMutacion){
+	public AGenetico(int poblacion, int generaciones, float porcCruces, float porcMutacion, float precision){
 		tamPob = poblacion;
 		numMaxGen = generaciones;
 		probCruce = porcCruces;
 		probMut = porcMutacion;
+		tolerancia = precision;
 	}
 	
 	public abstract void inicializar();

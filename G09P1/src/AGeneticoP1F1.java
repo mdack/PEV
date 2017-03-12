@@ -2,16 +2,15 @@ import java.util.Random;
 
 public class AGeneticoP1F1 extends AGenetico {
 	
-	public AGeneticoP1F1(int poblacion, int generaciones, float porcCruces, float porcMutacion)
+	public AGeneticoP1F1(int poblacion, int generaciones, float porcCruces, float porcMutacion, float tolerancia)
 	{
-		super(poblacion, generaciones, porcCruces, porcMutacion);
+		super(poblacion, generaciones, porcCruces, porcMutacion, tolerancia);
 	}
 
-	@Override
 	public void inicializar() {
 		this.poblacion = new Cromosoma[tamPob];
 		for(int i = 0; i < tamPob; i++)
-			this.poblacion[i] = new CromosomaP1F1();		
+			this.poblacion[i] = new CromosomaP1F1(tolerancia);		
 	}
 
 	@Override
@@ -79,8 +78,8 @@ public class AGeneticoP1F1 extends AGenetico {
 		int numSelCruce = 0;
 		int puntoCruce;
 		float prob;
-		Cromosoma hijo1 = new CromosomaP1F1();
-		Cromosoma hijo2 = new CromosomaP1F1();
+		Cromosoma hijo1 = new CromosomaP1F1(tolerancia);
+		Cromosoma hijo2 = new CromosomaP1F1(tolerancia);
 		Random rnd = new Random();
 		
 		for(int i = 0; i < tamPob; i++){
@@ -107,7 +106,7 @@ public class AGeneticoP1F1 extends AGenetico {
 		int j = 0; // Contador de bit dentro de gen.
 		int k = 0; // Contador de posicion general en cromosoma.
 		// Primera fase
-		for(i = 0; i < CromosomaP1F1.numGenes && k < puntoCruce; i++)
+		for(i = 0; i < CromosomaP1F1.N_GENES && k < puntoCruce; i++)
 		{
 			boolean[] aleloHijo1 = hijo1.genes[i].getAlelo();
 			boolean[] aleloHijo2 = hijo2.genes[i].getAlelo();
@@ -126,7 +125,7 @@ public class AGeneticoP1F1 extends AGenetico {
 			hijo2.genes[i].setAlelo(aleloHijo2);
 		}
 		// Segunda fase
-		while(i < CromosomaP1F1.numGenes)
+		while(i < CromosomaP1F1.N_GENES)
 		{
 			boolean[] aleloHijo1 = hijo1.genes[i].getAlelo();
 			boolean[] aleloHijo2 = hijo2.genes[i].getAlelo();
