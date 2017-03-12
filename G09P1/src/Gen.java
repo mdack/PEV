@@ -29,6 +29,13 @@ public class Gen {
 		this.gen = alelo;
 	}
 	
+	public void setPosAlelo(int pos, boolean value){
+		this.gen[pos] = value;
+	}
+	
+	public boolean getPosAlelo(int pos){
+		return this.gen[pos];
+	}
 	public boolean[] getAlelo(){ return gen; }
 	public int getLongAlelo(){ return longitud; }
 }

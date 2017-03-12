@@ -1,23 +1,23 @@
 
 public abstract class Cromosoma {
 	
-	protected float fitness;
-	protected float punt;
+	protected double fitness;
+	protected double punt;
 	protected float puntAcum;
 	protected Gen[] genes;
 	protected double fenotipo;
 	
-	public float getFitness() {
+	public double getFitness() {
 		return fitness;
 	}
 	public void setFitness(float fitness) {
 		this.fitness = fitness;
 	}
-	public float getPunt() {
+	public double getPunt() {
 		return punt;
 	}
-	public void setPunt(float punt) {
-		this.punt = punt;
+	public void setPunt(double d) {
+		this.punt = d;
 	}
 	public float getPuntAcum() {
 		return puntAcum;
@@ -32,6 +32,6 @@ public abstract class Cromosoma {
 		this.genes = genes;
 	}
 	
-	public abstract double fenotipo();
-	public abstract float evalua();
+	public abstract double fenotipo(int pos);
+	public abstract double evalua(int pos);
 }

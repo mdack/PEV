@@ -15,11 +15,11 @@ public class AGeneticoP1F1 extends AGenetico {
 
 	@Override
 	public void evaluar() {
-		float puntAcumulada = 0;
-		float maxFitness = -250f;
+		double puntAcumulada = 0;
+		double maxFitness = -250f;
 		int posMax = -1;
 		for(int i = 0; i < tamPob; i++){
-			float fitness = this.poblacion[i].getFitness();
+			double fitness = this.poblacion[i].getFitness();
 			if(fitness > maxFitness){
 				posMax = i;
 				maxFitness = fitness;
@@ -142,9 +142,10 @@ public class AGeneticoP1F1 extends AGenetico {
 			i++;
 			j = 0;
 		}
+		
 		// Evaluacion
-		hijo1.evalua();
-		hijo2.evalua();
+		hijo1.evalua(0);
+		hijo2.evalua(0);
 	}
 
 	@Override
@@ -154,19 +155,27 @@ public class AGeneticoP1F1 extends AGenetico {
 		float prob;
 		Random rnd = new Random();
 		
-		for(i = 0; i < this.tamPob; i++){
+		for(i = 0; i < this.tamPob; i++){			
+			Gen gen = poblacion[i].genes[0];
 			mutado = false;
-			for(j = 0; j < 9; j++)
+			
+			for(j = 0; j < gen.getLongAlelo(); j++)
 			{
 				prob = rnd.nextFloat();
-			// mutan los genes con prob<prob_mut
-			if (prob < probMut){
-				// Modificar un bit del alelo.
-				//poblacion[i].genes[j] = !(poblacion[i].genes[j]);
-				mutado = true;
+				// mutan los genes con prob<prob_mut
+				if (prob < probMut){
+					mutado = true;
+					if(gen.getPosAlelo(i)){
+						gen.setPosAlelo(i, false);
+					}
+					else{
+						gen.setPosAlelo(i, true);
+					}
+					
+				}
 			}
-			if (mutado)
-				poblacion[i].fitness = poblacion[i].evalua();
+			if (mutado){
+				poblacion[i].fitness = poblacion[i].evalua(0);
 			}
 		}
 	}

@@ -14,6 +14,11 @@ public class CromosomaP1F1 extends Cromosoma {
 		}		
 	}
 	
+	/**
+	 * Calcula la longitud del cromosoma
+	 * @param precision Precisión o tolerancia que se utiliza para calcula la longitud del cromosoma
+	 * @return Longitud que tendrá la cadena binaria
+	 */
 	private int longitudGen(double precision){
 		double longAux = (Math.log10((1+((X_MAX - X_MIN) / precision))) / Math.log10(2)); //Calcula la longitud exacta
 		int p_ent = (int) longAux; //Nos quedamos con la parte entera
@@ -23,19 +28,26 @@ public class CromosomaP1F1 extends Cromosoma {
 		
 		return p_ent;
 	}
-
-	public double fenotipo() {
+	
+	/**
+	 * Método que obtiene el fenotipo de un individuo
+	 */
+	public double fenotipo(int pos) {
 		double valor;
 		fenotipo = 0;
 		
-		for(int i = 0; i < N_GENES; i++){
-			Gen gen = this.genes[i];
-			valor = X_MIN + ((X_MAX - X_MIN) * bin_dec(gen)) / (Math.pow(2, gen.getLongAlelo()) - 1);
-			fenotipo += valor;
-		}
+		Gen gen = this.genes[pos];
+		valor = X_MIN + ((X_MAX - X_MIN) * bin_dec(gen)) / (Math.pow(2, gen.getLongAlelo()) - 1);
+		fenotipo += valor;
+
 		return this.fenotipo;
 	}
-
+	
+	/**
+	 * Convierte el contenido de la cadena binaria que lleva el gen en su valor decimal
+	 * @param gen Gen que se traducirá a decimal
+	 * @return Valor decimal de la cadena binaria
+	 */
 	private double bin_dec(Gen gen) {
 		int longGen = gen.getLongAlelo();
 		int pos = 0;
@@ -50,10 +62,14 @@ public class CromosomaP1F1 extends Cromosoma {
 		return valor;
 	}
 
-	@Override
-	public float evalua() {
-		float fit = (float)(Math.abs(fenotipo * Math.sin(Math.sqrt(Math.abs(fenotipo)))) * -1);
-		this.fitness = fit;
+	/**
+	 * Obtiene el valor de la función a optimizar
+	 */
+	public double evalua(int pos) {
+		double f = fenotipo(pos); //Obtenemos fenotipo
+		
+		double fit = (Math.abs(f * Math.sin(Math.sqrt(Math.abs(f)))) * -1);
+		
 		return fit;
 	}
 
