@@ -60,20 +60,14 @@ public class CromosomaP1F3 extends Cromosoma {
 	}
 
 	@Override
-	public double evalua(int pos) {
+	public double evalua() {
 		double x = 0;
 		double y = 0;
 		
-		switch(pos){
-		case 0:
-			x = fenotipo(pos);
-			break;
-		case 1:
-			y = fenotipo(pos);
-			break;
-		}
-		
-		double fit = 21.5 + x * Math.sin((4*Math.PI*x)) + y * Math.sin((20*Math.PI*x));		
+		x = fenotipo(0);
+		y = fenotipo(1);
+				
+		double fit = 21.5 + x * Math.sin((4*Math.PI*x)) + y * Math.sin((20*Math.PI*y));		
 		
 		return fit;
 	}

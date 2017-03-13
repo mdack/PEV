@@ -4,6 +4,7 @@ public class CromosomaP1F5 extends Cromosoma {
 	public static final int N_GENES = 2;
 	private static final double X_MIN = -10;
 	private static final double X_MAX = 10;
+	private static final int MAX_I = 5;
 		
 	public CromosomaP1F5(double tolerancia){
 		genes = new Gen[N_GENES];
@@ -31,14 +32,36 @@ public class CromosomaP1F5 extends Cromosoma {
 	
 	@Override
 	public double fenotipo(int pos) {
-		// TODO Auto-generated method stub
-		return 0;
+		double valor;
+		fenotipo = 0;
+		Gen gen = this.genes[pos];
+		
+		valor = X_MIN + ((X_MAX - X_MIN) * bin_dec(gen)) / (Math.pow(2, gen.getLongAlelo()) - 1);
+		fenotipo += valor;
+
+		return fenotipo;
 	}
 
 	@Override
-	public double evalua(int pos) {
-		// TODO Auto-generated method stub
-		return 0;
+	public double evalua() {
+		double suma1, suma2;
+		double x1 = fenotipo(0);
+		double x2 = fenotipo(1);
+				
+		suma1 = sumatorio(x1);
+		suma2 = sumatorio(x2);
+		
+		return (suma1 * suma2);
+	}
+
+	private double sumatorio(double x) {
+		double suma = 0;
+		
+		for(int i = 0; i < MAX_I; i++){
+			suma += (i * Math.cos((i + 1) * x + i));
+		}
+		
+		return suma;
 	}
 
 }
