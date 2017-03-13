@@ -2,9 +2,18 @@ import java.util.Random;
 
 public class AGeneticoP1F1 extends AGenetico {
 	
-	public AGeneticoP1F1(int poblacion, int generaciones, float porcCruces, float porcMutacion, float tolerancia)
+	public AGeneticoP1F1(int poblacion, int generaciones, double porcCruces, double porcMutacion, double tolerancia)
 	{
 		super(poblacion, generaciones, porcCruces, porcMutacion, tolerancia);
+		inicializar();
+		evaluar();
+		for(int i = 0; i < generaciones; i++)
+		{
+			seleccion(0);
+			reproduccion();
+			mutacion();
+			evaluar();
+		}
 	}
 
 	public void inicializar() {
@@ -16,7 +25,7 @@ public class AGeneticoP1F1 extends AGenetico {
 	@Override
 	public void evaluar() {
 		double puntAcumulada = 0;
-		double maxFitness = -250f;
+		double maxFitness = -250.0;
 		int posMax = -1;
 		for(int i = 0; i < tamPob; i++){
 			double fitness = this.poblacion[i].getFitness();
@@ -26,7 +35,8 @@ public class AGeneticoP1F1 extends AGenetico {
 			}
 			puntAcumulada = puntAcumulada + this.poblacion[i].getFitness();
 		}
-		float puntRelAcumulada = 0f;
+		if(maxFitness > mejorAbs) this.mejorAbs = maxFitness;
+		double puntRelAcumulada = 0.0;
 		for(int i = 0; i < tamPob; i++){
 			puntRelAcumulada += this.poblacion[i].getFitness() / puntAcumulada;
 			this.poblacion[i].setPunt((this.poblacion[i].getFitness() / puntAcumulada));
@@ -34,6 +44,7 @@ public class AGeneticoP1F1 extends AGenetico {
 		}
 		this.elMejor = this.poblacion[posMax];
 		this.posMejor = posMax;
+		VistaPrincipal.addData(mejorAbs, maxFitness, (puntAcumulada/tamPob));
 	}
 
 	@Override
@@ -50,11 +61,11 @@ public class AGeneticoP1F1 extends AGenetico {
 	
 	private void seleccionRuleta(){
 		int selSuperv[] = new int[tamPob]; // Supervivientes
-		float prob; // Probabilidad de supervivencia
+		double prob; // Probabilidad de supervivencia
 		int posSuperv = 0; // Posicion del superviviente
 		for(int i = 0; i < tamPob; i++){
 			Random rnd = new Random();
-			prob = rnd.nextFloat();
+			prob = rnd.nextDouble();
 			while((prob > poblacion[posSuperv].puntAcum) && (posSuperv < tamPob))
 			{
 				selSuperv[i] = posSuperv;
@@ -97,13 +108,13 @@ public class AGeneticoP1F1 extends AGenetico {
 		
 		int numSelCruce = 0;
 		int puntoCruce;
-		float prob;
+		double prob;
 		Cromosoma hijo1 = new CromosomaP1F1(tolerancia);
 		Cromosoma hijo2 = new CromosomaP1F1(tolerancia);
 		Random rnd = new Random();
 		
 		for(int i = 0; i < tamPob; i++){
-			prob = rnd.nextFloat();
+			prob = rnd.nextDouble();
 			if(prob < probCruce){
 				selCruce[numSelCruce] = i;
 				numSelCruce++;
@@ -172,7 +183,7 @@ public class AGeneticoP1F1 extends AGenetico {
 	public void mutacion() {
 		boolean mutado;
 		int i, j;
-		float prob;
+		double prob;
 		Random rnd = new Random();
 		
 		for(i = 0; i < this.tamPob; i++){			
@@ -181,7 +192,7 @@ public class AGeneticoP1F1 extends AGenetico {
 			
 			for(j = 0; j < gen.getLongAlelo(); j++)
 			{
-				prob = rnd.nextFloat();
+				prob = rnd.nextDouble();
 				// mutan los genes con prob<prob_mut
 				if (prob < probMut){
 					mutado = true;
