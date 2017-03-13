@@ -175,8 +175,8 @@ public class AGeneticoP1F1 extends AGenetico {
 		}
 		
 		// Evaluacion
-		hijo1.evalua(0);
-		hijo2.evalua(0);
+		hijo1.evalua();
+		hijo2.evalua();
 	}
 
 	@Override
@@ -206,7 +206,7 @@ public class AGeneticoP1F1 extends AGenetico {
 				}
 			}
 			if (mutado){
-				poblacion[i].fitness = poblacion[i].evalua(0);
+				poblacion[i].fitness = poblacion[i].evalua();
 			}
 		}
 	}

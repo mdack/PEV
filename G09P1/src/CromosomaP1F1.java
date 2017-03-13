@@ -13,7 +13,7 @@ public class CromosomaP1F1 extends Cromosoma {
 			this.genes[i] = new Gen(longGen);
 		}		
 		this.fenotipo = fenotipo(0);
-		this.fitness = evalua(0);
+		this.fitness = evalua();
 	}
 	
 	
@@ -50,8 +50,8 @@ public class CromosomaP1F1 extends Cromosoma {
 	/**
 	 * Obtiene el valor de la función a optimizar
 	 */
-	public double evalua(int pos) {
-		double f = fenotipo(pos); //Obtenemos fenotipo
+	public double evalua() {
+		double f = fenotipo(0); //Obtenemos fenotipo
 		
 		double fit = (Math.abs(f * Math.sin(Math.sqrt(Math.abs(f)))) * -1);
 		
