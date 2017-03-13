@@ -196,11 +196,11 @@ public class AGeneticoP1F1 extends AGenetico {
 				// mutan los genes con prob<prob_mut
 				if (prob < probMut){
 					mutado = true;
-					if(gen.getPosAlelo(i)){
-						gen.setPosAlelo(i, false);
+					if(gen.getPosAlelo(j)){
+						gen.setPosAlelo(j, false);
 					}
 					else{
-						gen.setPosAlelo(i, true);
+						gen.setPosAlelo(j, true);
 					}
 					
 				}
