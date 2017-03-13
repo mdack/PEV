@@ -2,8 +2,8 @@
 public class CromosomaP1F1 extends Cromosoma {
 	
 	public static final int N_GENES = 1;
-	private static final float X_MIN = -250f;
-	private static final float X_MAX = 250f;
+	private static final double X_MIN = -250f;
+	private static final double X_MAX = 250f;
 	
 	public CromosomaP1F1(double tolerancia){
 		genes = new Gen[N_GENES];
@@ -12,6 +12,8 @@ public class CromosomaP1F1 extends Cromosoma {
 			int longGen = longitudGen(tolerancia);
 			this.genes[i] = new Gen(longGen);
 		}		
+		this.fenotipo = fenotipo(0);
+		this.fitness = evalua(0);
 	}
 	
 	

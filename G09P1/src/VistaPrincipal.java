@@ -44,7 +44,7 @@ public class VistaPrincipal extends JFrame{
 		double[][] newMejoresAbs = new double[numGeneraciones+1][2];
 		double[][] newMejoresGen = new double[numGeneraciones+1][2];
 		double[][] newMediasGen = new double[numGeneraciones+1][2];
-		for(int i = 0; i < numGeneraciones+1; i++)
+		for(int i = 0; i < numGeneraciones; i++)
 		{
 			newMejoresAbs[i][0] = mejoresAbs[i][0];
 			newMejoresAbs[i][1] = mejoresAbs[i][1];
@@ -64,9 +64,36 @@ public class VistaPrincipal extends JFrame{
 		mejoresGen = newMejoresGen;
 		mediasGen = newMediasGen;
 		
-		plot.addLinePlot("Mejor absoluto", mejoresAbs);
-		plot.addLinePlot("Mejor de generacion", mejoresGen);
-		plot.addLinePlot("Media de generacion", mediasGen);
+		if(numGeneraciones != 0)
+		{
+			plot.changePlotData(0, mejoresAbs);
+			plot.changePlotData(1, mejoresGen);
+			plot.changePlotData(2, mediasGen);
+		}
+		else
+		{
+			plot.addLinePlot("Mejor absoluto", mejoresAbs);
+			plot.addLinePlot("Mejor de generacion", mejoresGen);
+			plot.addLinePlot("Media de generacion", mediasGen);
+		}
+		numGeneraciones++;
+		
+
+		
+//		double[][] newMejoresAbs = new double[1][2];
+//		double[][] newMejoresGen = new double[1][2];
+//		double[][] newMediaGen = new double[1][2];
+//		numGeneraciones++;
+//		newMejoresAbs[0][0] = numGeneraciones;
+//		newMejoresAbs[0][1] = mejorAbs;
+//		newMejoresGen[0][0] = numGeneraciones;
+//		newMejoresGen[0][1] = mejorGen;
+//		newMediaGen[0][0] = numGeneraciones;
+//		newMediaGen[0][1] = mediaGen;
+//		
+//		plot.addLinePlot("Mejor absoluto", mejoresAbs);
+//		plot.addLinePlot("Mejor de generacion", mejoresGen);
+//		plot.addLinePlot("Media de generacion", mediasGen);
 	}
 
 	private void initComponents() {
@@ -143,17 +170,17 @@ public class VistaPrincipal extends JFrame{
 			public void actionPerformed(ActionEvent evt){
 				int funcion = -1;
 				int nGeneracion, tamPoblacion;
-				int precision = 0;
-				float probCruce, probMutacion;
+				double precision = 0;
+				double probCruce, probMutacion;
 				boolean esRuleta;
 				boolean elitismo;
 				try{
 					nGeneracion = Integer.parseInt(tnGen.getText());
 					tamPoblacion = Integer.parseInt(ttamPob.getText());
-					probCruce = Float.parseFloat(tproCruce.getText());
-					
+					probCruce = Double.parseDouble(tproCruce.getText());
+					precision = Double.parseDouble(tprecision.getText());
 					if(probCruce < 100 && probCruce > 0){
-						probMutacion = Float.parseFloat(tproMutacion.getText());
+						probMutacion = Double.parseDouble(tproMutacion.getText());
 						if(probMutacion < 100 && probMutacion > 0){
 							probCruce = probCruce/100;
 							probMutacion = probMutacion/100;
