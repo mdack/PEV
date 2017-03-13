@@ -14,20 +14,6 @@ public class CromosomaP1F1 extends Cromosoma {
 		}		
 	}
 	
-	/**
-	 * Calcula la longitud del cromosoma
-	 * @param precision Precisión o tolerancia que se utiliza para calcula la longitud del cromosoma
-	 * @return Longitud que tendrá la cadena binaria
-	 */
-	private int longitudGen(double precision){
-		double longAux = (Math.log10((1+((X_MAX - X_MIN) / precision))) / Math.log10(2)); //Calcula la longitud exacta
-		int p_ent = (int) longAux; //Nos quedamos con la parte entera
-		double p_dec = longAux - p_ent; //Obtenemos la parte decimal
-		
-		if(p_dec > 0) p_ent++;
-		
-		return p_ent;
-	}
 	
 	/**
 	 * Método que obtiene el fenotipo de un individuo
@@ -43,23 +29,20 @@ public class CromosomaP1F1 extends Cromosoma {
 		return fenotipo;
 	}
 	
+	
 	/**
-	 * Convierte el contenido de la cadena binaria que lleva el gen en su valor decimal
-	 * @param gen Gen que se traducirá a decimal
-	 * @return Valor decimal de la cadena binaria
+	 * Calcula la longitud del cromosoma
+	 * @param precision Precisión o tolerancia que se utiliza para calcula la longitud del cromosoma
+	 * @return Longitud que tendrá la cadena binaria
 	 */
-	private double bin_dec(Gen gen) {
-		int longGen = gen.getLongAlelo();
-		int pos = 0;
-		double valor = 0;
+	public int longitudGen(double precision){
+		double longAux = (Math.log10((1+((X_MAX - X_MIN) / precision))) / Math.log10(2)); //Calcula la longitud exacta
+		int p_ent = (int) longAux; //Nos quedamos con la parte entera
+		double p_dec = longAux - p_ent; //Obtenemos la parte decimal
 		
-		for(int i = longGen; i >= 0; i--){
-			double num = (float)Math.pow(2, pos);
-			pos++;
-			valor += num;
-		}
+		if(p_dec > 0) p_ent++;
 		
-		return valor;
+		return p_ent;
 	}
 
 	/**
