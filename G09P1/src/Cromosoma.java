@@ -3,7 +3,7 @@ public abstract class Cromosoma {
 	
 	protected double fitness;
 	protected double punt;
-	protected float puntAcum;
+	protected double puntAcum;
 	protected Gen[] genes;
 	protected double fenotipo;
 	
@@ -19,10 +19,10 @@ public abstract class Cromosoma {
 	public void setPunt(double d) {
 		this.punt = d;
 	}
-	public float getPuntAcum() {
+	public double getPuntAcum() {
 		return puntAcum;
 	}
-	public void setPuntAcum(float puntAcum) {
+	public void setPuntAcum(double puntAcum) {
 		this.puntAcum = puntAcum;
 	}
 	public Gen[] getGenes() {

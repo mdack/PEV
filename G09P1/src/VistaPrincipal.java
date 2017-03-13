@@ -1,4 +1,7 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 
@@ -16,8 +19,13 @@ public class VistaPrincipal extends JFrame{
 	private JTextArea area;
 	private JScrollPane scroll;
 	private JProgressBar progressBar;
-	Plot2DPanel plot;
-	JPanel window, panelN, panelS, panelE, panelW;
+	private static Plot2DPanel plot;
+	private JPanel window, panelN, panelS, panelE, panelW;
+	
+	private static double[][] mejoresAbs;
+	private static double[][] mejoresGen;
+	private static double[][] mediasGen;
+	private static int numGeneraciones;
 	
 	public VistaPrincipal(){
 		initComponents();
@@ -30,6 +38,36 @@ public class VistaPrincipal extends JFrame{
 		
 		this.add(window);
 	}
+	
+	public static void addData(double mejorAbs, double mejorGen, double mediaGen)
+	{
+		double[][] newMejoresAbs = new double[numGeneraciones+1][2];
+		double[][] newMejoresGen = new double[numGeneraciones+1][2];
+		double[][] newMediasGen = new double[numGeneraciones+1][2];
+		for(int i = 0; i < numGeneraciones+1; i++)
+		{
+			newMejoresAbs[i][0] = mejoresAbs[i][0];
+			newMejoresAbs[i][1] = mejoresAbs[i][1];
+			newMejoresGen[i][0] = mejoresGen[i][0];
+			newMejoresGen[i][1] = mejoresGen[i][1];
+			newMediasGen[i][0] = mediasGen[i][0];
+			newMediasGen[i][1] = mediasGen[i][1];
+		}
+		newMejoresAbs[numGeneraciones][0] = numGeneraciones+1;
+		newMejoresAbs[numGeneraciones][1] = mejorAbs;
+		newMejoresGen[numGeneraciones][0] = numGeneraciones+1;
+		newMejoresGen[numGeneraciones][1] = mejorGen;
+		newMediasGen[numGeneraciones][0] = numGeneraciones+1;
+		newMediasGen[numGeneraciones][1] = mediaGen;
+		
+		mejoresAbs = newMejoresAbs;
+		mejoresGen = newMejoresGen;
+		mediasGen = newMediasGen;
+		
+		plot.addLinePlot("Mejor absoluto", mejoresAbs);
+		plot.addLinePlot("Mejor de generacion", mejoresGen);
+		plot.addLinePlot("Media de generacion", mediasGen);
+	}
 
 	private void initComponents() {
 		this.setTitle("Practica 1 - PEV");
@@ -37,7 +75,9 @@ public class VistaPrincipal extends JFrame{
 		this.setMinimumSize(new Dimension(1500,650));	
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);	
 		this.setLocationRelativeTo(null);
-				
+		
+		numGeneraciones = 0;
+		
 		window = new JPanel();
 		window.setLayout(new BorderLayout());
 		panelE = new JPanel();
@@ -58,10 +98,15 @@ public class VistaPrincipal extends JFrame{
 	
 		//texto
 		tnGen = new JTextField();
+		tnGen.setText("100");
 		ttamPob = new JTextField();
+		ttamPob.setText("100");
 		tproCruce = new JTextField();
+		tproCruce.setText("60");
 		tproMutacion = new JTextField();
+		tproMutacion.setText("5");
 		tprecision = new JTextField();
+		tprecision.setText("0.001");
 		
 		//combos
 		cFuncion = new JComboBox<String>();
@@ -94,9 +139,75 @@ public class VistaPrincipal extends JFrame{
 		
 		//boton
 		button = new JButton("Comenzar");
-		
+		button.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				int funcion = -1;
+				int nGeneracion, tamPoblacion;
+				int precision = 0;
+				float probCruce, probMutacion;
+				boolean esRuleta;
+				boolean elitismo;
+				try{
+					nGeneracion = Integer.parseInt(tnGen.getText());
+					tamPoblacion = Integer.parseInt(ttamPob.getText());
+					probCruce = Float.parseFloat(tproCruce.getText());
+					
+					if(probCruce < 100 && probCruce > 0){
+						probMutacion = Float.parseFloat(tproMutacion.getText());
+						if(probMutacion < 100 && probMutacion > 0){
+							probCruce = probCruce/100;
+							probMutacion = probMutacion/100;
+							if(cseleccion.getSelectedIndex() == 1){
+								esRuleta = false;
+							}
+							if(celitismo.getSelectedIndex() == 1){
+								elitismo = false;
+							}
+							funcion = cseleccion.getSelectedIndex();
+							AGenetico algoritmo = null;
+							switch(funcion){
+							case 0:
+								algoritmo = new AGeneticoP1F1(tamPoblacion, nGeneracion, probCruce, probMutacion, precision);
+								break;
+							case 1:
+								break;
+							case 2:
+								break;
+							case 3:
+								break;
+							case 4:
+								break;
+							}
+						}else{
+							JOptionPane.showMessageDialog(new JFrame(),
+								    "El porcentaje debe de ser entre 0 y 100%",
+								    "Probabilidad de Cruce incorrecta",
+								    JOptionPane.ERROR_MESSAGE);
+						}
+					}
+					else{
+						JOptionPane.showMessageDialog(new JFrame(),
+							    "El porcentaje debe de ser entre 0 y 100%",
+							    "Probabilidad de Cruce incorrecta",
+							    JOptionPane.ERROR_MESSAGE);
+					}
+					
+				}catch(NumberFormatException e){
+					JOptionPane.showMessageDialog(new JFrame(),
+						    "Campos incorrectos",
+						    "¡Deben ser números!",
+						    JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		//barra de progreso
 		progressBar = new JProgressBar();
+//		double[][] a = new double[2][2];
+//		a[0][0] = 2.0;
+//		a[0][1] = 3.0;
+//		a[1][0] = 4.0;
+//		a[1][1] = 7.0;
+//		plot.addLinePlot("holi", Color.BLACK, a);
 	}
 
 	private void addEast() {
@@ -151,7 +262,6 @@ public class VistaPrincipal extends JFrame{
 	private void addBottom() {
 		panelS.setLayout(new FlowLayout());
 		
-		button.addActionListener(new ALVistaPrincipal(tnGen, ttamPob,tproCruce, tproMutacion, tprecision, cseleccion, celitismo, cFuncion, this));
 		panelS.add(button);
 		
 		window.add(panelS, BorderLayout.SOUTH);

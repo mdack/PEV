@@ -7,11 +7,12 @@ public abstract class AGenetico {
 	protected int numMaxGen; // Numero maximo de generaciones
 	protected Cromosoma elMejor; // Mejor cromosoma de la poblacion
 	protected int posMejor; // Posicion en la poblacion
-	protected float probCruce; // Probabilidad de cruce
-	protected float probMut; // Probabilidad de mutacion
+	protected double probCruce; // Probabilidad de cruce
+	protected double probMut; // Probabilidad de mutacion
 	protected double tolerancia; // Tolerancia
+	protected double mejorAbs; // Fitness mejor absoluto.
 	
-	public AGenetico(int poblacion, int generaciones, float porcCruces, float porcMutacion, float precision){
+	public AGenetico(int poblacion, int generaciones, double porcCruces, double porcMutacion, double precision){
 		tamPob = poblacion;
 		numMaxGen = generaciones;
 		probCruce = porcCruces;
