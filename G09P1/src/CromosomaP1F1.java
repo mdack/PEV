@@ -2,8 +2,8 @@
 public class CromosomaP1F1 extends Cromosoma {
 	
 	public static final int N_GENES = 1;
-	private static final double X_MIN = -250f;
-	private static final double X_MAX = 250f;
+	private static final double X_MIN = -250;
+	private static final double X_MAX = 250;
 	
 	public CromosomaP1F1(double tolerancia){
 		genes = new Gen[N_GENES];

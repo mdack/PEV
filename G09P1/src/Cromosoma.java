@@ -42,10 +42,12 @@ public abstract class Cromosoma {
 		int pos = 0;
 		double valor = 0;
 		
-		for(int i = longGen; i >= 0; i--){
-			double num = (float)Math.pow(2, pos);
+		for(int i = longGen-1; i >= 0; i--){
+			if(gen.getPosAlelo(i)){
+				double num = (float)Math.pow(2, pos);
+				valor += num;
+			}
 			pos++;
-			valor += num;
 		}
 		
 		return valor;
