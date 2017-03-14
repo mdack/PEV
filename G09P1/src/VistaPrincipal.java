@@ -178,7 +178,6 @@ public class VistaPrincipal extends JFrame{
 //		a[0][1] = 3.0;
 //		a[1][0] = 4.0;
 //		a[1][1] = 7.0;
-//		plot.addLinePlot("holi", Color.BLACK, a);
 	}
 
 	private void addEast() {
