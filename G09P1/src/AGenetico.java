@@ -61,7 +61,7 @@ public abstract class AGenetico {
 		if(maxFitness > mejorAbs) this.mejorAbs = maxFitness;
 		this.elMejor = this.poblacion[posMejor];
 		
-		VistaPrincipal.addData(mejorAbs, maxFitness, (puntAcumulada/tamPob));
+		VistaPrincipal.addData(mejorAbs, maxFitness, (sumaAptitud/tamPob));
 
 	}
 

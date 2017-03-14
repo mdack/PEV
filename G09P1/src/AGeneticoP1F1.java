@@ -61,22 +61,38 @@ public class AGeneticoP1F1 extends AGenetico {
 	
 	private void seleccionRuleta(){
 		int selSuperv[] = new int[tamPob]; // Supervivientes
+		for(int i = 0; i < tamPob; i++) selSuperv[i] = -1;
 		double prob; // Probabilidad de supervivencia
-		int posSuperv = 0; // Posicion del superviviente
 		
-		for(int i = 0; i < tamPob; i++){
+		for(int i = 0; i < tamPob; i++)
+		{
 			Random rnd = new Random();
 			prob = rnd.nextDouble();
-			while((prob > poblacion[posSuperv].puntAcum) && (posSuperv < tamPob))
-			{
-				posSuperv++;
-				selSuperv[i] = posSuperv;
+			for(int j = 0; j < tamPob; j++){
+				if(j == 0)
+				{
+					if(prob >= 0.0 && prob <= poblacion[j].puntAcum)
+					{
+						selSuperv[i] = j;
+						j = tamPob;
+					}
+				}
+				else
+				{
+					if(prob >= poblacion[j-1].puntAcum && prob <= poblacion[j].puntAcum)
+					{
+						selSuperv[i] = j;
+						j = tamPob;
+					}
+				}
 			}
 		}
 		Cromosoma nuevaPob[] = new CromosomaP1F1[tamPob];
 		for(int i = 0; i < tamPob; i++){
-			nuevaPob[i] = poblacion[selSuperv[i]];
+			if(selSuperv[i] != -1)
+				nuevaPob[i] = poblacion[selSuperv[i]];
 		}
+		poblacion = nuevaPob;
 	}
 	
 	private void seleccionTorneo(){
@@ -122,7 +138,7 @@ public class AGeneticoP1F1 extends AGenetico {
 		}
 		if((numSelCruce % 2) == 1) numSelCruce--;
 		
-		puntoCruce = rnd.nextInt(poblacion[0].genes[0].getLongAlelo());
+		puntoCruce = rnd.nextInt(hijo1.genes[0].getLongAlelo());
 		for(int i = 0; i < numSelCruce; i += 2)
 		{
 			cruce(poblacion[selCruce[i]], poblacion[selCruce[i+1]], hijo1, hijo2, puntoCruce);
@@ -137,7 +153,7 @@ public class AGeneticoP1F1 extends AGenetico {
 		int j = 0; // Contador de bit dentro de gen.
 		int k = 0; // Contador de posicion general en cromosoma.
 		// Primera fase
-		for(i = 0; i < CromosomaP1F1.N_GENES && k < puntoCruce; i++)
+		while(i < CromosomaP1F1.N_GENES && k < puntoCruce)
 		{
 			boolean[] aleloHijo1 = hijo1.genes[i].getAlelo();
 			boolean[] aleloHijo2 = hijo2.genes[i].getAlelo();
