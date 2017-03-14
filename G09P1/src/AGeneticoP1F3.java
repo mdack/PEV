@@ -2,8 +2,8 @@ import java.util.Random;
 
 public class AGeneticoP1F3 extends AGenetico {
 
-	public AGeneticoP1F3(int poblacion, int generaciones, double porcCruces, double porcMutacion, double precision) {
-		super(poblacion, generaciones, porcCruces, porcMutacion, precision, true);
+	public AGeneticoP1F3(int poblacion, int generaciones, double porcCruces, double porcMutacion, double precision, boolean elitismo, int tipoSel) {
+		super(poblacion, generaciones, porcCruces, porcMutacion, precision, true, elitismo, tipoSel);
 		this.mejorAbs = Double.MIN_VALUE;
 	}
 

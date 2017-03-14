@@ -13,14 +13,18 @@ public abstract class AGenetico {
 	protected double tolerancia; // Tolerancia
 	protected double mejorAbs; // Fitness mejor absoluto.
 	protected boolean maximizar;
+	protected boolean esElitista;//tipo de seleccion por torneo
+	protected int tipoSel; //tipo de seleccion
 	
-	public AGenetico(int poblacion, int generaciones, double porcCruces, double porcMutacion, double precision, boolean b){
+	public AGenetico(int poblacion, int generaciones, double porcCruces, double porcMutacion, double precision, boolean b, boolean elitismo, int tipoSel2){
 		tamPob = poblacion;
 		numMaxGen = generaciones;
 		probCruce = porcCruces;
 		probMut = porcMutacion;
 		tolerancia = precision;
 		maximizar = b;
+		esElitista = elitismo;
+		tipoSel = tipoSel2;
 	}
 	
 	public abstract void inicializar();

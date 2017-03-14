@@ -13,14 +13,15 @@ public class VistaPrincipal extends JFrame{
 	 */
 	private static final long serialVersionUID = 1L;
 	private JLabel lnGen, ltamPob, lproCruce, lproMutacion, lprecision, lfuncion, lvalorN,lelitismo, lseleccion;
-	private JTextField tnGen, ttamPob, tproCruce, tproMutacion, tprecision;
-	private JComboBox<String> cFuncion, cseleccion, cvalorN, celitismo;
+	private JTextField tnGen, ttamPob, tproCruce, tproMutacion, tprecision, tvalorN;
+	private JComboBox<String> cFuncion, cseleccion, celitismo;
 	private JButton button;
 	private JTextArea area;
 	private JScrollPane scroll;
 	private JProgressBar progressBar;
 	private static Plot2DPanel plot;
 	private JPanel window, panelS, panelE, panelW;
+	
 	
 	private static double[][] mejoresAbs;
 	private static double[][] mejoresGen;
@@ -133,6 +134,8 @@ public class VistaPrincipal extends JFrame{
 		tproMutacion.setText("5");
 		tprecision = new JTextField();
 		tprecision.setText("0.001");
+		tvalorN = new JTextField();
+		tvalorN.setText("1");
 		
 		//combos
 		cFuncion = new JComboBox<String>();
@@ -147,9 +150,7 @@ public class VistaPrincipal extends JFrame{
 		cseleccion = new JComboBox<String>();
 		cseleccion.addItem("Ruleta");
 		cseleccion.addItem("Torneo");
-		
-		cvalorN = new JComboBox<String>();
-		cvalorN.addItem("1");
+		cseleccion.addItem("Estocástico");
 
 		celitismo = new JComboBox<String>();
 		celitismo.addItem("Si");
@@ -169,7 +170,7 @@ public class VistaPrincipal extends JFrame{
 		button = new JButton("Comenzar");
 		button.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
-				new ALVistaPrincipal(tnGen, ttamPob, tproCruce, tproMutacion, tprecision, cseleccion, celitismo, cFuncion).action();
+				new ALVistaPrincipal(tnGen, ttamPob, tproCruce, tproMutacion, tprecision, cseleccion, celitismo, cFuncion, tvalorN).action();
 			}
 		});
 		
@@ -215,7 +216,7 @@ public class VistaPrincipal extends JFrame{
 		panelW.add(cFuncion);
 		
 		panelW.add(lvalorN);
-		panelW.add(cvalorN);
+		panelW.add(tvalorN);
 		
 		panelW.add(lseleccion);
 		panelW.add(cseleccion);

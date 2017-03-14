@@ -5,32 +5,32 @@ import javax.swing.JTextField;
 
 public class ALVistaPrincipal{
 	
-	int nGeneracion, tamPoblacion, funcion;
+	int nGeneracion, tamPoblacion, funcion, n, tipoSel;
 	double probCruce;
 	double precision;
 	double probMutacion;
-	boolean esRuleta = true, elitismo = true;
-	
+	boolean elitismo = true;
 	
 	public ALVistaPrincipal(JTextField tnGen, JTextField ttamPob, JTextField tproCruce, JTextField tproMutacion,
-			JTextField tprecision, JComboBox<String> cseleccion,JComboBox<String> celitismo,   JComboBox<String> cfuncion) {
+			JTextField tprecision, JComboBox<String> cseleccion,JComboBox<String> celitismo,   JComboBox<String> cfuncion, JTextField tvalorN) {
 		try{
 			nGeneracion = Integer.parseInt(tnGen.getText());
 			tamPoblacion = Integer.parseInt(ttamPob.getText());
 			probCruce = Double.parseDouble(tproCruce.getText());
 			precision = Double.parseDouble(tprecision.getText());
+			n = Integer.parseInt(tvalorN.getText());
+			
 			if(probCruce < 100 && probCruce > 0){
 				probMutacion = Double.parseDouble(tproMutacion.getText());
 				if(probMutacion < 100 && probMutacion > 0){
 					probCruce = probCruce/100;
 					probMutacion = probMutacion/100;
-					if(cseleccion.getSelectedIndex() == 1){
-						esRuleta = false;
-					}
 					if(celitismo.getSelectedIndex() == 1){
 						elitismo = false;
 					}
+					tipoSel = cseleccion.getSelectedIndex();
 					funcion = cfuncion.getSelectedIndex();	
+					
 				}else{
 					JOptionPane.showMessageDialog(new JFrame(),
 						    "El porcentaje debe de ser entre 0 y 100%",
@@ -58,12 +58,12 @@ public class ALVistaPrincipal{
 		AGenetico algoritmo = null;
 		switch(funcion){
 		case 0:
-			algoritmo = new AGeneticoP1F1(tamPoblacion, nGeneracion, probCruce, probMutacion, precision);
+			algoritmo = new AGeneticoP1F1(tamPoblacion, nGeneracion, probCruce, probMutacion, precision, elitismo, tipoSel);
 			break;
 		case 1:
 			break;
 		case 2:
-			algoritmo = new AGeneticoP1F3(tamPoblacion, nGeneracion, probCruce, probMutacion, precision);
+			algoritmo = new AGeneticoP1F3(tamPoblacion, nGeneracion, probCruce, probMutacion, precision,elitismo, tipoSel);
 			algoritmo.inicializar();
 			algoritmo.evaluar();
 			while(i < nGeneracion){

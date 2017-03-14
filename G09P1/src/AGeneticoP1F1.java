@@ -2,9 +2,9 @@ import java.util.Random;
 
 public class AGeneticoP1F1 extends AGenetico {
 	
-	public AGeneticoP1F1(int poblacion, int generaciones, double porcCruces, double porcMutacion, double tolerancia)
+	public AGeneticoP1F1(int poblacion, int generaciones, double porcCruces, double porcMutacion, double tolerancia, boolean elitismo, int tipoSel)
 	{
-		super(poblacion, generaciones, porcCruces, porcMutacion, tolerancia, false);
+		super(poblacion, generaciones, porcCruces, porcMutacion, tolerancia, false, elitismo, tipoSel);
 		inicializar();
 		evaluar();
 		for(int i = 0; i < generaciones; i++)
@@ -22,31 +22,6 @@ public class AGeneticoP1F1 extends AGenetico {
 			this.poblacion[i] = new CromosomaP1F1(tolerancia);		
 	}
 
-//	@Override
-//	public void evaluar() {
-//		double puntAcumulada = 0;
-//		double maxFitness = -250.0;
-//		int posMax = -1;
-//		for(int i = 0; i < tamPob; i++){
-//			double fitness = this.poblacion[i].getFitness();
-//			if(fitness > maxFitness){
-//				posMax = i;
-//				maxFitness = fitness;
-//			}
-//			puntAcumulada = puntAcumulada + this.poblacion[i].getFitness();
-//		}
-//		if(maxFitness > mejorAbs) this.mejorAbs = maxFitness;
-//		double puntRelAcumulada = 0.0;
-//		for(int i = 0; i < tamPob; i++){
-//			puntRelAcumulada += this.poblacion[i].getFitness() / puntAcumulada;
-//			this.poblacion[i].setPunt((this.poblacion[i].getFitness() / puntAcumulada));
-//			this.poblacion[i].setPuntAcum(puntRelAcumulada);
-//		}
-//		this.elMejor = this.poblacion[posMax];
-//		this.posMejor = posMax;
-//		VistaPrincipal.addData(mejorAbs, maxFitness, (puntAcumulada/tamPob));
-//	}
-
 	@Override
 	public void seleccion(int tipo) {
 		switch(tipo){
@@ -60,39 +35,59 @@ public class AGeneticoP1F1 extends AGenetico {
 	}
 	
 	private void seleccionRuleta(){
-		int selSuperv[] = new int[tamPob]; // Supervivientes
-		for(int i = 0; i < tamPob; i++) selSuperv[i] = -1;
-		double prob; // Probabilidad de supervivencia
-		
-		for(int i = 0; i < tamPob; i++)
-		{
-			Random rnd = new Random();
-			prob = rnd.nextDouble();
-			for(int j = 0; j < tamPob; j++){
-				if(j == 0)
-				{
-					if(prob >= 0.0 && prob <= poblacion[j].puntAcum)
-					{
-						selSuperv[i] = j;
-						j = tamPob;
-					}
-				}
-				else
-				{
-					if(prob >= poblacion[j-1].puntAcum && prob <= poblacion[j].puntAcum)
-					{
-						selSuperv[i] = j;
-						j = tamPob;
-					}
-				}
+		int[] sel_super = new int[tamPob];
+		double prob;
+		int pos_super;
+			
+		for(int i = 0; i < tamPob; i++){
+			prob = Math.random();
+			pos_super = 0;
+			
+			while((prob > poblacion[pos_super].getPuntAcum()) && (pos_super < tamPob)){
+				pos_super++;
+				sel_super[i] = pos_super;
 			}
 		}
-		Cromosoma nuevaPob[] = new CromosomaP1F1[tamPob];
+		//Se genera la población intermedia
+		Cromosoma[] nuevaPob = new CromosomaP1F1[tamPob];
 		for(int i = 0; i < tamPob; i++){
-			if(selSuperv[i] != -1)
-				nuevaPob[i] = poblacion[selSuperv[i]];
+			nuevaPob[i] = poblacion[sel_super[i]];
 		}
+		
 		poblacion = nuevaPob;
+//		int selSuperv[] = new int[tamPob]; // Supervivientes
+//		for(int i = 0; i < tamPob; i++) selSuperv[i] = -1;
+//		double prob; // Probabilidad de supervivencia
+//		
+//		for(int i = 0; i < tamPob; i++)
+//		{
+//			Random rnd = new Random();
+//			prob = rnd.nextDouble();
+//			for(int j = 0; j < tamPob; j++){
+//				if(j == 0)
+//				{
+//					if(prob >= 0.0 && prob <= poblacion[j].puntAcum)
+//					{
+//						selSuperv[i] = j;
+//						j = tamPob;
+//					}
+//				}
+//				else
+//				{
+//					if(prob >= poblacion[j-1].puntAcum && prob <= poblacion[j].puntAcum)
+//					{
+//						selSuperv[i] = j;
+//						j = tamPob;
+//					}
+//				}
+//			}
+//		}
+//		Cromosoma nuevaPob[] = new CromosomaP1F1[tamPob];
+//		for(int i = 0; i < tamPob; i++){
+//			if(selSuperv[i] != -1)
+//				nuevaPob[i] = poblacion[selSuperv[i]];
+//		}
+//		poblacion = nuevaPob;
 	}
 	
 	private void seleccionTorneo(){

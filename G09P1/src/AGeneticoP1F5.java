@@ -1,8 +1,10 @@
 
 public class AGeneticoP1F5 extends AGenetico {
 
-	public AGeneticoP1F5(int poblacion, int generaciones, double porcCruces, double porcMutacion, double precision) {
-		super(poblacion, generaciones, porcCruces, porcMutacion, precision, false);
+
+	public AGeneticoP1F5(int poblacion, int generaciones, double porcCruces, double porcMutacion, double precision,
+			boolean b, boolean elitismo, int tipoSel2) {
+		super(poblacion, generaciones, porcCruces, porcMutacion, precision, b, elitismo, tipoSel2);
 		// TODO Auto-generated constructor stub
 	}
 
