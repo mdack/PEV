@@ -30,43 +30,47 @@ public abstract class AGenetico {
 	public abstract void inicializar();
 	
 	public void evaluar() {
-		double maxFitness = Double.MIN_VALUE;
-		double fitness = 0;
+		double optFitness;
 		double sumaAptitud = 0;
-		double puntAcumulada;
-		
-		for(int i = 0; i < tamPob; i++){
-			fitness = poblacion[i].evalua(); 
-			sumaAptitud += fitness;
-			if(fitness > maxFitness){
-				this.posMejor = i;
-				maxFitness = fitness;
-			}
-		}
-		
-		puntAcumulada = setPuntuaciones(sumaAptitud);	
 		
 		if(!maximizar){//Si es una función de minimización
-			sumaAptitud = 0;
+			optFitness = Double.MAX_VALUE;
+			double fitness = 0;
+			double puntAcumulada;
+			
 			for(int i = 0; i < tamPob; i++){
-				fitness = maxFitness - poblacion[i].evalua();
-				poblacion[i].setFitness(fitness);
+				fitness = poblacion[i].evalua(); 
 				sumaAptitud += fitness;
-			}
-			for(int i = 0; i < tamPob; i++){
-				if(poblacion[i].getFitness() > maxFitness){
-					maxFitness = poblacion[i].getFitness();
-					posMejor = i;
+				if(fitness < optFitness){
+					this.posMejor = i;
+					optFitness = fitness;
 				}
 			}
+			if(optFitness < mejorAbs) this.mejorAbs = optFitness;
+			this.elMejor = this.poblacion[posMejor];
+			puntAcumulada = setPuntuaciones(sumaAptitud);
+		}
+		else
+		{
+			optFitness = Double.MIN_VALUE;
+			double fitness = 0;
+			double puntAcumulada = 0;
+			
+			for(int i = 0; i < tamPob; i++){
+				fitness = poblacion[i].evalua();
+				poblacion[i].setFitness(fitness);
+				sumaAptitud += fitness;
+				if(fitness > optFitness){
+					optFitness = fitness;
+					this.posMejor = i;
+				}
+			}
+			if(optFitness > mejorAbs) this.mejorAbs = optFitness;
+			this.elMejor = this.poblacion[posMejor];
 			puntAcumulada = setPuntuaciones(sumaAptitud);
 		}
 		
-		if(maxFitness > mejorAbs) this.mejorAbs = maxFitness;
-		this.elMejor = this.poblacion[posMejor];
-		
-		VistaPrincipal.addData(mejorAbs, maxFitness, (sumaAptitud/tamPob));
-
+		VistaPrincipal.addData(mejorAbs, optFitness, (sumaAptitud/tamPob));
 	}
 
 	private double setPuntuaciones(double sumaAptitud) {

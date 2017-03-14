@@ -64,19 +64,10 @@ public class VistaPrincipal extends JFrame{
 		mejoresAbs = newMejoresAbs;
 		mejoresGen = newMejoresGen;
 		mediasGen = newMediasGen;
-		
-		if(numGeneraciones != 0)
-		{
-			plot.changePlotData(0, mejoresAbs);
-			plot.changePlotData(1, mejoresGen);
-			plot.changePlotData(2, mediasGen);
-		}
-		else
-		{
-			plot.addLinePlot("Mejor absoluto", mejoresAbs);
-			plot.addLinePlot("Mejor de generacion", mejoresGen);
-			plot.addLinePlot("Media de generacion", mediasGen);
-		}
+		plot.removeAllPlots();
+		plot.addLinePlot("Mejor absoluto", mejoresAbs);
+		plot.addLinePlot("Mejor de generacion", mejoresGen);
+		plot.addLinePlot("Media de generacion", mediasGen);
 		numGeneraciones++;
 		
 
@@ -170,7 +161,13 @@ public class VistaPrincipal extends JFrame{
 		button = new JButton("Comenzar");
 		button.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
+				numGeneraciones = 0;
+				plot.removeAllPlots();
+				mejoresAbs = null;
+				mejoresGen = null;
+				mediasGen = null;
 				new ALVistaPrincipal(tnGen, ttamPob, tproCruce, tproMutacion, tprecision, cseleccion, celitismo, cFuncion, tvalorN).action();
+				plot.setFixedBounds(0, 0, Integer.parseInt(tnGen.getText()));
 			}
 		});
 		

@@ -53,7 +53,8 @@ public class CromosomaP1F1 extends Cromosoma {
 	public double evalua() {
 		double f = fenotipo(0); //Obtenemos fenotipo
 		
-		double fit = -(Math.abs(f * Math.sin(Math.sqrt(Math.abs(f)))) * -1);
+		double fit = ((Math.abs(f * Math.sin(Math.sqrt(Math.abs(f)))) * -1));
+		this.fitness = fit;
 		
 		return fit;
 	}
