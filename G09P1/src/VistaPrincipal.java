@@ -18,7 +18,7 @@ public class VistaPrincipal extends JFrame{
 	private JButton button;
 	private JTextArea area;
 	private JScrollPane scroll;
-	private JProgressBar progressBar;
+	private static JProgressBar progressBar;
 	private static Plot2DPanel plot;
 	private JPanel window, panelS, panelE, panelW;
 	
@@ -46,7 +46,8 @@ public class VistaPrincipal extends JFrame{
 		double[][] newMejoresGen = new double[numGeneraciones+1][2];
 		double[][] newMediasGen = new double[numGeneraciones+1][2];
 		for(int i = 0; i < numGeneraciones; i++)
-		{
+		{	
+			progressBar.setValue(i+1);
 			newMejoresAbs[i][0] = mejoresAbs[i][0];
 			newMejoresAbs[i][1] = mejoresAbs[i][1];
 			newMejoresGen[i][0] = mejoresGen[i][0];
@@ -69,23 +70,6 @@ public class VistaPrincipal extends JFrame{
 		plot.addLinePlot("Mejor de generacion", mejoresGen);
 		plot.addLinePlot("Media de generacion", mediasGen);
 		numGeneraciones++;
-		
-
-		
-//		double[][] newMejoresAbs = new double[1][2];
-//		double[][] newMejoresGen = new double[1][2];
-//		double[][] newMediaGen = new double[1][2];
-//		numGeneraciones++;
-//		newMejoresAbs[0][0] = numGeneraciones;
-//		newMejoresAbs[0][1] = mejorAbs;
-//		newMejoresGen[0][0] = numGeneraciones;
-//		newMejoresGen[0][1] = mejorGen;
-//		newMediaGen[0][0] = numGeneraciones;
-//		newMediaGen[0][1] = mediaGen;
-//		
-//		plot.addLinePlot("Mejor absoluto", mejoresAbs);
-//		plot.addLinePlot("Mejor de generacion", mejoresGen);
-//		plot.addLinePlot("Media de generacion", mediasGen);
 	}
 
 	private void initComponents() {
@@ -173,10 +157,7 @@ public class VistaPrincipal extends JFrame{
 		
 		//barra de progreso
 		progressBar = new JProgressBar();
-//		double[][] a = new double[2][2];
-//		a[0][0] = 2.0;
-//		a[0][1] = 3.0;
-//		a[1][0] = 4.0;
+		progressBar.setForeground(Color.BLUE);
 	}
 
 	private void addEast() {
@@ -237,9 +218,8 @@ public class VistaPrincipal extends JFrame{
 	}
 
 	private void addTop() {
-		 progressBar.setValue(25);
 		 progressBar.setStringPainted(true);
-		 Border border = BorderFactory.createTitledBorder("Reading...");
+		 Border border = BorderFactory.createTitledBorder("Cargando...");
 		 progressBar.setBorder(border);
 		 
 		 window.add(progressBar, BorderLayout.NORTH);
