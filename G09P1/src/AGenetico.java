@@ -15,6 +15,7 @@ public abstract class AGenetico {
 	protected boolean maximizar;
 	protected boolean esElitista;//tipo de seleccion por torneo
 	protected int tipoSel; //tipo de seleccion
+	protected static final double P = 0.75;
 	
 	public AGenetico(int poblacion, int generaciones, double porcCruces, double porcMutacion, double precision, boolean b, boolean elitismo, int tipoSel2){
 		tamPob = poblacion;
@@ -32,11 +33,10 @@ public abstract class AGenetico {
 	public void evaluar() {
 		double optFitness;
 		double sumaAptitud = 0;
+		double fitness = 0;
 		
 		if(!maximizar){//Si es una función de minimización
 			optFitness = Double.MAX_VALUE;
-			double fitness = 0;
-			double puntAcumulada;
 			
 			for(int i = 0; i < tamPob; i++){
 				fitness = poblacion[i].evalua(); 
@@ -48,13 +48,11 @@ public abstract class AGenetico {
 			}
 			if(optFitness < mejorAbs) this.mejorAbs = optFitness;
 			this.elMejor = this.poblacion[posMejor];
-			puntAcumulada = setPuntuaciones(sumaAptitud);
+			setPuntuaciones(sumaAptitud);
 		}
 		else
 		{
 			optFitness = Double.MIN_VALUE;
-			double fitness = 0;
-			double puntAcumulada = 0;
 			
 			for(int i = 0; i < tamPob; i++){
 				fitness = poblacion[i].evalua();
@@ -67,20 +65,19 @@ public abstract class AGenetico {
 			}
 			if(optFitness > mejorAbs) this.mejorAbs = optFitness;
 			this.elMejor = this.poblacion[posMejor];
-			puntAcumulada = setPuntuaciones(sumaAptitud);
+			setPuntuaciones(sumaAptitud);
 		}
 		
 		VistaPrincipal.addData(mejorAbs, optFitness, (sumaAptitud/tamPob));
 	}
 
-	private double setPuntuaciones(double sumaAptitud) {
+	private void setPuntuaciones(double sumaAptitud) {
 		double puntAcumulada = 0;
 		for(int i = 0; i < tamPob; i++){
 			this.poblacion[i].setPunt((this.poblacion[i].getFitness() / sumaAptitud));
 			this.poblacion[i].setPuntAcum(poblacion[i].getPunt() + puntAcumulada);
 			puntAcumulada += poblacion[i].getPunt();
-		}
-		return puntAcumulada;		
+		}		
 	}
 	
 	public abstract void seleccion(int tipo);
@@ -117,4 +114,10 @@ public abstract class AGenetico {
 			}
 		}
 	}
+	
+	public int getPosMejor(){
+		return this.posMejor;
+	}
+	
+	public abstract String toString();
 }

@@ -25,7 +25,7 @@ public class ALVistaPrincipal{
 				if(probMutacion < 100 && probMutacion > 0){
 					probCruce = probCruce/100;
 					probMutacion = probMutacion/100;
-					if(celitismo.getSelectedIndex() == 1){
+					if(celitismo.getSelectedIndex() == 0){
 						elitismo = false;
 					}
 					tipoSel = cseleccion.getSelectedIndex();
@@ -54,21 +54,14 @@ public class ALVistaPrincipal{
 	}
 
 	public void action() {
-		int i = 0;
-		AGenetico algoritmo = null;
 		switch(funcion){
 		case 0:
-			algoritmo = new AGeneticoP1F1(tamPoblacion, nGeneracion, probCruce, probMutacion, precision, elitismo, tipoSel);
+			new AGeneticoP1F1(tamPoblacion, nGeneracion, probCruce, probMutacion, precision, elitismo, tipoSel);
 			break;
 		case 1:
 			break;
 		case 2:
-			algoritmo = new AGeneticoP1F3(tamPoblacion, nGeneracion, probCruce, probMutacion, precision,elitismo, tipoSel);
-			algoritmo.inicializar();
-			algoritmo.evaluar();
-			while(i < nGeneracion){
-				algoritmo.seleccion(0);
-			}
+			new AGeneticoP1F3(tamPoblacion, nGeneracion, probCruce, probMutacion, precision,elitismo, tipoSel);
 			break;
 		case 3:
 			break;

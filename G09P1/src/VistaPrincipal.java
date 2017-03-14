@@ -16,7 +16,7 @@ public class VistaPrincipal extends JFrame{
 	private JTextField tnGen, ttamPob, tproCruce, tproMutacion, tprecision, tvalorN;
 	private JComboBox<String> cFuncion, cseleccion, celitismo;
 	private JButton button;
-	private JTextArea area;
+	private static JTextArea area;
 	private JScrollPane scroll;
 	private static JProgressBar progressBar;
 	private static Plot2DPanel plot;
@@ -40,14 +40,21 @@ public class VistaPrincipal extends JFrame{
 		this.add(window);
 	}
 	
+	public static void addText(String string){
+		area.setText(string);
+	}
+	
 	public static void addData(double mejorAbs, double mejorGen, double mediaGen)
 	{
 		double[][] newMejoresAbs = new double[numGeneraciones+1][2];
 		double[][] newMejoresGen = new double[numGeneraciones+1][2];
 		double[][] newMediasGen = new double[numGeneraciones+1][2];
+		int p = 0, r;
 		for(int i = 0; i < numGeneraciones; i++)
 		{	
-			progressBar.setValue(i+1);
+			p += 100/numGeneraciones;
+			r = 100 % numGeneraciones;
+			progressBar.setValue(p+r);
 			newMejoresAbs[i][0] = mejoresAbs[i][0];
 			newMejoresAbs[i][1] = mejoresAbs[i][1];
 			newMejoresGen[i][0] = mejoresGen[i][0];
@@ -124,12 +131,13 @@ public class VistaPrincipal extends JFrame{
 	
 		cseleccion = new JComboBox<String>();
 		cseleccion.addItem("Ruleta");
-		cseleccion.addItem("Torneo");
 		cseleccion.addItem("Estocástico");
-
+		cseleccion.addItem("T-Determinitico");
+		cseleccion.addItem("T-Probabilistico");
+		
 		celitismo = new JComboBox<String>();
-		celitismo.addItem("Si");
 		celitismo.addItem("No");
+		celitismo.addItem("Si");
 		
 		//Grafica
 		plot = new Plot2DPanel();
@@ -138,8 +146,8 @@ public class VistaPrincipal extends JFrame{
 		area = new JTextArea();
 		area.setColumns(20);
 		area.setRows(31);
-		scroll = new JScrollPane();
-		scroll.setViewportView(area);
+		scroll = new JScrollPane(area);
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		
 		//boton
 		button = new JButton("Comenzar");
@@ -164,7 +172,7 @@ public class VistaPrincipal extends JFrame{
 		panelE.setLayout(new FlowLayout());
 		panelE.setBorder(BorderFactory.createTitledBorder("Descripción"));
 		
-		panelE.add(area);
+		panelE.add(scroll);
 		
 		window.add(panelE, BorderLayout.EAST);		
 	}
@@ -219,7 +227,7 @@ public class VistaPrincipal extends JFrame{
 
 	private void addTop() {
 		 progressBar.setStringPainted(true);
-		 Border border = BorderFactory.createTitledBorder("Cargando...");
+		 Border border = BorderFactory.createTitledBorder("Progreso");
 		 progressBar.setBorder(border);
 		 
 		 window.add(progressBar, BorderLayout.NORTH);

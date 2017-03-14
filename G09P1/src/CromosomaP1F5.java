@@ -65,4 +65,10 @@ public class CromosomaP1F5 extends Cromosoma {
 		return suma;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

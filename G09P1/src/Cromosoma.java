@@ -56,4 +56,5 @@ public abstract class Cromosoma {
 	
 	public abstract double fenotipo(int pos);
 	public abstract double evalua();
+	public abstract String toString();
 }

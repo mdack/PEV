@@ -4,7 +4,15 @@ public class AGeneticoP1F3 extends AGenetico {
 
 	public AGeneticoP1F3(int poblacion, int generaciones, double porcCruces, double porcMutacion, double precision, boolean elitismo, int tipoSel) {
 		super(poblacion, generaciones, porcCruces, porcMutacion, precision, true, elitismo, tipoSel);
-		this.mejorAbs = Double.MIN_VALUE;
+		inicializar();
+		evaluar();
+		for(int i = 0; i < generaciones; i++)
+		{
+			seleccion(tipoSel);
+			reproduccion();
+			mutacion();
+			evaluar();
+		}
 	}
 
 	public void inicializar() {
@@ -17,64 +25,122 @@ public class AGeneticoP1F3 extends AGenetico {
 	}
 
 	public void seleccion(int tipo) {
-		switch(tipo){
-		case 0:
+		if(tipo == 0){
 			seleccionRuleta();
-			break;
-		case 1:
-			seleccionTorneo();
-			break;
+		}else if(tipo == 1){
+			seleccionEstocastico();
+		}else{
+			seleccionTorneo(tipo);
 		}
 	}
 	
-	private void seleccionRuleta(){
-		int selSuperv[] = new int[tamPob]; // Supervivientes
-		double prob; // Probabilidad de supervivencia
-		int posSuperv = 0; // Posicion del superviviente
+	private void seleccionEstocastico() {
+		int[] sel_super = new int[tamPob];
+		double suma = getRandom();
+		int pos_super = 0;
 		
 		for(int i = 0; i < tamPob; i++){
-			Random rnd = new Random();
-			prob = rnd.nextDouble();
-			while((prob > poblacion[posSuperv].getPuntAcum()) && (posSuperv < tamPob))
-			{
-				posSuperv++;
-				selSuperv[i] = posSuperv;
+			while((suma > poblacion[pos_super].getPuntAcum()) && (pos_super < tamPob)){
+				pos_super++;
+				sel_super[i] = pos_super;
+			}
+			suma += (1/tamPob);
+		}
+		
+		//Se genera la población intermedia
+		Cromosoma[] nuevaPob = new CromosomaP1F3[tamPob];
+		for(int i = 0; i < tamPob; i++){
+			nuevaPob[i] = poblacion[sel_super[i]];
+		}
+		
+		poblacion = nuevaPob;
+	}
+
+	private double getRandom() {
+		double n = Math.random();
+		double marca = 1.0 / tamPob;
+		
+		while(n > marca){
+			n = Math.random();
+		}
+		
+		return n;
+	}
+
+	private void seleccionRuleta(){
+		int[] sel_super = new int[tamPob];
+		double prob;
+		int pos_super;
+		
+		for(int i = 0; i < tamPob; i++){
+			prob = Math.random();
+			pos_super = 0;
+			
+			while((prob > poblacion[pos_super].getPuntAcum()) && (pos_super < tamPob)){
+				pos_super++;
+				sel_super[i] = pos_super;
 			}
 		}
-		Cromosoma nuevaPob[] = new CromosomaP1F3[tamPob];
+		//Se genera la población intermedia
+		Cromosoma[] nuevaPob = new CromosomaP1F3[tamPob];
 		for(int i = 0; i < tamPob; i++){
-			nuevaPob[i] = poblacion[selSuperv[i]];
+			nuevaPob[i] = poblacion[sel_super[i]];
 		}
+		
+		poblacion = nuevaPob;
 	}
-	
-	private void seleccionTorneo(){
+
+	private void seleccionTorneo(int tipo){
 		Cromosoma subpoblacion[] = new CromosomaP1F3[2]; //Conjunto a valorar
 		Cromosoma poblacionAux[] = new CromosomaP1F3[tamPob]; //Nueva generación
 		Random rnd = new Random();
 		int posElegida;
+		double prob;
 		
 		for(int j = 0; j < tamPob; j++){
 			
 			for(int i = 0; i < 2; i++){ //Seleccionamos 2 individuos al azar
-				posElegida = (rnd.nextInt() * tamPob);
+				posElegida = (int) (rnd.nextDouble() * tamPob);
 				subpoblacion[i] = poblacion[posElegida];
 			}
 			
-			if(subpoblacion[0].getFitness() > subpoblacion[1].getFitness()){
-				poblacionAux[j] = subpoblacion[0];
-			}
-			else{
-				poblacionAux[j] = subpoblacion[1];
+			if(tipo == 2){
+				poblacionAux[j] = getMejorSubpoblacion(subpoblacion);
+			}else{
+				prob = rnd.nextDouble();
+				if(prob > P){
+					poblacionAux[j] = getMejorSubpoblacion(subpoblacion);
+				}else{
+					poblacionAux[j] = getMenorSubpoblacion(subpoblacion);
+				}
 			}
 		}
 		
 		poblacion = poblacionAux;
 	}
+	
+	private Cromosoma getMenorSubpoblacion(Cromosoma[] subpoblacion) {
+		if(subpoblacion[0].fitness < subpoblacion[1].fitness){
+			return subpoblacion[0];
+		}
+		else{
+			return subpoblacion[1];
+		}
+	}
 
-	@Override
-	public void reproduccion() {
-		int selCruce[] = new int[tamPob];//Seleccionados para reproducir
-		int numSelCruce = 0; //contador de seleccionados
+	private Cromosoma getMejorSubpoblacion(Cromosoma[] subpoblacion) {
+		if(subpoblacion[0].fitness > subpoblacion[1].fitness){
+			return subpoblacion[0];
+		}
+		else{
+			return subpoblacion[1];
+		}
+	}
+
+	public void reproduccion(){
+		int selCruce[] = new int[tamPob];
+		
+		int numSelCruce = 0;
 		int puntoCruce;
 		double prob;
 		Cromosoma hijo1 = new CromosomaP1F3(tolerancia);
@@ -88,7 +154,6 @@ public class AGeneticoP1F3 extends AGenetico {
 				numSelCruce++;
 			}
 		}
-		//El número de seleccionados se hace par
 		if((numSelCruce % 2) == 1) numSelCruce--;
 		
 		puntoCruce = rnd.nextInt(poblacion[0].longitud);
@@ -98,13 +163,59 @@ public class AGeneticoP1F3 extends AGenetico {
 			poblacion[selCruce[i]] = hijo1;
 			poblacion[selCruce[i+1]] = hijo2;
 		}
+	}
+	
+	private void cruce(Cromosoma padre1, Cromosoma padre2, Cromosoma hijo1, Cromosoma hijo2, int puntoCruce)
+	{
+		int i = 0; // Contador de gen.
+		int j = 0; // Contador de bit dentro de gen.
+		int k = 0; // Contador de posicion general en cromosoma.
+		// Primera fase
+		while(i < CromosomaP1F3.N_GENES && k < puntoCruce)
+		{
+			boolean[] aleloHijo1 = hijo1.genes[i].getAlelo();
+			boolean[] aleloHijo2 = hijo2.genes[i].getAlelo();
+			boolean[] aleloPadre1 = padre1.genes[i].getAlelo();
+			boolean[] aleloPadre2 = padre2.genes[i].getAlelo();
+			if(k < puntoCruce)
+			{
+				for(j = 0; j < hijo1.genes[i].getLongAlelo() && k < puntoCruce; j++)
+				{
+					aleloHijo1[j] = aleloPadre1[j];
+					aleloHijo2[j] = aleloPadre2[j];
+					k++;
+				}
+			}
+			hijo1.genes[i].setAlelo(aleloHijo1);
+			hijo2.genes[i].setAlelo(aleloHijo2);
+		}
+		// Segunda fase
+		while(i < CromosomaP1F3.N_GENES)
+		{
+			boolean[] aleloHijo1 = hijo1.genes[i].getAlelo();
+			boolean[] aleloHijo2 = hijo2.genes[i].getAlelo();
+			boolean[] aleloPadre1 = padre1.genes[i].getAlelo();
+			boolean[] aleloPadre2 = padre2.genes[i].getAlelo();
+			while(j < hijo1.genes[i].getLongAlelo())
+			{
+				aleloHijo1[j] = aleloPadre2[j];
+				aleloHijo2[j] = aleloPadre1[j];
+				j++;
+			}
+			hijo1.genes[i].setAlelo(aleloHijo1);
+			hijo2.genes[i].setAlelo(aleloHijo2);
+			i++;
+			j = 0;
+		}
 		
+		// Evaluacion
+		hijo1.evalua();
+		hijo2.evalua();
 	}
 
-	private void cruce(Cromosoma cromosoma, Cromosoma cromosoma2, Cromosoma hijo1, Cromosoma hijo2, int puntoCruce) {
+	@Override
+	public String toString() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
-
-
 }

@@ -5,15 +5,21 @@ public class AGeneticoP1F1 extends AGenetico {
 	public AGeneticoP1F1(int poblacion, int generaciones, double porcCruces, double porcMutacion, double tolerancia, boolean elitismo, int tipoSel)
 	{
 		super(poblacion, generaciones, porcCruces, porcMutacion, tolerancia, false, elitismo, tipoSel);
+		String cadena = "";
+		cadena += "Función 1\n";
+		
 		inicializar();
 		evaluar();
 		for(int i = 0; i < generaciones; i++)
 		{
-			seleccion(0);
+			seleccion(tipoSel);
 			reproduccion();
 			mutacion();
 			evaluar();
+			cadena += ("Generación " + (i+1) + "\n");
+			cadena += toString();
 		}
+		VistaPrincipal.addText(cadena);
 	}
 
 	public void inicializar() {
@@ -24,21 +30,53 @@ public class AGeneticoP1F1 extends AGenetico {
 
 	@Override
 	public void seleccion(int tipo) {
-		switch(tipo){
-		case 0:
+		if(tipo == 0){
 			seleccionRuleta();
-			break;
-		case 1:
-			seleccionTorneo();
-			break;
+		}else if(tipo == 1){
+			seleccionEstocastico();
+		}else{
+			seleccionTorneo(tipo);
 		}
 	}
 	
+	private void seleccionEstocastico() {
+		int[] sel_super = new int[tamPob];
+		double suma = getRandom();
+		int pos_super = 0;
+		
+		for(int i = 0; i < tamPob; i++){
+			while((suma > poblacion[pos_super].getPuntAcum()) && (pos_super < tamPob)){
+				pos_super++;
+				sel_super[i] = pos_super;
+			}
+			suma += (1/tamPob);
+		}
+		
+		//Se genera la población intermedia
+		Cromosoma[] nuevaPob = new CromosomaP1F1[tamPob];
+		for(int i = 0; i < tamPob; i++){
+			nuevaPob[i] = poblacion[sel_super[i]];
+		}
+		
+		poblacion = nuevaPob;
+	}
+
+	private double getRandom() {
+		double n = Math.random();
+		double marca = 1.0 / tamPob;
+		
+		while(n > marca){
+			n = Math.random();
+		}
+		
+		return n;
+	}
+
 	private void seleccionRuleta(){
 		int[] sel_super = new int[tamPob];
 		double prob;
 		int pos_super;
-			
+		
 		for(int i = 0; i < tamPob; i++){
 			prob = Math.random();
 			pos_super = 0;
@@ -56,31 +94,54 @@ public class AGeneticoP1F1 extends AGenetico {
 		
 		poblacion = nuevaPob;
 	}
-	
-	private void seleccionTorneo(){
+
+	private void seleccionTorneo(int tipo){
 		Cromosoma subpoblacion[] = new CromosomaP1F1[2]; //Conjunto a valorar
 		Cromosoma poblacionAux[] = new CromosomaP1F1[tamPob]; //Nueva generación
 		Random rnd = new Random();
 		int posElegida;
+		double prob;
 		
 		for(int j = 0; j < tamPob; j++){
 			
 			for(int i = 0; i < 2; i++){ //Seleccionamos 2 individuos al azar
-				posElegida = (rnd.nextInt() * tamPob);
+				posElegida = (int) (rnd.nextDouble() * tamPob);
 				subpoblacion[i] = poblacion[posElegida];
 			}
 			
-			if(subpoblacion[0].fitness > subpoblacion[1].fitness){
-				poblacionAux[j] = subpoblacion[0];
-			}
-			else{
-				poblacionAux[j] = subpoblacion[1];
+			if(tipo == 2){
+				poblacionAux[j] = getMejorSubpoblacion(subpoblacion);
+			}else{
+				prob = rnd.nextDouble();
+				if(prob > P){
+					poblacionAux[j] = getMejorSubpoblacion(subpoblacion);
+				}else{
+					poblacionAux[j] = getMenorSubpoblacion(subpoblacion);
+				}
 			}
 		}
 		
 		poblacion = poblacionAux;
 	}
 	
+	private Cromosoma getMenorSubpoblacion(Cromosoma[] subpoblacion) {
+		if(subpoblacion[0].fitness < subpoblacion[1].fitness){
+			return subpoblacion[0];
+		}
+		else{
+			return subpoblacion[1];
+		}
+	}
+
+	private Cromosoma getMejorSubpoblacion(Cromosoma[] subpoblacion) {
+		if(subpoblacion[0].fitness > subpoblacion[1].fitness){
+			return subpoblacion[0];
+		}
+		else{
+			return subpoblacion[1];
+		}
+	}
+
 	public void reproduccion(){
 		int selCruce[] = new int[tamPob];
 		
@@ -155,6 +216,26 @@ public class AGeneticoP1F1 extends AGenetico {
 		// Evaluacion
 		hijo1.evalua();
 		hijo2.evalua();
+	}
+
+	@Override
+	public String toString() {
+		String cadena = " ";
+		
+		cadena += "Mejor absoluto: ";
+		cadena += this.mejorAbs + "\n";
+		cadena += "\n";
+		
+		cadena += "Mejor de generación: \n";
+		cadena += this.elMejor.toString();
+		cadena += "\n";
+
+		for(int i = 0; i < tamPob; i++){
+			cadena += ("Individuo " + (i+1) + "\n");
+			cadena += poblacion[i].toString();
+			cadena += ("\n");
+		}
+		return cadena;
 	}
 
 }
