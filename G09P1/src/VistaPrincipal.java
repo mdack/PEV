@@ -20,7 +20,7 @@ public class VistaPrincipal extends JFrame{
 	private JScrollPane scroll;
 	private JProgressBar progressBar;
 	private static Plot2DPanel plot;
-	private JPanel window, panelN, panelS, panelE, panelW;
+	private JPanel window, panelS, panelE, panelW;
 	
 	private static double[][] mejoresAbs;
 	private static double[][] mejoresGen;
@@ -99,7 +99,7 @@ public class VistaPrincipal extends JFrame{
 	private void initComponents() {
 		this.setTitle("Practica 1 - PEV");
 		this.setResizable(false);
-		this.setMinimumSize(new Dimension(1500,650));	
+		this.setMinimumSize(new Dimension(1200,650));	
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);	
 		this.setLocationRelativeTo(null);
 		
@@ -108,7 +108,6 @@ public class VistaPrincipal extends JFrame{
 		window = new JPanel();
 		window.setLayout(new BorderLayout());
 		panelE = new JPanel();
-		panelN = new JPanel();
 		panelW = new JPanel();
 		panelS = new JPanel();
 		
@@ -142,7 +141,9 @@ public class VistaPrincipal extends JFrame{
 		cFuncion.addItem("Función 3");
 		cFuncion.addItem("Función 4");
 		cFuncion.addItem("Función 5");
+
 		
+	
 		cseleccion = new JComboBox<String>();
 		cseleccion.addItem("Ruleta");
 		cseleccion.addItem("Torneo");
@@ -168,65 +169,10 @@ public class VistaPrincipal extends JFrame{
 		button = new JButton("Comenzar");
 		button.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
-				int funcion = -1;
-				int nGeneracion, tamPoblacion;
-				double precision = 0;
-				double probCruce, probMutacion;
-				boolean esRuleta;
-				boolean elitismo;
-				try{
-					nGeneracion = Integer.parseInt(tnGen.getText());
-					tamPoblacion = Integer.parseInt(ttamPob.getText());
-					probCruce = Double.parseDouble(tproCruce.getText());
-					precision = Double.parseDouble(tprecision.getText());
-					if(probCruce < 100 && probCruce > 0){
-						probMutacion = Double.parseDouble(tproMutacion.getText());
-						if(probMutacion < 100 && probMutacion > 0){
-							probCruce = probCruce/100;
-							probMutacion = probMutacion/100;
-							if(cseleccion.getSelectedIndex() == 1){
-								esRuleta = false;
-							}
-							if(celitismo.getSelectedIndex() == 1){
-								elitismo = false;
-							}
-							funcion = cseleccion.getSelectedIndex();
-							AGenetico algoritmo = null;
-							switch(funcion){
-							case 0:
-								algoritmo = new AGeneticoP1F1(tamPoblacion, nGeneracion, probCruce, probMutacion, precision);
-								break;
-							case 1:
-								break;
-							case 2:
-								break;
-							case 3:
-								break;
-							case 4:
-								break;
-							}
-						}else{
-							JOptionPane.showMessageDialog(new JFrame(),
-								    "El porcentaje debe de ser entre 0 y 100%",
-								    "Probabilidad de Cruce incorrecta",
-								    JOptionPane.ERROR_MESSAGE);
-						}
-					}
-					else{
-						JOptionPane.showMessageDialog(new JFrame(),
-							    "El porcentaje debe de ser entre 0 y 100%",
-							    "Probabilidad de Cruce incorrecta",
-							    JOptionPane.ERROR_MESSAGE);
-					}
-					
-				}catch(NumberFormatException e){
-					JOptionPane.showMessageDialog(new JFrame(),
-						    "Campos incorrectos",
-						    "¡Deben ser números!",
-						    JOptionPane.ERROR_MESSAGE);
-				}
+				new ALVistaPrincipal(tnGen, ttamPob, tproCruce, tproMutacion, tprecision, cseleccion, celitismo, cFuncion).action();
 			}
 		});
+		
 		//barra de progreso
 		progressBar = new JProgressBar();
 //		double[][] a = new double[2][2];

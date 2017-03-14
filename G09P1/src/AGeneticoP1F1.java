@@ -4,7 +4,7 @@ public class AGeneticoP1F1 extends AGenetico {
 	
 	public AGeneticoP1F1(int poblacion, int generaciones, double porcCruces, double porcMutacion, double tolerancia)
 	{
-		super(poblacion, generaciones, porcCruces, porcMutacion, tolerancia);
+		super(poblacion, generaciones, porcCruces, porcMutacion, tolerancia, false);
 		inicializar();
 		evaluar();
 		for(int i = 0; i < generaciones; i++)
@@ -22,30 +22,30 @@ public class AGeneticoP1F1 extends AGenetico {
 			this.poblacion[i] = new CromosomaP1F1(tolerancia);		
 	}
 
-	@Override
-	public void evaluar() {
-		double puntAcumulada = 0;
-		double maxFitness = -250.0;
-		int posMax = -1;
-		for(int i = 0; i < tamPob; i++){
-			double fitness = this.poblacion[i].getFitness();
-			if(fitness > maxFitness){
-				posMax = i;
-				maxFitness = fitness;
-			}
-			puntAcumulada = puntAcumulada + this.poblacion[i].getFitness();
-		}
-		if(maxFitness > mejorAbs) this.mejorAbs = maxFitness;
-		double puntRelAcumulada = 0.0;
-		for(int i = 0; i < tamPob; i++){
-			puntRelAcumulada += this.poblacion[i].getFitness() / puntAcumulada;
-			this.poblacion[i].setPunt((this.poblacion[i].getFitness() / puntAcumulada));
-			this.poblacion[i].setPuntAcum(puntRelAcumulada);
-		}
-		this.elMejor = this.poblacion[posMax];
-		this.posMejor = posMax;
-		VistaPrincipal.addData(mejorAbs, maxFitness, (puntAcumulada/tamPob));
-	}
+//	@Override
+//	public void evaluar() {
+//		double puntAcumulada = 0;
+//		double maxFitness = -250.0;
+//		int posMax = -1;
+//		for(int i = 0; i < tamPob; i++){
+//			double fitness = this.poblacion[i].getFitness();
+//			if(fitness > maxFitness){
+//				posMax = i;
+//				maxFitness = fitness;
+//			}
+//			puntAcumulada = puntAcumulada + this.poblacion[i].getFitness();
+//		}
+//		if(maxFitness > mejorAbs) this.mejorAbs = maxFitness;
+//		double puntRelAcumulada = 0.0;
+//		for(int i = 0; i < tamPob; i++){
+//			puntRelAcumulada += this.poblacion[i].getFitness() / puntAcumulada;
+//			this.poblacion[i].setPunt((this.poblacion[i].getFitness() / puntAcumulada));
+//			this.poblacion[i].setPuntAcum(puntRelAcumulada);
+//		}
+//		this.elMejor = this.poblacion[posMax];
+//		this.posMejor = posMax;
+//		VistaPrincipal.addData(mejorAbs, maxFitness, (puntAcumulada/tamPob));
+//	}
 
 	@Override
 	public void seleccion(int tipo) {
@@ -63,25 +63,25 @@ public class AGeneticoP1F1 extends AGenetico {
 		int selSuperv[] = new int[tamPob]; // Supervivientes
 		double prob; // Probabilidad de supervivencia
 		int posSuperv = 0; // Posicion del superviviente
+		
 		for(int i = 0; i < tamPob; i++){
 			Random rnd = new Random();
 			prob = rnd.nextDouble();
 			while((prob > poblacion[posSuperv].puntAcum) && (posSuperv < tamPob))
 			{
-				selSuperv[i] = posSuperv;
 				posSuperv++;
+				selSuperv[i] = posSuperv;
 			}
 		}
 		Cromosoma nuevaPob[] = new CromosomaP1F1[tamPob];
 		for(int i = 0; i < tamPob; i++){
-			if(selSuperv[i] != -1)
-				nuevaPob[i] = poblacion[selSuperv[i]];
+			nuevaPob[i] = poblacion[selSuperv[i]];
 		}
 	}
 	
 	private void seleccionTorneo(){
-		Cromosoma subpoblacion[] = new Cromosoma[2]; //Conjunto a valorar
-		Cromosoma poblacionAux[] = new Cromosoma[tamPob]; //Nueva generación
+		Cromosoma subpoblacion[] = new CromosomaP1F1[2]; //Conjunto a valorar
+		Cromosoma poblacionAux[] = new CromosomaP1F1[tamPob]; //Nueva generación
 		Random rnd = new Random();
 		int posElegida;
 		
@@ -122,7 +122,7 @@ public class AGeneticoP1F1 extends AGenetico {
 		}
 		if((numSelCruce % 2) == 1) numSelCruce--;
 		
-		puntoCruce = rnd.nextInt(9);
+		puntoCruce = rnd.nextInt(poblacion[0].genes[0].getLongAlelo());
 		for(int i = 0; i < numSelCruce; i += 2)
 		{
 			cruce(poblacion[selCruce[i]], poblacion[selCruce[i+1]], hijo1, hijo2, puntoCruce);
@@ -179,35 +179,4 @@ public class AGeneticoP1F1 extends AGenetico {
 		hijo2.evalua();
 	}
 
-	@Override
-	public void mutacion() {
-		boolean mutado;
-		int i, j;
-		double prob;
-		Random rnd = new Random();
-		
-		for(i = 0; i < this.tamPob; i++){			
-			Gen gen = poblacion[i].genes[0];
-			mutado = false;
-			
-			for(j = 0; j < gen.getLongAlelo(); j++)
-			{
-				prob = rnd.nextDouble();
-				// mutan los genes con prob<prob_mut
-				if (prob < probMut){
-					mutado = true;
-					if(gen.getPosAlelo(j)){
-						gen.setPosAlelo(j, false);
-					}
-					else{
-						gen.setPosAlelo(j, true);
-					}
-					
-				}
-			}
-			if (mutado){
-				poblacion[i].fitness = poblacion[i].evalua();
-			}
-		}
-	}
 }

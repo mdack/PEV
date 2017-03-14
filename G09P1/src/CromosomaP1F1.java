@@ -7,7 +7,7 @@ public class CromosomaP1F1 extends Cromosoma {
 	
 	public CromosomaP1F1(double tolerancia){
 		genes = new Gen[N_GENES];
-
+				
 		for(int i = 0; i < N_GENES; i++){	
 			int longGen = longitudGen(tolerancia);
 			this.genes[i] = new Gen(longGen);

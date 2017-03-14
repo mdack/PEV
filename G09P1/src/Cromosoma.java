@@ -10,7 +10,7 @@ public abstract class Cromosoma {
 	public double getFitness() {
 		return fitness;
 	}
-	public void setFitness(float fitness) {
+	public void setFitness(double fitness) {
 		this.fitness = fitness;
 	}
 	public double getPunt() {

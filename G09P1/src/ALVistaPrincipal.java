@@ -1,29 +1,26 @@
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-public class ALVistaPrincipal implements ActionListener{
+public class ALVistaPrincipal{
 	
 	int nGeneracion, tamPoblacion, funcion;
-	float probCruce, probMutacion, precision;
+	double probCruce;
+	double precision;
+	double probMutacion;
 	boolean esRuleta = true, elitismo = true;
-	VistaPrincipal window;
 	
 	
 	public ALVistaPrincipal(JTextField tnGen, JTextField ttamPob, JTextField tproCruce, JTextField tproMutacion,
-			JTextField tprecision, JComboBox<String> cseleccion,JComboBox<String> celitismo,   JComboBox<String> cfuncion,
-			VistaPrincipal ventana) {
+			JTextField tprecision, JComboBox<String> cseleccion,JComboBox<String> celitismo,   JComboBox<String> cfuncion) {
 		try{
 			nGeneracion = Integer.parseInt(tnGen.getText());
 			tamPoblacion = Integer.parseInt(ttamPob.getText());
-			probCruce = Integer.parseInt(tproCruce.getText());
-			
+			probCruce = Double.parseDouble(tproCruce.getText());
+			precision = Double.parseDouble(tprecision.getText());
 			if(probCruce < 100 && probCruce > 0){
-				probMutacion = Integer.parseInt(tproMutacion.getText());
+				probMutacion = Double.parseDouble(tproMutacion.getText());
 				if(probMutacion < 100 && probMutacion > 0){
 					probCruce = probCruce/100;
 					probMutacion = probMutacion/100;
@@ -34,7 +31,6 @@ public class ALVistaPrincipal implements ActionListener{
 						elitismo = false;
 					}
 					funcion = cfuncion.getSelectedIndex();	
-					window = ventana;
 				}else{
 					JOptionPane.showMessageDialog(new JFrame(),
 						    "El porcentaje debe de ser entre 0 y 100%",
@@ -57,23 +53,28 @@ public class ALVistaPrincipal implements ActionListener{
 		}
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void action() {
+		int i = 0;
 		AGenetico algoritmo = null;
 		switch(funcion){
 		case 0:
-			algoritmo = new AGeneticoP1F1(this.tamPoblacion, this.nGeneracion, this.probCruce, this.probMutacion, this.precision);
+			algoritmo = new AGeneticoP1F1(tamPoblacion, nGeneracion, probCruce, probMutacion, precision);
 			break;
 		case 1:
 			break;
 		case 2:
+			algoritmo = new AGeneticoP1F3(tamPoblacion, nGeneracion, probCruce, probMutacion, precision);
+			algoritmo.inicializar();
+			algoritmo.evaluar();
+			while(i < nGeneracion){
+				algoritmo.seleccion(0);
+			}
 			break;
 		case 3:
 			break;
 		case 4:
 			break;
-		}
 		
 	}
-
+	}
 }
