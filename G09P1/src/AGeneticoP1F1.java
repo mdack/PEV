@@ -55,39 +55,6 @@ public class AGeneticoP1F1 extends AGenetico {
 		}
 		
 		poblacion = nuevaPob;
-//		int selSuperv[] = new int[tamPob]; // Supervivientes
-//		for(int i = 0; i < tamPob; i++) selSuperv[i] = -1;
-//		double prob; // Probabilidad de supervivencia
-//		
-//		for(int i = 0; i < tamPob; i++)
-//		{
-//			Random rnd = new Random();
-//			prob = rnd.nextDouble();
-//			for(int j = 0; j < tamPob; j++){
-//				if(j == 0)
-//				{
-//					if(prob >= 0.0 && prob <= poblacion[j].puntAcum)
-//					{
-//						selSuperv[i] = j;
-//						j = tamPob;
-//					}
-//				}
-//				else
-//				{
-//					if(prob >= poblacion[j-1].puntAcum && prob <= poblacion[j].puntAcum)
-//					{
-//						selSuperv[i] = j;
-//						j = tamPob;
-//					}
-//				}
-//			}
-//		}
-//		Cromosoma nuevaPob[] = new CromosomaP1F1[tamPob];
-//		for(int i = 0; i < tamPob; i++){
-//			if(selSuperv[i] != -1)
-//				nuevaPob[i] = poblacion[selSuperv[i]];
-//		}
-//		poblacion = nuevaPob;
 	}
 	
 	private void seleccionTorneo(){
@@ -133,7 +100,7 @@ public class AGeneticoP1F1 extends AGenetico {
 		}
 		if((numSelCruce % 2) == 1) numSelCruce--;
 		
-		puntoCruce = rnd.nextInt(hijo1.genes[0].getLongAlelo());
+		puntoCruce = rnd.nextInt(poblacion[0].longitud);
 		for(int i = 0; i < numSelCruce; i += 2)
 		{
 			cruce(poblacion[selCruce[i]], poblacion[selCruce[i+1]], hijo1, hijo2, puntoCruce);

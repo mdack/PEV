@@ -6,6 +6,7 @@ public abstract class Cromosoma {
 	protected double puntAcum;
 	protected Gen[] genes;
 	protected double fenotipo;
+	protected int longitud;
 	
 	public double getFitness() {
 		return fitness;

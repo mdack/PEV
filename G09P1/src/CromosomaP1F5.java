@@ -12,6 +12,7 @@ public class CromosomaP1F5 extends Cromosoma {
 		for(int i = 0; i < N_GENES; i++){	
 			int longGen = longitudGen(tolerancia);
 			this.genes[i] = new Gen(longGen);
+			longitud += longGen;
 		}
 	}
 	

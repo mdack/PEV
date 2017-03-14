@@ -75,7 +75,7 @@ public class AGeneticoP1F3 extends AGenetico {
 	public void reproduccion() {
 		int selCruce[] = new int[tamPob];//Seleccionados para reproducir
 		int numSelCruce = 0; //contador de seleccionados
-		int puntoCruce1, puntoCruce2;
+		int puntoCruce;
 		double prob;
 		Cromosoma hijo1 = new CromosomaP1F3(tolerancia);
 		Cromosoma hijo2 = new CromosomaP1F3(tolerancia);
@@ -91,24 +91,20 @@ public class AGeneticoP1F3 extends AGenetico {
 		//El número de seleccionados se hace par
 		if((numSelCruce % 2) == 1) numSelCruce--;
 		
-		puntoCruce1 = rnd.nextInt(poblacion[0].genes[0].getLongAlelo());
-		puntoCruce2 = rnd.nextInt(poblacion[0].genes[1].getLongAlelo());
+		puntoCruce = rnd.nextInt(poblacion[0].longitud);
 		for(int i = 0; i < numSelCruce; i += 2)
 		{
-			cruce(poblacion[selCruce[i]], poblacion[selCruce[i+1]], hijo1, hijo2, puntoCruce1, puntoCruce2);
+			cruce(poblacion[selCruce[i]], poblacion[selCruce[i+1]], hijo1, hijo2, puntoCruce);
 			poblacion[selCruce[i]] = hijo1;
 			poblacion[selCruce[i+1]] = hijo2;
 		}
 		
 	}
 
-	private void cruce(Cromosoma cromosoma, Cromosoma cromosoma2, Cromosoma hijo1, Cromosoma hijo2, int puntoCruce1,
-			int puntoCruce2) {
-		
-		for(int i = 0; i < puntoCruce1; i++){
-			
-		}
+	private void cruce(Cromosoma cromosoma, Cromosoma cromosoma2, Cromosoma hijo1, Cromosoma hijo2, int puntoCruce) {
+		// TODO Auto-generated method stub
 		
 	}
+
 
 }

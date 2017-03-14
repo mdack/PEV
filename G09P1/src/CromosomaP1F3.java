@@ -8,10 +8,11 @@ public class CromosomaP1F3 extends Cromosoma {
 	
 	public CromosomaP1F3(double tolerancia){
 		genes = new Gen[N_GENES];
-
+		
 		for(int i = 0; i < N_GENES; i++){	
 			int longGen = longitudGen(tolerancia, i);
 			this.genes[i] = new Gen(longGen);
+			longitud += longGen;
 		}
 	}
 	
