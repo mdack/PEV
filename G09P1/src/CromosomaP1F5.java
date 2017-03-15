@@ -48,11 +48,14 @@ public class CromosomaP1F5 extends Cromosoma {
 		double suma1, suma2;
 		double x1 = fenotipo(0);
 		double x2 = fenotipo(1);
-				
+		double fit; 
+		
 		suma1 = sumatorio(x1);
 		suma2 = sumatorio(x2);
+		fit = (suma1 * suma2);
+		fitness = fit;
 		
-		return (suma1 * suma2);
+		return fit;
 	}
 
 	private double sumatorio(double x) {
@@ -67,8 +70,13 @@ public class CromosomaP1F5 extends Cromosoma {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+		String cadena = "";
+		
+		cadena += ("x1 = " + fenotipo(0) + "\n");
+		cadena += ("x2 = " + fenotipo(1) + "\n");
+		cadena += ("f(xi) = " + fitness + "\n");
+		
+		return cadena;
 	}
 
 }

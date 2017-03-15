@@ -110,7 +110,7 @@ public class AGeneticoP1F1 extends AGenetico {
 	}
 	
 	private Cromosoma getMenorSubpoblacion(Cromosoma[] subpoblacion) {
-		if(subpoblacion[0].fitness < subpoblacion[1].fitness){
+		if(subpoblacion[0].getFitness() < subpoblacion[1].getFitness()){
 			return subpoblacion[0];
 		}
 		else{
@@ -119,7 +119,7 @@ public class AGeneticoP1F1 extends AGenetico {
 	}
 
 	private Cromosoma getMejorSubpoblacion(Cromosoma[] subpoblacion) {
-		if(subpoblacion[0].fitness > subpoblacion[1].fitness){
+		if(subpoblacion[0].getFitness() > subpoblacion[1].getFitness()){
 			return subpoblacion[0];
 		}
 		else{

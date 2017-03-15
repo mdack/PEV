@@ -4,15 +4,6 @@ public class AGeneticoP1F3 extends AGenetico {
 
 	public AGeneticoP1F3(int poblacion, int generaciones, double porcCruces, double porcMutacion, double precision, boolean elitismo, int tipoSel) {
 		super(poblacion, generaciones, porcCruces, porcMutacion, precision, true, elitismo, tipoSel);
-		inicializar();
-		evaluar();
-		for(int i = 0; i < generaciones; i++)
-		{
-			seleccion(tipoSel);
-			reproduccion();
-			mutacion();
-			evaluar();
-		}
 	}
 
 	public void inicializar() {
