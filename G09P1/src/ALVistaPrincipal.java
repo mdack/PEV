@@ -60,6 +60,7 @@ public class ALVistaPrincipal{
 			AG = new AGeneticoP1F1(tamPoblacion, nGeneracion, probCruce, probMutacion, precision, elitismo, tipoSel);
 			break;
 		case 1:
+			AG = new AGeneticoP1F2(tamPoblacion, nGeneracion, probCruce, probMutacion, precision, elitismo, tipoSel);
 			break;
 		case 2:
 			AG = new AGeneticoP1F3(tamPoblacion, nGeneracion, probCruce, probMutacion, precision,elitismo, tipoSel);

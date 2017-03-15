@@ -40,7 +40,7 @@ public class CromosomaP1F1 extends Cromosoma {
 	 */
 	public int longitudGen(double precision){
 		double longAux = (Math.log10((1+((X_MAX - X_MIN) / precision))) / Math.log10(2)); //Calcula la longitud exacta
-		int p_ent = (int) longAux; //Nos quedamos con la parte entera
+		int p_ent = (int) longAux; // Nos quedamos con la parte entera
 		double p_dec = longAux - p_ent; //Obtenemos la parte decimal
 		
 		if(p_dec > 0) p_ent++;
