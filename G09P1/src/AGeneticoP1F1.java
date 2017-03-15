@@ -5,21 +5,6 @@ public class AGeneticoP1F1 extends AGenetico {
 	public AGeneticoP1F1(int poblacion, int generaciones, double porcCruces, double porcMutacion, double tolerancia, boolean elitismo, int tipoSel)
 	{
 		super(poblacion, generaciones, porcCruces, porcMutacion, tolerancia, false, elitismo, tipoSel);
-		String cadena = "";
-		cadena += "Función 1\n";
-		
-		inicializar();
-		evaluar();
-		for(int i = 0; i < generaciones; i++)
-		{
-			seleccion(tipoSel);
-			reproduccion();
-			mutacion();
-			evaluar();
-			cadena += ("Generación " + (i+1) + "\n");
-			cadena += toString();
-		}
-		VistaPrincipal.addText(cadena);
 	}
 
 	public void inicializar() {
@@ -49,7 +34,7 @@ public class AGeneticoP1F1 extends AGenetico {
 				pos_super++;
 				sel_super[i] = pos_super;
 			}
-			suma += (1/tamPob);
+			suma += (1.0/tamPob);
 		}
 		
 		//Se genera la población intermedia
@@ -216,26 +201,6 @@ public class AGeneticoP1F1 extends AGenetico {
 		// Evaluacion
 		hijo1.evalua();
 		hijo2.evalua();
-	}
-
-	@Override
-	public String toString() {
-		String cadena = " ";
-		
-		cadena += "Mejor absoluto: ";
-		cadena += this.mejorAbs + "\n";
-		cadena += "\n";
-		
-		cadena += "Mejor de generación: \n";
-		cadena += this.elMejor.toString();
-		cadena += "\n";
-
-		for(int i = 0; i < tamPob; i++){
-			cadena += ("Individuo " + (i+1) + "\n");
-			cadena += poblacion[i].toString();
-			cadena += ("\n");
-		}
-		return cadena;
 	}
 
 }

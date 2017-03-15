@@ -54,20 +54,42 @@ public class ALVistaPrincipal{
 	}
 
 	public void action() {
+		AGenetico AG = null;
 		switch(funcion){
 		case 0:
-			new AGeneticoP1F1(tamPoblacion, nGeneracion, probCruce, probMutacion, precision, elitismo, tipoSel);
+			AG = new AGeneticoP1F1(tamPoblacion, nGeneracion, probCruce, probMutacion, precision, elitismo, tipoSel);
 			break;
 		case 1:
 			break;
 		case 2:
-			new AGeneticoP1F3(tamPoblacion, nGeneracion, probCruce, probMutacion, precision,elitismo, tipoSel);
+			AG = new AGeneticoP1F3(tamPoblacion, nGeneracion, probCruce, probMutacion, precision,elitismo, tipoSel);
 			break;
 		case 3:
 			break;
 		case 4:
 			break;
 		
+		}
+		algoritmoGenetico(AG, funcion+1);
 	}
+
+	private void algoritmoGenetico(AGenetico aG, int f) {
+		String cadena = "";
+		cadena += "***************** Función " + f + " *********************\n";
+		
+		aG.inicializar();
+		aG.evaluar();
+		for(int i = 0; i < aG.getNumMaxGen(); i++)
+		{	
+			cadena += "--------------------------------------------------------------\n";
+			cadena += ("* Generación " + (i+1) + "\n");
+			cadena += "--------------------------------------------------------------\n";
+			cadena += aG.toString();
+			aG.seleccion(tipoSel);
+			aG.reproduccion();
+			aG.mutacion();
+			aG.evaluar();
+		}
+		VistaPrincipal.addText(cadena);
 	}
 }

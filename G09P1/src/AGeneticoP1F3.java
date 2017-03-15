@@ -212,10 +212,4 @@ public class AGeneticoP1F3 extends AGenetico {
 		hijo1.evalua();
 		hijo2.evalua();
 	}
-
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

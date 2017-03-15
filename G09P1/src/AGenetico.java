@@ -119,5 +119,27 @@ public abstract class AGenetico {
 		return this.posMejor;
 	}
 	
-	public abstract String toString();
+	public int getNumMaxGen(){
+		return this.numMaxGen;
+	}
+	
+	public String toString() {
+		String cadena = " ";
+		
+		for(int i = 0; i < tamPob; i++){
+			cadena += ("Individuo " + (i+1) + "\n");
+			cadena += poblacion[i].toString();
+			cadena += ("\n");
+		}
+		
+		cadena += "* Mejor de generación: \n";
+		cadena += this.elMejor.toString();
+		cadena += "\n";
+		
+		cadena += "* Mejor absoluto: ";
+		cadena += this.mejorAbs + "\n";
+		cadena += "\n";
+		
+		return cadena;
+	}
 }

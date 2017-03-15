@@ -75,8 +75,13 @@ public class CromosomaP1F3 extends Cromosoma {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+		String cadena = "";
+		
+		cadena += ("x = " + fenotipo(0) + "\n");
+		cadena += ("y = " + fenotipo(1) + "\n");
+		cadena += ("f(x,y) = " + fitness + "\n");
+		
+		return cadena;
 	}
 
 }

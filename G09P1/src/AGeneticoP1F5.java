@@ -63,10 +63,4 @@ public class AGeneticoP1F5 extends AGenetico {
 		
 	}
 
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

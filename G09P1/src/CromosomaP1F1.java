@@ -64,7 +64,7 @@ public class CromosomaP1F1 extends Cromosoma {
 	@Override
 	public String toString() {
 		String cadena = " ";
-		cadena += ("x = " + fenotipo + "\n");
+		cadena += ("x = " + fenotipo(0) + "\n");
 		cadena += ("f(x) = " + fitness + "\n");
 		
 		return cadena;
