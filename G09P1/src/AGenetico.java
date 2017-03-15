@@ -126,11 +126,14 @@ public abstract class AGenetico {
 	public String toString() {
 		String cadena = " ";
 		
-		for(int i = 0; i < tamPob; i++){
-			cadena += ("Individuo " + (i+1) + "\n");
-			cadena += poblacion[i].toString();
-			cadena += ("\n");
-		}
+		// He comentado esto porque ralentiza mucho la ejecucion
+		// y creo que es innecesario.
+		
+//		for(int i = 0; i < tamPob; i++){
+//			cadena += ("Individuo " + (i+1) + "\n");
+//			cadena += poblacion[i].toString();
+//			cadena += ("\n");
+//		}
 		
 		cadena += "* Mejor de generación: \n";
 		cadena += this.elMejor.toString();

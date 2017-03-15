@@ -1,11 +1,12 @@
 
-public class CromosomaP1F2 extends Cromosoma {
+public class CromosomaP1F4 extends Cromosoma {
 	
-	public static final int N_GENES = 2;
-	private static final double X_MIN = -512;
-	private static final double X_MAX = 512;
-	
-	public CromosomaP1F2(double tolerancia){
+	public static int N_GENES;
+	private static final double X_MIN = 0;
+	private static final double X_MAX = Math.PI;
+
+	public CromosomaP1F4(double tolerancia, int n){
+		CromosomaP1F4.N_GENES = n;
 		genes = new Gen[N_GENES];
 		
 		for(int i = 0; i < N_GENES; i++){	
@@ -14,6 +15,7 @@ public class CromosomaP1F2 extends Cromosoma {
 			longitud += longGen;
 		}		
 		this.fenotipo = fenotipo(0);
+		this.fitness = evalua();
 	}
 	
 	/**
@@ -23,14 +25,14 @@ public class CromosomaP1F2 extends Cromosoma {
 	 */
 	public int longitudGen(double precision){
 		double longAux = (Math.log10((1+((X_MAX - X_MIN) / precision))) / Math.log10(2)); //Calcula la longitud exacta
-		int p_ent = (int) longAux; //Nos quedamos con la parte entera
+		int p_ent = (int) longAux; // Nos quedamos con la parte entera
 		double p_dec = longAux - p_ent; //Obtenemos la parte decimal
 		
 		if(p_dec > 0) p_ent++;
 		
 		return p_ent;
 	}
-
+	
 	/**
 	 * Método que obtiene el fenotipo de un individuo
 	 */
@@ -47,20 +49,25 @@ public class CromosomaP1F2 extends Cromosoma {
 
 	@Override
 	public double evalua() {
-		double x1 = fenotipo(0);
-		double x2 = fenotipo(1);
-		
-		double fit = (-(x2 + 47)*Math.sin(Math.sqrt(Math.abs(x2+(x1/2)+47)))) - (x1*Math.sin(Math.sqrt(Math.abs(x1 - (x2+47)))));
+		double variables[] = new double[CromosomaP1F4.N_GENES];
+		for(int i = 0; i < CromosomaP1F4.N_GENES; i++)
+			variables[i] = fenotipo(i);
+		double fit = 0;
+		for(int i = 0; i < CromosomaP1F4.N_GENES; i++)
+		{
+			double func = Math.sin(variables[i])*Math.pow(Math.sin(((i+1)*Math.pow(variables[i], 2))/Math.PI), 20);
+			fit += func;
+		}
+		fit = fit * -1;
 		this.fitness = fit;
 		return fit;
 	}
 
-	@Override
 	public String toString() {
 		String cadena = "";
-		cadena += ("x1 = " + fenotipo(0) + "\n");
-		cadena += ("x2 = " + fenotipo(1) + "\n");
-		cadena += ("f(x1,x2) = " + this.fitness + "\n");
+		for(int i = 0; i < CromosomaP1F4.N_GENES; i++)
+			cadena += "x" + i + " = " + fenotipo(i) + "\n";
+		cadena += ("f(xi) = " + this.fitness + "\n");
 		return cadena;
 	}
 
