@@ -79,7 +79,6 @@ public class ALVistaPrincipal{
 	private void algoritmoGenetico(AGenetico aG, int f) {
 		String cadena = "";
 		cadena += "***************** Función " + f + " *********************\n";
-		//int tamElite = (int)(tamPoblacion * 0.02);
 		
 		aG.inicializar();
 		aG.evaluar();
@@ -89,15 +88,15 @@ public class ALVistaPrincipal{
 			cadena += ("* Generación " + (i+1) + "\n");
 			cadena += "--------------------------------------------------------------\n";
 			cadena += aG.toString();
-//			if(elitismo){
-//				aG.separaMejores(tamElite);
-//			}
+			if(elitismo){
+				aG.seleccionaElite();
+			}
 			aG.seleccion(tipoSel);
 			aG.reproduccion();
 			aG.mutacion();
-//			if(elitismo){
-//				aG.incluyeElite();
-//			}
+			if(elitismo){
+				aG.insertaElite();
+			}
 			aG.evaluar();
 		}
 		VistaPrincipal.addText(cadena);
