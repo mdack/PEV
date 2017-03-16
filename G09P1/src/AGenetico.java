@@ -16,7 +16,7 @@ public abstract class AGenetico {
 	protected boolean esElitista;//tipo de seleccion por torneo
 	protected int tipoSel; //tipo de seleccion
 	protected static final double P = 0.75;
-	protected Cromosoma[] elite;
+	private Cromosoma[] elite;
 	protected int tamElite;
 	
 	public AGenetico(int poblacion, int generaciones, double porcCruces, double porcMutacion, double precision, boolean b, boolean elitismo, int tipoSel2){
@@ -147,60 +147,64 @@ public abstract class AGenetico {
 		
 		return cadena;
 	}
-	
-	public void separaMejores(int tamE) {
-		tamElite = tamE;
-		elite = new Cromosoma[tamE];	
-		
-		for(int i = 0; i < tamE; i++){
-			elite[i] = obtieneMejor();
-		}
-	}
-
-	private Cromosoma obtieneMejor() {
-		double mejorFitness = Double.MAX_VALUE;
-		if(maximizar) mejorFitness = Double.MIN_VALUE;
-		int pos_mejor = 0;
-		Cromosoma aux;
-		
-		for(int i = 0; i < tamPob; i++){
-			if(maximizar){
-				if(poblacion[i].getFitness() > mejorFitness){
-					pos_mejor = i;
-				}
-			}else{
-				if(poblacion[i].getFitness() < mejorFitness){
-					pos_mejor = i;
-				}
-			}
-		}
-		aux = poblacion[pos_mejor];
-		
-		mueveIzquierda(pos_mejor);
-		
-		return aux;
-	}
-
-	private void mueveIzquierda(int pos_mejor) {
-		tamPob--;
-		for(int i = pos_mejor; i < tamPob; i++){
-			poblacion[i] = poblacion[i+1];
-		}
-	}
-
-	public void incluyeElite() {
-		int tam = tamPob;
-		tamPob += tamElite;
-		int pos = 0;
-		Cromosoma[] auxPob = new Cromosoma[tamPob];
-		
-		for(int i = 0; i < tamPob; i++){
-			if(i >= tam){
-				auxPob[i] = elite[pos];
-			}else{
-				auxPob[i] = poblacion[i];
-			}
-		}
-		poblacion = auxPob;
-	}
+//	
+//	public void separaMejores(int tamE) {
+//		Cromosoma[] eliteAux = new Cromosoma[tamE];	
+//		
+//		for(int i = 0; i < tamE; i++){
+//			eliteAux[i] = obtieneMejor();
+//		}
+//		tamElite = tamE; 
+//		elite = eliteAux;
+//	}
+//
+//	private Cromosoma obtieneMejor() {
+//		double mejorFitness = Double.MAX_VALUE;
+//		if(maximizar) mejorFitness = Double.MIN_VALUE;
+//		int pos_mejor = 0;
+//		Cromosoma aux = null;
+//		
+//		for(int i = 0; i < tamPob; i++){
+//			if(maximizar){
+//				if(poblacion[i].getFitness() > mejorFitness){
+//					pos_mejor = i;
+//					mejorFitness = poblacion[i].getFitness();
+//				}
+//			}else{
+//				if(poblacion[i].getFitness() < mejorFitness){
+//					pos_mejor = i;
+//					mejorFitness = poblacion[i].getFitness();
+//				}
+//			}
+//		}
+//		aux = poblacion[pos_mejor];
+//		
+//		mueveIzquierda(pos_mejor);
+//		
+//		return aux;
+//	}
+//
+//	private void mueveIzquierda(int pos_mejor) {
+//		tamPob--;
+//		for(int i = pos_mejor; i < tamPob; i++){
+//			poblacion[i] = poblacion[i+1];
+//		}
+//	}
+//
+//	public void incluyeElite() {
+//		int tam = tamPob;
+//		int tamPobAux = tamPob + tamElite;
+//		int pos = 0;
+//		Cromosoma[] auxPob = new Cromosoma[tamPobAux];
+//		
+//		for(int i = 0; i < tamPobAux; i++){
+//			if(i < tam) auxPob[i] = poblacion[i];
+//			else{
+//				auxPob[i] = elite[pos];
+//				pos++;
+//			}
+//		}
+//		tamPob = tamPobAux;
+//		poblacion = auxPob;
+//	}
 }
