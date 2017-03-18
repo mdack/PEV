@@ -6,6 +6,8 @@ public class Gen {
 	private boolean[] gen;
 	private int longitud;
 	
+	public Gen(){}
+	
 	public Gen(int tamGen){
 		gen = new boolean[tamGen];
 		longitud = tamGen;
@@ -38,4 +40,11 @@ public class Gen {
 	}
 	public boolean[] getAlelo(){ return gen; }
 	public int getLongAlelo(){ return longitud; }
+	public Gen copia(){
+		Gen aux = new Gen();
+		aux.longitud = this.longitud;
+		aux.gen = new boolean[longitud];
+		for(int i = 0; i < longitud; i++) aux.gen[i] = this.gen[i];
+		return aux;
+	}
 }

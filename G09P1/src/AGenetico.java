@@ -147,7 +147,7 @@ public abstract class AGenetico {
 		int pos_elite = tamPob - tamElite;
 		
 		for(int i = 0; i < tamElite; i++){
-			elite[i] = poblacion[pos_elite];
+			elite[i] = poblacion[pos_elite].copia();
 			pos_elite++;
 		}
 	}
@@ -178,7 +178,7 @@ public abstract class AGenetico {
 		ordenaPoblacion();
 		
 		for(int i = 0; i < tamElite; i++){
-			poblacion[i] = elite[i];
+			poblacion[i] = elite[i].copia();
 		}
 	}
 

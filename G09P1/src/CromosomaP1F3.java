@@ -6,6 +6,8 @@ public class CromosomaP1F3 extends Cromosoma {
 	private static final double Y_MIN = 4.1;
 	private static final double Y_MAX = 5.8;
 	
+	public CromosomaP1F3(){}
+	
 	public CromosomaP1F3(double tolerancia){
 		genes = new Gen[N_GENES];
 		
@@ -83,6 +85,22 @@ public class CromosomaP1F3 extends Cromosoma {
 		cadena += ("f(x,y) = " + fitness + "\n");
 		
 		return cadena;
+	}
+
+	@Override
+	public Cromosoma copia() {
+		CromosomaP1F3 aux = new CromosomaP1F3();
+		aux.fitness = this.fitness;
+		aux.fenotipo = this.fenotipo;
+		aux.longitud = this.longitud;
+		aux.punt = this.punt;
+		aux.puntAcum = this.puntAcum;
+		aux.genes = new Gen[N_GENES];
+		for(int i = 0; i < N_GENES; i++)
+		{
+			aux.genes[i] = this.genes[i].copia();
+		}
+		return aux;
 	}
 
 }

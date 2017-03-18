@@ -5,6 +5,8 @@ public class CromosomaP1F5 extends Cromosoma {
 	private static final double X_MIN = -10;
 	private static final double X_MAX = 10;
 	private static final int MAX_I = 5;
+	
+	public CromosomaP1F5(){}
 		
 	public CromosomaP1F5(double tolerancia){
 		genes = new Gen[N_GENES];
@@ -77,6 +79,22 @@ public class CromosomaP1F5 extends Cromosoma {
 		cadena += ("f(xi) = " + fitness + "\n");
 		
 		return cadena;
+	}
+
+	@Override
+	public Cromosoma copia() {
+		CromosomaP1F5 aux = new CromosomaP1F5();
+		aux.fitness = this.fitness;
+		aux.fenotipo = this.fenotipo;
+		aux.longitud = this.longitud;
+		aux.punt = this.punt;
+		aux.puntAcum = this.puntAcum;
+		aux.genes = new Gen[N_GENES];
+		for(int i = 0; i < N_GENES; i++)
+		{
+			aux.genes[i] = this.genes[i].copia();
+		}
+		return aux;
 	}
 
 }

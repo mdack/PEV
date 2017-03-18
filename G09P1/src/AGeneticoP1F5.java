@@ -43,7 +43,7 @@ public class AGeneticoP1F5 extends AGenetico {
 		//Se genera la población intermedia
 		Cromosoma[] nuevaPob = new CromosomaP1F5[tamPob];
 		for(int i = 0; i < tamPob; i++){
-			nuevaPob[i] = poblacion[sel_super[i]];
+			nuevaPob[i] = poblacion[sel_super[i]].copia();
 		}
 		
 		poblacion = nuevaPob;
@@ -77,7 +77,7 @@ public class AGeneticoP1F5 extends AGenetico {
 		//Se genera la población intermedia
 		Cromosoma[] nuevaPob = new CromosomaP1F5[tamPob];
 		for(int i = 0; i < tamPob; i++){
-			nuevaPob[i] = poblacion[sel_super[i]];
+			nuevaPob[i] = poblacion[sel_super[i]].copia();
 		}
 		
 		poblacion = nuevaPob;
@@ -94,7 +94,7 @@ public class AGeneticoP1F5 extends AGenetico {
 			
 			for(int i = 0; i < 2; i++){ //Seleccionamos 2 individuos al azar
 				posElegida = (int) (rnd.nextDouble() * tamPob);
-				subpoblacion[i] = poblacion[posElegida];
+				subpoblacion[i] = poblacion[posElegida].copia();
 			}
 			
 			if(tipo == 2){
@@ -153,8 +153,8 @@ public class AGeneticoP1F5 extends AGenetico {
 		for(int i = 0; i < numSelCruce; i += 2)
 		{
 			cruce(poblacion[selCruce[i]], poblacion[selCruce[i+1]], hijo1, hijo2, puntoCruce);
-			poblacion[selCruce[i]] = hijo1;
-			poblacion[selCruce[i+1]] = hijo2;
+			poblacion[selCruce[i]] = hijo1.copia();
+			poblacion[selCruce[i+1]] = hijo2.copia();
 		}
 	}
 	
