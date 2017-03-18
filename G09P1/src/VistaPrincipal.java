@@ -62,11 +62,11 @@ public class VistaPrincipal extends JFrame{
 			newMediasGen[i][0] = mediasGen[i][0];
 			newMediasGen[i][1] = mediasGen[i][1];
 		}
-		newMejoresAbs[numGeneraciones][0] = numGeneraciones+1;
+		newMejoresAbs[numGeneraciones][0] = numGeneraciones;
 		newMejoresAbs[numGeneraciones][1] = mejorAbs;
-		newMejoresGen[numGeneraciones][0] = numGeneraciones+1;
+		newMejoresGen[numGeneraciones][0] = numGeneraciones;
 		newMejoresGen[numGeneraciones][1] = mejorGen;
-		newMediasGen[numGeneraciones][0] = numGeneraciones+1;
+		newMediasGen[numGeneraciones][0] = numGeneraciones;
 		newMediasGen[numGeneraciones][1] = mediaGen;
 		
 		mejoresAbs = newMejoresAbs;
