@@ -61,7 +61,7 @@ public class CromosomaP1F5 extends Cromosoma {
 	private double sumatorio(double x) {
 		double suma = 0;
 		
-		for(int i = 0; i < MAX_I; i++){
+		for(int i = 1; i <= MAX_I; i++){
 			suma += (i * Math.cos((i + 1) * x + i));
 		}
 		

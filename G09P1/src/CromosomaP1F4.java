@@ -55,7 +55,7 @@ public class CromosomaP1F4 extends Cromosoma {
 		double fit = 0;
 		for(int i = 0; i < CromosomaP1F4.N_GENES; i++)
 		{
-			double func = Math.sin(variables[i])*Math.pow(Math.sin(((i+1)*Math.pow(variables[i], 2))/Math.PI), 20);
+			double func = (Math.sin(variables[i]))*(Math.pow(Math.sin(((i+2)*Math.pow(variables[i], 2))/Math.PI), 20));
 			fit += func;
 		}
 		fit = fit * -1;
