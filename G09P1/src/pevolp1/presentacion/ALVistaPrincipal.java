@@ -1,7 +1,10 @@
+package pevolp1.presentacion;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import pevolp1.algoritmo.AGenetico;
 
 public class ALVistaPrincipal{
 	
@@ -54,25 +57,8 @@ public class ALVistaPrincipal{
 	}
 
 	public void action() {
-		AGenetico AG = null;
-		switch(funcion){
-		case 0:
-			AG = new AGeneticoP1F1(tamPoblacion, nGeneracion, probCruce, probMutacion, precision, elitismo, tipoSel);
-			break;
-		case 1:
-			AG = new AGeneticoP1F2(tamPoblacion, nGeneracion, probCruce, probMutacion, precision, elitismo, tipoSel);
-			break;
-		case 2:
-			AG = new AGeneticoP1F3(tamPoblacion, nGeneracion, probCruce, probMutacion, precision,elitismo, tipoSel);
-			break;
-		case 3:
-			AG = new AGeneticoP1F4(tamPoblacion, nGeneracion, probCruce, probMutacion, precision,elitismo, tipoSel, n);
-			break;
-		case 4:
-			AG = new AGeneticoP1F5(tamPoblacion, nGeneracion, probCruce, probMutacion, precision,elitismo, tipoSel);
-			break;
+		AGenetico AG = new AGenetico(tamPoblacion, nGeneracion, probCruce, probMutacion, precision, elitismo, funcion, n);
 		
-		}
 		algoritmoGenetico(AG, funcion+1);
 	}
 

@@ -1,19 +1,22 @@
+package pevolp1.algoritmo.cromosoma;
+
+import pevolp1.algoritmo.gen.Gen;
 
 public class CromosomaP1F2 extends Cromosoma {
 	
-	public static final int N_GENES = 2;
 	private static final double X_MIN = -512;
 	private static final double X_MAX = 512;
 	
 	public CromosomaP1F2(){}
 	
 	public CromosomaP1F2(double tolerancia){
+		N_GENES = 2;
 		genes = new Gen[N_GENES];
 		
 		for(int i = 0; i < N_GENES; i++){	
 			int longGen = longitudGen(tolerancia);
 			this.genes[i] = new Gen(longGen);
-			longitud += longGen;
+			setLongitud(getLongitud() + longGen);
 		}		
 		this.fenotipo = fenotipo(0);
 	}
@@ -71,7 +74,7 @@ public class CromosomaP1F2 extends Cromosoma {
 		CromosomaP1F2 aux = new CromosomaP1F2();
 		aux.fitness = this.fitness;
 		aux.fenotipo = this.fenotipo;
-		aux.longitud = this.longitud;
+		aux.setLongitud(this.getLongitud());
 		aux.punt = this.punt;
 		aux.puntAcum = this.puntAcum;
 		aux.genes = new Gen[N_GENES];

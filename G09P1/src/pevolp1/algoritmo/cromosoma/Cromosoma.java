@@ -1,3 +1,6 @@
+package pevolp1.algoritmo.cromosoma;
+
+import pevolp1.algoritmo.gen.Gen;
 
 public abstract class Cromosoma {
 	
@@ -6,7 +9,8 @@ public abstract class Cromosoma {
 	protected double puntAcum;
 	protected Gen[] genes;
 	protected double fenotipo;
-	protected int longitud;
+	private int longitud;
+	protected static int N_GENES;
 	
 	public double getFitness() {
 		return fitness;
@@ -33,6 +37,10 @@ public abstract class Cromosoma {
 		this.genes = genes;
 	}
 	
+	public int getNGenes(){
+		return N_GENES;
+	
+	}
 	/**
 	 * Convierte el contenido de la cadena binaria que lleva el gen en su valor decimal
 	 * @param gen Gen que se traducirá a decimal
@@ -58,4 +66,10 @@ public abstract class Cromosoma {
 	public abstract double evalua();
 	public abstract String toString();
 	public abstract Cromosoma copia();
+	public int getLongitud() {
+		return longitud;
+	}
+	public void setLongitud(int longitud) {
+		this.longitud = longitud;
+	}
 }
