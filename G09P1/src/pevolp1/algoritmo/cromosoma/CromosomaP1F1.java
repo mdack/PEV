@@ -19,7 +19,7 @@ public class CromosomaP1F1 extends Cromosoma {
 			setLongitud(getLongitud() + longGen);
 		}		
 		this.fenotipo = fenotipo(0);
-		this.fitness = evalua();
+		this.fitness_bruto = evalua();
 	}
 	
 	
@@ -60,7 +60,6 @@ public class CromosomaP1F1 extends Cromosoma {
 		double f = fenotipo(0); //Obtenemos fenotipo
 		
 		double fit = ((Math.abs(f * Math.sin(Math.sqrt(Math.abs(f)))) * -1));
-		this.fitness = fit;
 		
 		return fit;
 	}
@@ -70,7 +69,7 @@ public class CromosomaP1F1 extends Cromosoma {
 	public String toString() {
 		String cadena = " ";
 		cadena += ("x = " + fenotipo(0) + "\n");
-		cadena += ("f(x) = " + fitness + "\n");
+		cadena += ("f(x) = " + fitness_bruto + "\n");
 		
 		return cadena;
 	}
@@ -82,6 +81,7 @@ public class CromosomaP1F1 extends Cromosoma {
 	{
 		CromosomaP1F1 aux = new CromosomaP1F1();
 		aux.fitness = this.fitness;
+		aux.fitness_bruto = this.fitness_bruto;
 		aux.fenotipo = this.fenotipo;
 		aux.setLongitud(this.getLongitud());
 		aux.punt = this.punt;

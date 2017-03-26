@@ -5,6 +5,7 @@ import pevolp1.algoritmo.gen.Gen;
 public abstract class Cromosoma {
 	
 	protected double fitness;
+	protected double fitness_bruto; //Aptitud antes de transformarla
 	protected double punt;
 	protected double puntAcum;
 	protected Gen[] genes;
@@ -41,6 +42,13 @@ public abstract class Cromosoma {
 		return N_GENES;
 	
 	}
+	public double getFitness_bruto() {
+		return fitness_bruto;
+	}
+	public void setFitness_bruto(double fitness_bruto) {
+		this.fitness_bruto = fitness_bruto;
+	}
+	
 	/**
 	 * Convierte el contenido de la cadena binaria que lleva el gen en su valor decimal
 	 * @param gen Gen que se traducirá a decimal

@@ -24,10 +24,10 @@ public class AGenetico {
 	private double probMut; // Probabilidad de mutacion
 	private double tolerancia; // Tolerancia
 	private double mejorAbs; // Fitness mejor absoluto.
-	private boolean maximizar;
 	private int tamElite;
 	private int func;
 	private int n;
+	private boolean maximizar;
 	
 	public AGenetico(int poblacion, int generaciones, double porcCruces, double porcMutacion, double precision, boolean elitismo,int funcion, int nVar){
 		tamPob = poblacion;
@@ -39,13 +39,9 @@ public class AGenetico {
 			tamElite = (int) (tamPob * 0.02);
 			elite = new Cromosoma[tamElite];
 		}
-		
-		if(funcion != 3){
-			maximizar = false;
-		}else{
-			maximizar = true;
-		}
 		n = nVar;
+		if(funcion != 3) maximizar = false;
+		else maximizar = true;
 		
 		func = funcion;
 	}
@@ -72,59 +68,58 @@ public class AGenetico {
 			}
 		}
 	}
-	
-	
-	
+		
 	public void evaluar() {
 		double optFitness;
 		double sumaAptitud = 0;
 		double fitness = 0;
+		double optFitness_bruto = 0;
 		
-		if(!maximizar){//Si es una función de minimización
-			optFitness = Double.MAX_VALUE;
-			
-			for(int i = 0; i < tamPob; i++){
-				fitness = poblacion[i].evalua(); 
-				sumaAptitud += fitness;
-				if(fitness < optFitness){
-					this.posMejor = i;
-					optFitness = fitness;
-				}
-			}
-			if(optFitness < mejorAbs) this.mejorAbs = optFitness;
-			this.elMejor = this.poblacion[posMejor];
-			setPuntuaciones(sumaAptitud);
-		}
-		else
-		{
 			optFitness = Double.MIN_VALUE;
 			
 			for(int i = 0; i < tamPob; i++){
-				fitness = poblacion[i].evalua();
-				poblacion[i].setFitness(fitness);
+				fitness = poblacion[i].getFitness();
 				sumaAptitud += fitness;
 				if(fitness > optFitness){
 					optFitness = fitness;
+					optFitness_bruto = poblacion[i].getFitness_bruto();
 					this.posMejor = i;
 				}
 			}
-			if(optFitness > mejorAbs) this.mejorAbs = optFitness;
-			this.elMejor = this.poblacion[posMejor];
-			setPuntuaciones(sumaAptitud);
-		}
-		
-		VistaPrincipal.addData(mejorAbs, optFitness, (sumaAptitud/tamPob));
-	}
+			if(maximizar){
+				if(optFitness_bruto > mejorAbs) this.mejorAbs = optFitness_bruto;
+			}else{
+				if(optFitness_bruto < mejorAbs) this.mejorAbs = optFitness_bruto;
+			}
+			this.elMejor = this.poblacion[posMejor].copia();
+			
+			double puntAcumulada = 0;
+			for(int i = 0; i < tamPob; i++){
+				this.poblacion[i].setPunt((this.poblacion[i].getFitness() / sumaAptitud));
+				this.poblacion[i].setPuntAcum(poblacion[i].getPunt() + puntAcumulada);
+				puntAcumulada += poblacion[i].getPunt();
+			}
 
-	private void setPuntuaciones(double sumaAptitud) {
-		double puntAcumulada = 0;
-		for(int i = 0; i < tamPob; i++){
-			this.poblacion[i].setPunt((this.poblacion[i].getFitness() / sumaAptitud));
-			this.poblacion[i].setPuntAcum(poblacion[i].getPunt() + puntAcumulada);
-			puntAcumulada += poblacion[i].getPunt();
-		}		
+		
+		VistaPrincipal.addData(mejorAbs, elMejor.getFitness_bruto(), (sumaAptitud/tamPob));
 	}
 		
+	public void revisar_adaptacion_minimizar(){
+		double cmax = poblacion[0].getFitness_bruto();
+		
+		for(int i = 1; i < tamPob; i++){
+			if(poblacion[i].getFitness_bruto() > cmax){
+				cmax = poblacion[i].getFitness_bruto();
+			}
+		}
+		cmax = cmax * 1.05;
+		
+		for(int i = 0; i < tamPob; i++){
+			double f = cmax - poblacion[i].getFitness_bruto();
+			poblacion[i].setFitness(f);
+		}
+	}
+	
 	public void mutacion() {
 		boolean mutado;
 		int i, j;
@@ -151,7 +146,7 @@ public class AGenetico {
 				}
 			}
 			if (mutado){
-				poblacion[i].setFitness(poblacion[i].evalua());
+				poblacion[i].setFitness_bruto(poblacion[i].evalua());
 			}
 		}
 	}
@@ -193,18 +188,10 @@ public class AGenetico {
 		
 		for(int i = 0; i < tamPob; i++){
 			for(int j=i+1; j < tamPob; j++){
-				if(maximizar){
-					if(poblacion[i].getFitness() > poblacion[j].getFitness()){
+				if(poblacion[i].getFitness() > poblacion[j].getFitness()){
 						temp = poblacion[i];
 						poblacion[i] = poblacion[j];
 						poblacion[j] = temp;
-					}
-				}else{
-					if(poblacion[i].getFitness() < poblacion[j].getFitness()){
-						temp = poblacion[i];
-						poblacion[i] = poblacion[j];
-						poblacion[j] = temp;
-					}
 				}
 			}
 		}
@@ -317,8 +304,11 @@ public class AGenetico {
 		}
 		
 		// Evaluacion
-		hijo1.evalua();
-		hijo2.evalua();
+		double f;
+		f = hijo1.evalua();
+		hijo1.setFitness_bruto(f);
+		f = hijo2.evalua();
+		hijo2.setFitness_bruto(f);
 	}
 	
 
