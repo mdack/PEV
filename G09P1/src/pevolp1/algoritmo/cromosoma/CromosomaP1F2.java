@@ -18,7 +18,7 @@ public class CromosomaP1F2 extends Cromosoma {
 			this.genes[i] = new Gen(longGen);
 			setLongitud(getLongitud() + longGen);
 		}		
-		this.fenotipo = fenotipo(0);
+		this.fitness_bruto = evalua();
 	}
 	
 	/**
@@ -56,7 +56,7 @@ public class CromosomaP1F2 extends Cromosoma {
 		double x2 = fenotipo(1);
 		
 		double fit = (-(x2 + 47)*Math.sin(Math.sqrt(Math.abs(x2+(x1/2)+47)))) - (x1*Math.sin(Math.sqrt(Math.abs(x1 - (x2+47)))));
-		this.fitness = fit;
+	
 		return fit;
 	}
 

@@ -3,15 +3,17 @@ package pevolp1.algoritmo.seleccion;
 import pevolp1.algoritmo.cromosoma.Cromosoma;
 
 public class Estocastico extends Seleccion {
-
+	
+	private double marca;
+	
 	public Estocastico(int func) {
 		super(func);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void selecciona(Cromosoma[] poblacion, int tamPob) {
+	public Cromosoma[] selecciona(Cromosoma[] poblacion, int tamPob) {
 		int[] sel_super = new int[tamPob];
+		marca = 1.0 / tamPob;
 		double suma = getRandom(tamPob);
 		int pos_super = 0;
 		
@@ -20,22 +22,23 @@ public class Estocastico extends Seleccion {
 				pos_super++;
 				sel_super[i] = pos_super;
 			}
-			suma += (1.0/tamPob);
+			suma += marca;
 		}
 		
 		//Se genera la población intermedia
-		Cromosoma[] nuevaPob = creaPoblacion(tamPob);
+		Cromosoma[] nuevaPob = new Cromosoma[tamPob];
 		for(int i = 0; i < tamPob; i++){
 			nuevaPob[i] = poblacion[sel_super[i]].copia();
 		}
 		
-		poblacion = nuevaPob;
-
+		for(int i = 0; i < tamPob; i++){
+			poblacion[i] = nuevaPob[i].copia();
+		}
+		return poblacion;
 	}
 	
 	private double getRandom(int tamPob) {
 		double n = Math.random();
-		double marca = 1.0 / tamPob;
 		
 		while(n > marca){
 			n = Math.random();

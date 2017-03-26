@@ -18,8 +18,7 @@ public class CromosomaP1F4 extends Cromosoma {
 			this.genes[i] = new Gen(longGen);
 			setLongitud(getLongitud() + longGen);
 		}		
-		this.fenotipo = fenotipo(0);
-		this.fitness = evalua();
+		this.fitness_bruto = evalua();
 	}
 	
 	/**
@@ -63,7 +62,6 @@ public class CromosomaP1F4 extends Cromosoma {
 			fit += func;
 		}
 		fit = fit * -1;
-		this.fitness = fit;
 		return fit;
 	}
 

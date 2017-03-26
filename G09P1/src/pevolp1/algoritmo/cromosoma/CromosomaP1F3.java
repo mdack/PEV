@@ -19,6 +19,7 @@ public class CromosomaP1F3 extends Cromosoma {
 			this.genes[i] = new Gen(longGen);
 			setLongitud(getLongitud() + longGen);
 		}
+		this.fitness_bruto = evalua();
 	}
 	
 	/**
@@ -74,7 +75,6 @@ public class CromosomaP1F3 extends Cromosoma {
 		y = fenotipo(1);
 				
 		double fit = 21.5 + x * Math.sin((4*Math.PI*x)) + y * Math.sin((20*Math.PI*y));	
-		this.fitness = fit;
 		
 		return fit;
 	}

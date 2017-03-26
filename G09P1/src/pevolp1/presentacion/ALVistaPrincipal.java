@@ -84,13 +84,13 @@ public class ALVistaPrincipal{
 			aG.seleccion(tipoSel);
 			aG.reproduccion();
 			aG.mutacion();
+			if(elitismo){
+				aG.insertaElite();
+			}
 			if(!aG.isMaximizar())
 				aG.revisar_adaptacion_minimizar();
 			else
 				aG.revisar_adaptacion_maximizar();
-			if(elitismo){
-				aG.insertaElite();
-			}
 			aG.evaluar();
 		}
 		VistaPrincipal.addText(cadena);

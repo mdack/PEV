@@ -11,7 +11,7 @@ public class Ruleta extends Seleccion {
 	}
 
 	@Override
-	public void selecciona(Cromosoma[] poblacion, int tamPob) {
+	public Cromosoma[] selecciona(Cromosoma[] poblacion, int tamPob) {
 		int[] sel_super = new int[tamPob];
 		double prob;
 		int pos_super;
@@ -26,10 +26,15 @@ public class Ruleta extends Seleccion {
 			}
 		}
 		//Se genera la población intermedia
-		Cromosoma[] nuevaPob = creaPoblacion(tamPob);
+		Cromosoma[] nuevaPob = new Cromosoma[tamPob];
 		for(int i = 0; i < tamPob; i++){
 			nuevaPob[i] = poblacion[sel_super[i]].copia();
 		}
+		for(int i = 0; i < tamPob; i++){
+			poblacion[i] = nuevaPob[i].copia();
+		}
+		
+		return poblacion;
 	}
 
 	

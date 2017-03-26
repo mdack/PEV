@@ -19,6 +19,7 @@ public class CromosomaP1F5 extends Cromosoma {
 			this.genes[i] = new Gen(longGen);
 			setLongitud(getLongitud() + longGen);
 		}
+		this.fitness_bruto = evalua();
 	}
 	
 	/**
@@ -58,7 +59,6 @@ public class CromosomaP1F5 extends Cromosoma {
 		suma1 = sumatorio(x1);
 		suma2 = sumatorio(x2);
 		fit = (suma1 * suma2);
-		fitness = fit;
 		
 		return fit;
 	}

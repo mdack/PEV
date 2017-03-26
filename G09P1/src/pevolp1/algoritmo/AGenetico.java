@@ -24,7 +24,6 @@ public class AGenetico {
 	private double probMut; // Probabilidad de mutacion
 	private double tolerancia; // Tolerancia
 	private double mejorAbs; // Fitness mejor absoluto.
-	private double mejorAbs_mod;
 	private int tamElite;
 	private int func;
 	private int n;
@@ -80,8 +79,7 @@ public class AGenetico {
 			
 			for(int i = 0; i < tamPob; i++){
 				fitness = poblacion[i].getFitness();
-				//sumaAptitud += fitness;
-				sumaAptitud += poblacion[i].getFitness_bruto();
+				sumaAptitud += fitness;
 				if(fitness > optFitness){
 					optFitness = fitness;
 					optFitness_bruto = poblacion[i].getFitness_bruto();
@@ -97,7 +95,7 @@ public class AGenetico {
 			
 			double puntAcumulada = 0;
 			for(int i = 0; i < tamPob; i++){
-				this.poblacion[i].setPunt((this.poblacion[i].getFitness_bruto() / sumaAptitud));
+				this.poblacion[i].setPunt((this.poblacion[i].getFitness() / sumaAptitud));
 				this.poblacion[i].setPuntAcum(poblacion[i].getPunt() + puntAcumulada);
 				puntAcumulada += poblacion[i].getPunt();
 			}
@@ -139,28 +137,30 @@ public class AGenetico {
 	}
 	
 	public void mutacion() {
-		boolean mutado;
+		boolean mutado = false;
 		int i, j;
 		double prob;
 		Random rnd = new Random();
 		
-		for(i = 0; i < this.tamPob; i++){			
-			Gen gen = poblacion[i].getGenes()[0];
-			mutado = false;
-			
-			for(j = 0; j < gen.getLongAlelo(); j++)
-			{
-				prob = rnd.nextDouble();
-				// mutan los genes con prob<prob_mut
-				if (prob < probMut){
-					mutado = true;
-					if(gen.getPosAlelo(j)){
-						gen.setPosAlelo(j, false);
+		for(i = 0; i < this.tamPob; i++){	
+			for(int k = 0; k < poblacion[i].getNGenes(); k++){
+				Gen gen = poblacion[i].getGenes()[k];
+				mutado = false;
+				
+				for(j = 0; j < gen.getLongAlelo(); j++)
+				{
+					prob = rnd.nextDouble();
+					// mutan los genes con prob<prob_mut
+					if (prob < probMut){
+						mutado = true;
+						if(gen.getPosAlelo(j)){
+							gen.setPosAlelo(j, false);
+						}
+						else{
+							gen.setPosAlelo(j, true);
+						}
+						
 					}
-					else{
-						gen.setPosAlelo(j, true);
-					}
-					
 				}
 			}
 			if (mutado){
@@ -225,11 +225,11 @@ public class AGenetico {
 	
 	public void seleccion(int tipo) {
 		if(tipo == 0){
-			new Ruleta(func).selecciona(poblacion, tamPob);
+			poblacion = new Ruleta(func).selecciona(poblacion, tamPob);
 		}else if(tipo == 1){
-			new Estocastico(func).selecciona(poblacion, tamPob);
+			poblacion = new Estocastico(func).selecciona(poblacion, tamPob);
 		}else{
-			new Torneo(func, tipo).selecciona(poblacion, tamPob);
+			poblacion = new Torneo(func, tipo).selecciona(poblacion, tamPob);
 		}
 	}
 
