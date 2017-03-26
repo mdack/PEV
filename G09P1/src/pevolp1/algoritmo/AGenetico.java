@@ -24,6 +24,7 @@ public class AGenetico {
 	private double probMut; // Probabilidad de mutacion
 	private double tolerancia; // Tolerancia
 	private double mejorAbs; // Fitness mejor absoluto.
+	private double mejorAbs_mod;
 	private int tamElite;
 	private int func;
 	private int n;
@@ -40,7 +41,7 @@ public class AGenetico {
 			elite = new Cromosoma[tamElite];
 		}
 		n = nVar;
-		if(funcion != 3) maximizar = false;
+		if(funcion != 2) maximizar = false;
 		else maximizar = true;
 		
 		func = funcion;
@@ -79,7 +80,8 @@ public class AGenetico {
 			
 			for(int i = 0; i < tamPob; i++){
 				fitness = poblacion[i].getFitness();
-				sumaAptitud += fitness;
+				//sumaAptitud += fitness;
+				sumaAptitud += poblacion[i].getFitness_bruto();
 				if(fitness > optFitness){
 					optFitness = fitness;
 					optFitness_bruto = poblacion[i].getFitness_bruto();
@@ -95,7 +97,7 @@ public class AGenetico {
 			
 			double puntAcumulada = 0;
 			for(int i = 0; i < tamPob; i++){
-				this.poblacion[i].setPunt((this.poblacion[i].getFitness() / sumaAptitud));
+				this.poblacion[i].setPunt((this.poblacion[i].getFitness_bruto() / sumaAptitud));
 				this.poblacion[i].setPuntAcum(poblacion[i].getPunt() + puntAcumulada);
 				puntAcumulada += poblacion[i].getPunt();
 			}
@@ -117,6 +119,22 @@ public class AGenetico {
 		for(int i = 0; i < tamPob; i++){
 			double f = cmax - poblacion[i].getFitness_bruto();
 			poblacion[i].setFitness(f);
+		}
+	}
+	
+	public void revisar_adaptacion_maximizar(){
+		double cmin = poblacion[0].getFitness_bruto();
+		
+		for(int i = 1; i < tamPob; i++){
+			if(poblacion[i].getFitness_bruto() < cmin)
+				cmin = poblacion[i].getFitness_bruto();
+		}
+		
+		cmin = Math.abs(cmin);
+		
+		for(int i = 0; i < tamPob; i++){
+			double fit = cmin + poblacion[i].getFitness_bruto();
+			poblacion[i].setFitness(fit);
 		}
 	}
 	
@@ -309,6 +327,10 @@ public class AGenetico {
 		hijo1.setFitness_bruto(f);
 		f = hijo2.evalua();
 		hijo2.setFitness_bruto(f);
+	}
+
+	public boolean isMaximizar() {
+		return maximizar;
 	}
 	
 

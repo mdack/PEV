@@ -66,8 +66,11 @@ public class ALVistaPrincipal{
 		String cadena = "";
 		cadena += "***************** Función " + f + " *********************\n";
 		
-		aG.inicializar();	
-		aG.revisar_adaptacion_minimizar();
+		aG.inicializar();
+		if(!aG.isMaximizar())
+			aG.revisar_adaptacion_minimizar();
+		else
+			aG.revisar_adaptacion_maximizar();
 		aG.evaluar();
 		for(int i = 0; i < aG.getNumMaxGen(); i++)
 		{	
@@ -81,7 +84,10 @@ public class ALVistaPrincipal{
 			aG.seleccion(tipoSel);
 			aG.reproduccion();
 			aG.mutacion();
-			aG.revisar_adaptacion_minimizar();
+			if(!aG.isMaximizar())
+				aG.revisar_adaptacion_minimizar();
+			else
+				aG.revisar_adaptacion_maximizar();
 			if(elitismo){
 				aG.insertaElite();
 			}

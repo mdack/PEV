@@ -65,7 +65,7 @@ public class CromosomaP1F2 extends Cromosoma {
 		String cadena = "";
 		cadena += ("x1 = " + fenotipo(0) + "\n");
 		cadena += ("x2 = " + fenotipo(1) + "\n");
-		cadena += ("f(x1,x2) = " + this.fitness + "\n");
+		cadena += ("f(x1,x2) = " + this.fitness_bruto + "\n");
 		return cadena;
 	}
 
@@ -73,6 +73,7 @@ public class CromosomaP1F2 extends Cromosoma {
 	public Cromosoma copia() {
 		CromosomaP1F2 aux = new CromosomaP1F2();
 		aux.fitness = this.fitness;
+		aux.fitness_bruto = this.fitness_bruto;
 		aux.fenotipo = this.fenotipo;
 		aux.setLongitud(this.getLongitud());
 		aux.punt = this.punt;

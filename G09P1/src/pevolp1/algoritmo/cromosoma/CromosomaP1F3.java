@@ -85,7 +85,7 @@ public class CromosomaP1F3 extends Cromosoma {
 		
 		cadena += ("x = " + fenotipo(0) + "\n");
 		cadena += ("y = " + fenotipo(1) + "\n");
-		cadena += ("f(x,y) = " + fitness + "\n");
+		cadena += ("f(x,y) = " + fitness_bruto + "\n");
 		
 		return cadena;
 	}
@@ -94,6 +94,7 @@ public class CromosomaP1F3 extends Cromosoma {
 	public Cromosoma copia() {
 		CromosomaP1F3 aux = new CromosomaP1F3();
 		aux.fitness = this.fitness;
+		aux.fitness_bruto = this.fitness_bruto;
 		aux.fenotipo = this.fenotipo;
 		aux.setLongitud(this.getLongitud());
 		aux.punt = this.punt;

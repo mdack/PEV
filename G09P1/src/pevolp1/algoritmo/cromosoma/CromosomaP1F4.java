@@ -71,7 +71,7 @@ public class CromosomaP1F4 extends Cromosoma {
 		String cadena = "";
 		for(int i = 0; i < CromosomaP1F4.N_GENES; i++)
 			cadena += "x" + i + " = " + fenotipo(i) + "\n";
-		cadena += ("f(xi) = " + this.fitness + "\n");
+		cadena += ("f(xi) = " + this.fitness_bruto + "\n");
 		return cadena;
 	}
 
@@ -79,6 +79,7 @@ public class CromosomaP1F4 extends Cromosoma {
 	public Cromosoma copia() {
 		CromosomaP1F4 aux = new CromosomaP1F4();
 		aux.fitness = this.fitness;
+		aux.fitness_bruto = this.fitness_bruto;
 		aux.fenotipo = this.fenotipo;
 		aux.setLongitud(this.getLongitud());
 		aux.punt = this.punt;

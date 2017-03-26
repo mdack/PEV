@@ -79,7 +79,7 @@ public class CromosomaP1F5 extends Cromosoma {
 		
 		cadena += ("x1 = " + fenotipo(0) + "\n");
 		cadena += ("x2 = " + fenotipo(1) + "\n");
-		cadena += ("f(xi) = " + fitness + "\n");
+		cadena += ("f(xi) = " + fitness_bruto + "\n");
 		
 		return cadena;
 	}
@@ -88,6 +88,7 @@ public class CromosomaP1F5 extends Cromosoma {
 	public Cromosoma copia() {
 		CromosomaP1F5 aux = new CromosomaP1F5();
 		aux.fitness = this.fitness;
+		aux.fitness_bruto = this.fitness_bruto;
 		aux.fenotipo = this.fenotipo;
 		aux.setLongitud(this.getLongitud());
 		aux.punt = this.punt;
