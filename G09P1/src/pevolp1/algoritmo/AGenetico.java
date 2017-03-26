@@ -72,6 +72,7 @@ public class AGenetico {
 	public void evaluar() {
 		double optFitness;
 		double sumaAptitud = 0;
+		double sumaAptitudMaximizar = 0;
 		double fitness = 0;
 		double optFitness_bruto = 0;
 		
@@ -80,6 +81,7 @@ public class AGenetico {
 			for(int i = 0; i < tamPob; i++){
 				fitness = poblacion[i].getFitness();
 				sumaAptitud += fitness;
+				sumaAptitudMaximizar += poblacion[i].getFitness_bruto();
 				if(fitness > optFitness){
 					optFitness = fitness;
 					optFitness_bruto = poblacion[i].getFitness_bruto();
@@ -88,6 +90,7 @@ public class AGenetico {
 			}
 			if(maximizar){
 				if(optFitness_bruto > mejorAbs) this.mejorAbs = optFitness_bruto;
+				sumaAptitud = sumaAptitudMaximizar;
 			}else{
 				if(optFitness_bruto < mejorAbs) this.mejorAbs = optFitness_bruto;
 			}
