@@ -62,6 +62,8 @@ public class CromosomaP1F4 extends Cromosoma {
 			fit += func;
 		}
 		fit = fit * -1;
+		
+		this.fitness_bruto = fit;
 		return fit;
 	}
 

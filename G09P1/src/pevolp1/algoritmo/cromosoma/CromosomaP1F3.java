@@ -76,6 +76,7 @@ public class CromosomaP1F3 extends Cromosoma {
 				
 		double fit = 21.5 + x * Math.sin((4*Math.PI*x)) + y * Math.sin((20*Math.PI*y));	
 		
+		this.fitness_bruto = fit;
 		return fit;
 	}
 

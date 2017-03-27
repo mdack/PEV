@@ -67,10 +67,11 @@ public class ALVistaPrincipal{
 		cadena += "***************** Función " + f + " *********************\n";
 		
 		aG.inicializar();
+		/*
 		if(!aG.isMaximizar())
 			aG.revisar_adaptacion_minimizar();
 		else
-			aG.revisar_adaptacion_maximizar();
+			aG.revisar_adaptacion_maximizar();*/
 		aG.evaluar();
 		for(int i = 0; i < aG.getNumMaxGen(); i++)
 		{	
@@ -87,10 +88,11 @@ public class ALVistaPrincipal{
 			if(elitismo){
 				aG.insertaElite();
 			}
+			/*
 			if(!aG.isMaximizar())
 				aG.revisar_adaptacion_minimizar();
 			else
-				aG.revisar_adaptacion_maximizar();
+				aG.revisar_adaptacion_maximizar();*/
 			aG.evaluar();
 		}
 		VistaPrincipal.addText(cadena);

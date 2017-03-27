@@ -61,6 +61,8 @@ public class CromosomaP1F1 extends Cromosoma {
 		
 		double fit = ((Math.abs(f * Math.sin(Math.sqrt(Math.abs(f)))) * -1));
 		
+		this.fitness_bruto = fit;
+		
 		return fit;
 	}
 

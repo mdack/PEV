@@ -57,6 +57,7 @@ public class CromosomaP1F2 extends Cromosoma {
 		
 		double fit = (-(x2 + 47)*Math.sin(Math.sqrt(Math.abs(x2+(x1/2)+47)))) - (x1*Math.sin(Math.sqrt(Math.abs(x1 - (x2+47)))));
 	
+		this.fitness_bruto = fit;
 		return fit;
 	}
 

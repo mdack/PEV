@@ -68,90 +68,85 @@ public class AGenetico {
 			}
 		}
 	}
+	
+	public void evaluar(){
+		double sumaAdap;
+		if(maximizar) sumaAdap = revisar_adaptacion_maximizar();
+		else sumaAdap = revisar_adaptacion_minimizar();
 		
-	public void evaluar() {
-		double optFitness;
-		double sumaAptitud = 0;
-		double sumaAptitudMaximizar = 0;
-		double sumaAptitudBruta = 0;
-		double fitness = 0;
-		double fitnessBruto = 0;
-		
-		if(maximizar)
-			optFitness = Double.MIN_VALUE;
-		else
-			optFitness = Double.MAX_VALUE;
-		
-		for(int i = 0; i < tamPob; i++){
-			fitness = poblacion[i].getFitness();
-			fitnessBruto = poblacion[i].getFitness_bruto();
-			sumaAptitud += fitness;
-			sumaAptitudBruta += fitnessBruto;
-			sumaAptitudMaximizar += fitnessBruto;
-			if(maximizar)
-			{
-				if(fitnessBruto > optFitness){
-					optFitness = fitnessBruto;
-					this.posMejor = i;
-				}
-			}
-			else
-			{
-				if(fitnessBruto < optFitness){
-					optFitness = fitnessBruto;
-					this.posMejor = i;
-				}
-			}
-		}
+		double fitnessBrutoAcum = 0; // Para calcular la media mas tarde.
+		double bestFitness;
+		double puntAcum = 0;
 		if(maximizar){
-			if(optFitness > mejorAbs) this.mejorAbs = optFitness;
-			sumaAptitud = sumaAptitudMaximizar;
-		}else{
-			if(optFitness < mejorAbs) this.mejorAbs = optFitness;
-		}
-		this.elMejor = this.poblacion[posMejor].copia();
-		
-		double puntAcumulada = 0;
-		for(int i = 0; i < tamPob; i++){
-			this.poblacion[i].setPunt((this.poblacion[i].getFitness() / sumaAptitud));
-			this.poblacion[i].setPuntAcum(poblacion[i].getPunt() + puntAcumulada);
-			puntAcumulada += poblacion[i].getPunt();
-		}
-
-		
-		VistaPrincipal.addData(mejorAbs, elMejor.getFitness_bruto(), (sumaAptitudBruta/tamPob));
-	}
-		
-	public void revisar_adaptacion_minimizar(){
-		double cmax = poblacion[0].getFitness_bruto();
-		
-		for(int i = 1; i < tamPob; i++){
-			if(poblacion[i].getFitness_bruto() > cmax){
-				cmax = poblacion[i].getFitness_bruto();
+			bestFitness = -1000000;
+			for(int i = 0; i < tamPob; i++){
+				poblacion[i].evalua();
+				double fit = poblacion[i].getFitness_bruto();
+				fitnessBrutoAcum += fit;
+				if(fit > bestFitness){
+					bestFitness = fit;
+					this.posMejor = i;
+				}
+				poblacion[i].setPunt(poblacion[i].getFitness()/sumaAdap);
+				puntAcum += poblacion[i].getFitness()/sumaAdap;
+				poblacion[i].setPuntAcum(puntAcum);
 			}
+			this.elMejor = this.poblacion[posMejor].copia();
+			if(bestFitness > this.mejorAbs) this.mejorAbs = bestFitness;
 		}
-		cmax = (cmax+cmax)/100;
+		else{
+			bestFitness = Double.MAX_VALUE;
+			for(int i = 0; i < tamPob; i++){
+				double fit = poblacion[i].getFitness_bruto();
+				fitnessBrutoAcum += fit;
+				if(fit < bestFitness){
+					bestFitness = fit;
+					this.posMejor = i;
+				}
+				poblacion[i].setPunt(poblacion[i].getFitness()/sumaAdap);
+				puntAcum += poblacion[i].getFitness()/sumaAdap;
+				poblacion[i].setPuntAcum(puntAcum);
+			}
+			this.elMejor = this.poblacion[posMejor].copia();
+			if(bestFitness < this.mejorAbs) this.mejorAbs = bestFitness;
+		}
 		
-		for(int i = 0; i < tamPob; i++){
-			double f = cmax - poblacion[i].getFitness_bruto();
-			poblacion[i].setFitness(f);
-		}
+		VistaPrincipal.addData(mejorAbs, elMejor.getFitness_bruto(), fitnessBrutoAcum/tamPob);
 	}
 	
-	public void revisar_adaptacion_maximizar(){
-		double cmin = poblacion[0].getFitness_bruto();
-		
-		for(int i = 1; i < tamPob; i++){
-			if(poblacion[i].getFitness_bruto() < cmin)
-				cmin = poblacion[i].getFitness_bruto();
+	public double revisar_adaptacion_minimizar(){
+		double cmax = -1000000;
+		for(int i = 0; i < tamPob; i++)
+		{
+			double fit = poblacion[i].getFitness_bruto();
+			if(fit > cmax) cmax = fit;
 		}
-		
+		double sumaAdap = 0;
+		for(int i = 0; i < tamPob; i++)
+		{
+			double adapFit = cmax - poblacion[i].getFitness_bruto();
+			sumaAdap += adapFit;
+			poblacion[i].setFitness(adapFit);
+		}
+		return sumaAdap;
+	}
+	
+	public double revisar_adaptacion_maximizar(){
+		double cmin = Double.MAX_VALUE;
+		for(int i = 0; i < tamPob; i++)
+		{
+			double fit = poblacion[i].getFitness_bruto();
+			if(fit < cmin) cmin = fit;
+		}
 		cmin = Math.abs(cmin);
-		
-		for(int i = 0; i < tamPob; i++){
-			double fit = cmin + poblacion[i].getFitness_bruto();
-			poblacion[i].setFitness(fit);
+		double sumaAdap = 0;
+		for(int i = 0; i < tamPob; i++)
+		{
+			double adapFit = cmin + poblacion[i].getFitness_bruto();
+			sumaAdap += adapFit;
+			poblacion[i].setFitness(adapFit);
 		}
+		return sumaAdap;
 	}
 	
 	public void mutacion() {
@@ -270,14 +265,23 @@ public class AGenetico {
 			}
 		}
 		if((numSelCruce % 2) == 1) numSelCruce--;
+		Cromosoma[] nuevaPob = new Cromosoma[tamPob];
 		
 		puntoCruce = rnd.nextInt(poblacion[0].getLongitud());
 		for(int i = 0; i < numSelCruce; i += 2)
 		{
-			cruce(poblacion[selCruce[i]], poblacion[selCruce[i+1]], hijo1, hijo2, puntoCruce);
-			poblacion[selCruce[i]] = hijo1.copia();
-			poblacion[selCruce[i+1]] = hijo2.copia();
+			int padre1 = selCruce[i];
+			int padre2 = selCruce[i+1];
+			cruce(poblacion[padre1], poblacion[padre2], hijo1, hijo2, puntoCruce);
+			nuevaPob[padre1] = hijo1.copia();
+			nuevaPob[padre2] = hijo2.copia();
 		}
+		for(int i = 0; i < tamPob; i++)
+		{
+			if(nuevaPob[i] == null) nuevaPob[i] = poblacion[i].copia();
+		}
+		for(int i = 0; i < tamPob; i++)
+			poblacion[i] = nuevaPob[i].copia();
 	}
 		
 	private Cromosoma nuevoCromosoma() {

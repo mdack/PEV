@@ -60,6 +60,7 @@ public class CromosomaP1F5 extends Cromosoma {
 		suma2 = sumatorio(x2);
 		fit = (suma1 * suma2);
 		
+		this.fitness_bruto = fit;
 		return fit;
 	}
 
