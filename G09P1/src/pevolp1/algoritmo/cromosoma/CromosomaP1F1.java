@@ -32,7 +32,7 @@ public class CromosomaP1F1 extends Cromosoma {
 		
 		Gen gen = this.genes[pos];
 		valor = X_MIN + ((X_MAX - X_MIN) * bin_dec(gen)) / (Math.pow(2, gen.getLongAlelo()) - 1);
-		fenotipo += valor;
+		fenotipo = valor;
 
 		return fenotipo;
 	}

@@ -44,7 +44,7 @@ public class CromosomaP1F5 extends Cromosoma {
 		Gen gen = this.genes[pos];
 		
 		valor = X_MIN + ((X_MAX - X_MIN) * bin_dec(gen)) / (Math.pow(2, gen.getLongAlelo()) - 1);
-		fenotipo += valor;
+		fenotipo = valor;
 
 		return fenotipo;
 	}
@@ -68,7 +68,7 @@ public class CromosomaP1F5 extends Cromosoma {
 		double suma = 0;
 		
 		for(int i = 1; i <= MAX_I; i++){
-			suma += (i * Math.cos((i + 1) * x + i));
+			suma += (i * Math.cos(((i + 1) * x) + i));
 		}
 		
 		return suma;

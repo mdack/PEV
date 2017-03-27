@@ -1,6 +1,8 @@
 package pevolp1.algoritmo.seleccion;
 
 
+import java.util.Random;
+
 import pevolp1.algoritmo.cromosoma.*;
 
 public class Ruleta extends Seleccion {
@@ -9,31 +11,24 @@ public class Ruleta extends Seleccion {
 		super(func);
 		// TODO Auto-generated constructor stub
 	}
-
-	@Override
-	public Cromosoma[] selecciona(Cromosoma[] poblacion, int tamPob) {
+	
+	public Cromosoma[] selecciona(Cromosoma[] poblacion, int tamPob){
 		int[] sel_super = new int[tamPob];
 		double prob;
+		Random rnd = new Random();
 		int pos_super;
 		
-		for(int i = 0; i < tamPob; i++){
-			prob = Math.random();
+		for(int i = 0; i < tamPob; i++)
+		{
 			pos_super = 0;
-			
-			while((prob > poblacion[pos_super].getPuntAcum()) && (pos_super < tamPob)){
-				pos_super++;
-				sel_super[i] = pos_super;
-			}
-		}
-		//Se genera la población intermedia
-		Cromosoma[] nuevaPob = new Cromosoma[tamPob];
-		for(int i = 0; i < tamPob; i++){
-			nuevaPob[i] = poblacion[sel_super[i]].copia();
-		}
-		for(int i = 0; i < tamPob; i++){
-			poblacion[i] = nuevaPob[i].copia();
+			prob = rnd.nextDouble();
+			while(prob > poblacion[pos_super].getPuntAcum() && pos_super < tamPob) pos_super++;
+			sel_super[i] = pos_super;
 		}
 		
+		Cromosoma[] newPob = new Cromosoma[tamPob];
+		for(int i = 0; i < tamPob; i++) newPob[i] = poblacion[sel_super[i]];
+		for(int i = 0; i < tamPob; i++) poblacion[i] = newPob[i].copia();
 		return poblacion;
 	}
 

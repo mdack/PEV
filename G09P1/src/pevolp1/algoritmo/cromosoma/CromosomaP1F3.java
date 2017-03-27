@@ -55,11 +55,11 @@ public class CromosomaP1F3 extends Cromosoma {
 		switch(pos){
 		case 0:
 			valor = X_MIN + ((X_MAX - X_MIN) * bin_dec(gen)) / (Math.pow(2, gen.getLongAlelo()) - 1);
-			fenotipo += valor;
+			fenotipo = valor;
 			break;
 		case 1:
 			valor = Y_MIN + ((Y_MAX - Y_MIN) * bin_dec(gen)) / (Math.pow(2, gen.getLongAlelo()) - 1);
-			fenotipo += valor;
+			fenotipo = valor;
 			break;
 		}
 
