@@ -73,38 +73,53 @@ public class AGenetico {
 		double optFitness;
 		double sumaAptitud = 0;
 		double sumaAptitudMaximizar = 0;
+		double sumaAptitudBruta = 0;
 		double fitness = 0;
-		double optFitness_bruto = 0;
+		double fitnessBruto = 0;
 		
+		if(maximizar)
 			optFitness = Double.MIN_VALUE;
-			
-			for(int i = 0; i < tamPob; i++){
-				fitness = poblacion[i].getFitness();
-				sumaAptitud += fitness;
-				sumaAptitudMaximizar += poblacion[i].getFitness_bruto();
-				if(fitness > optFitness){
-					optFitness = fitness;
-					optFitness_bruto = poblacion[i].getFitness_bruto();
+		else
+			optFitness = Double.MAX_VALUE;
+		
+		for(int i = 0; i < tamPob; i++){
+			fitness = poblacion[i].getFitness();
+			fitnessBruto = poblacion[i].getFitness_bruto();
+			sumaAptitud += fitness;
+			sumaAptitudBruta += fitnessBruto;
+			sumaAptitudMaximizar += fitnessBruto;
+			if(maximizar)
+			{
+				if(fitnessBruto > optFitness){
+					optFitness = fitnessBruto;
 					this.posMejor = i;
 				}
 			}
-			if(maximizar){
-				if(optFitness_bruto > mejorAbs) this.mejorAbs = optFitness_bruto;
-				sumaAptitud = sumaAptitudMaximizar;
-			}else{
-				if(optFitness_bruto < mejorAbs) this.mejorAbs = optFitness_bruto;
+			else
+			{
+				if(fitnessBruto < optFitness){
+					optFitness = fitnessBruto;
+					this.posMejor = i;
+				}
 			}
-			this.elMejor = this.poblacion[posMejor].copia();
-			
-			double puntAcumulada = 0;
-			for(int i = 0; i < tamPob; i++){
-				this.poblacion[i].setPunt((this.poblacion[i].getFitness() / sumaAptitud));
-				this.poblacion[i].setPuntAcum(poblacion[i].getPunt() + puntAcumulada);
-				puntAcumulada += poblacion[i].getPunt();
-			}
+		}
+		if(maximizar){
+			if(optFitness > mejorAbs) this.mejorAbs = optFitness;
+			sumaAptitud = sumaAptitudMaximizar;
+		}else{
+			if(optFitness < mejorAbs) this.mejorAbs = optFitness;
+		}
+		this.elMejor = this.poblacion[posMejor].copia();
+		
+		double puntAcumulada = 0;
+		for(int i = 0; i < tamPob; i++){
+			this.poblacion[i].setPunt((this.poblacion[i].getFitness() / sumaAptitud));
+			this.poblacion[i].setPuntAcum(poblacion[i].getPunt() + puntAcumulada);
+			puntAcumulada += poblacion[i].getPunt();
+		}
 
 		
-		VistaPrincipal.addData(mejorAbs, elMejor.getFitness_bruto(), (sumaAptitud/tamPob));
+		VistaPrincipal.addData(mejorAbs, elMejor.getFitness_bruto(), (sumaAptitudBruta/tamPob));
 	}
 		
 	public void revisar_adaptacion_minimizar(){
@@ -115,7 +130,7 @@ public class AGenetico {
 				cmax = poblacion[i].getFitness_bruto();
 			}
 		}
-		cmax = cmax * 1.05;
+		cmax = (cmax+cmax)/100;
 		
 		for(int i = 0; i < tamPob; i++){
 			double f = cmax - poblacion[i].getFitness_bruto();
@@ -156,11 +171,11 @@ public class AGenetico {
 					// mutan los genes con prob<prob_mut
 					if (prob < probMut){
 						mutado = true;
-						if(gen.getPosAlelo(j)){
-							gen.setPosAlelo(j, false);
+						if(poblacion[i].getGenes()[k].getPosAlelo(j)){
+							poblacion[i].getGenes()[k].setPosAlelo(j, false);
 						}
 						else{
-							gen.setPosAlelo(j, true);
+							poblacion[i].getGenes()[k].setPosAlelo(j, true);
 						}
 						
 					}
