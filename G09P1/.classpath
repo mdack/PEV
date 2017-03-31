@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Users/Jose/git/PEV/G09P1/src"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="D:/Espacios_de_trabajo/workspace_github/G09P1/jmatharray.jar"/>
-	<classpathentry kind="lib" path="D:/Espacios_de_trabajo/workspace_github/G09P1/jmathplot.jar"/>
+	<classpathentry kind="lib" path="lib/jmatharray.jar"/>
+	<classpathentry kind="lib" path="lib/jmathplot.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

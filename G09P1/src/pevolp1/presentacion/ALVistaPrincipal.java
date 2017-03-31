@@ -23,9 +23,9 @@ public class ALVistaPrincipal{
 			precision = Double.parseDouble(tprecision.getText());
 			n = Integer.parseInt(tvalorN.getText());
 			
-			if(probCruce < 100 && probCruce > 0){
+			if(probCruce < 100 && probCruce >= 0){
 				probMutacion = Double.parseDouble(tproMutacion.getText());
-				if(probMutacion < 100 && probMutacion > 0){
+				if(probMutacion < 100 && probMutacion >= 0){
 					probCruce = probCruce/100;
 					probMutacion = probMutacion/100;
 					if(celitismo.getSelectedIndex() == 0){
@@ -67,11 +67,6 @@ public class ALVistaPrincipal{
 		cadena += "***************** Función " + f + " *********************\n";
 		
 		aG.inicializar();
-		/*
-		if(!aG.isMaximizar())
-			aG.revisar_adaptacion_minimizar();
-		else
-			aG.revisar_adaptacion_maximizar();*/
 		aG.evaluar();
 		for(int i = 0; i < aG.getNumMaxGen(); i++)
 		{	
@@ -88,11 +83,6 @@ public class ALVistaPrincipal{
 			if(elitismo){
 				aG.insertaElite();
 			}
-			/*
-			if(!aG.isMaximizar())
-				aG.revisar_adaptacion_minimizar();
-			else
-				aG.revisar_adaptacion_maximizar();*/
 			aG.evaluar();
 		}
 		VistaPrincipal.addText(cadena);
