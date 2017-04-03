@@ -13,9 +13,9 @@ public class VistaPrincipal extends JFrame{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JLabel lnGen, ltamPob, lproCruce, lproMutacion, lprecision, lfuncion, lvalorN,lelitismo, lseleccion;
+	private JLabel lnGen, ltamPob, lproCruce, lproMutacion, lprecision, lfuncion, lvalorN,lelitismo, lseleccion, ltipoMut, ltipoCruce;
 	private JTextField tnGen, ttamPob, tproCruce, tproMutacion, tprecision, tvalorN;
-	private JComboBox<String> cFuncion, cseleccion, celitismo;
+	private JComboBox<String> cFuncion, cseleccion, celitismo, cmutacion, ccruce;
 	private JButton button;
 	private static JTextArea area;
 	private JScrollPane scroll;
@@ -104,7 +104,9 @@ public class VistaPrincipal extends JFrame{
 		lfuncion = new JLabel("Función a optimizar:");
 		lvalorN = new JLabel("Valor de n:");
 		lseleccion = new JLabel("Tipo de selección");
-		lelitismo = new JLabel("Selección por elitismo");		
+		lelitismo = new JLabel("Selección por elitismo");	
+		ltipoMut = new JLabel("Tipo mutación: ");
+		ltipoCruce = new JLabel("Tipo cruce: ");
 	
 		//texto
 		tnGen = new JTextField();
@@ -122,23 +124,38 @@ public class VistaPrincipal extends JFrame{
 		
 		//combos
 		cFuncion = new JComboBox<String>();
-		cFuncion.addItem("Función 1");
-		cFuncion.addItem("Función 2");
-		cFuncion.addItem("Función 3");
-		cFuncion.addItem("Función 4");
-		cFuncion.addItem("Función 5");
+		cFuncion.addItem("Datos 12");
+		cFuncion.addItem("Datos 15");
+		cFuncion.addItem("Datos 30");
 
 		
 	
 		cseleccion = new JComboBox<String>();
 		cseleccion.addItem("Ruleta");
 		cseleccion.addItem("Estocástico");
-		cseleccion.addItem("T-Determinitico");
-		cseleccion.addItem("T-Probabilistico");
+		cseleccion.addItem("T-Determinístico");
+		cseleccion.addItem("T-Probabilístico");
 		
 		celitismo = new JComboBox<String>();
 		celitismo.addItem("No");
 		celitismo.addItem("Si");
+		
+		cmutacion = new JComboBox<String>();
+		cmutacion.addItem("Inserción");
+		cmutacion.addItem("Intercambio");
+		cmutacion.addItem("Inversión");
+		cmutacion.addItem("Heurística");
+		cmutacion.addItem("Propio");
+		
+		ccruce = new JComboBox<String>();
+		ccruce.addItem("PMX");
+		ccruce.addItem("OX");
+		ccruce.addItem("OX-Posiciones");
+		ccruce.addItem("OX-Orden");
+		ccruce.addItem("CX");
+		ccruce.addItem("ERX");
+		ccruce.addItem("Codificación Ordinal");
+		ccruce.addItem("Propio");
 		
 		//Grafica
 		plot = new Plot2DPanel();
@@ -179,7 +196,7 @@ public class VistaPrincipal extends JFrame{
 	}
 
 	private void addWest() {
-		panelW.setLayout(new GridLayout(9, 2, 35, 35));
+		panelW.setLayout(new GridLayout(11, 2, 20, 20));
 		panelW.setBorder(BorderFactory.createTitledBorder("Parámetros"));
 		
 		panelW.add(lnGen);
@@ -188,8 +205,14 @@ public class VistaPrincipal extends JFrame{
 		panelW.add(ltamPob);
 		panelW.add(ttamPob);
 		
+		panelW.add(ltipoCruce);
+		panelW.add(ccruce);
+		
 		panelW.add(lproCruce);
 		panelW.add(tproCruce);
+		
+		panelW.add(ltipoMut);
+		panelW.add(cmutacion);
 		
 		panelW.add(lproMutacion);
 		panelW.add(tproMutacion);
