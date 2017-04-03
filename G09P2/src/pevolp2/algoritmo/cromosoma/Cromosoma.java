@@ -39,35 +39,13 @@ public abstract class Cromosoma {
 	}
 	
 	public int getNGenes(){
-		return N_GENES;
-	
+		return N_GENES;	
 	}
 	public double getFitness_bruto() {
 		return fitness_bruto;
 	}
 	public void setFitness_bruto(double fitness_bruto) {
 		this.fitness_bruto = fitness_bruto;
-	}
-	
-	/**
-	 * Convierte el contenido de la cadena binaria que lleva el gen en su valor decimal
-	 * @param gen Gen que se traducirá a decimal
-	 * @return Valor decimal de la cadena binaria
-	 */
-	public double bin_dec(Gen gen) {
-		int longGen = gen.getLongAlelo();
-		int pos = 0;
-		double valor = 0;
-		
-		for(int i = longGen-1; i >= 0; i--){
-			if(gen.getPosAlelo(i)){
-				double num = (float)Math.pow(2, pos);
-				valor += num;
-			}
-			pos++;
-		}
-		
-		return valor;
 	}
 	
 	public abstract double fenotipo(int pos);
