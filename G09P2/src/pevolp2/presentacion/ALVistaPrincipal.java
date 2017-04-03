@@ -53,13 +53,13 @@ public class ALVistaPrincipal{
 				    JOptionPane.ERROR_MESSAGE);
 		}
 	}
-/*
-	public void action() {
+
+	public void action() {/*
 		AGenetico AG = new AGenetico(tamPoblacion, nGeneracion, probCruce, probMutacion, precision, elitismo, funcion, n);
 		
-		algoritmoGenetico(AG, funcion+1);
+		algoritmoGenetico(AG, funcion+1);*/
 	}
-
+/*
 	private void algoritmoGenetico(AGenetico aG, int f) {
 		String cadena = "";
 		cadena += "***************** Función " + f + " *********************\n";
