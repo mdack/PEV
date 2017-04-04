@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 public class Matrices {
 	
-	final static String ARCH_0 = "ajuste.dat";
-	final static String ARCH_1 = "datos12.dat";
-	final static String ARCH_2 = "datos15.dat";
-	final static String ARCH_3 = "datos30.dat";
+	final static String ARCH_0 = "data/ajuste.dat";
+	final static String ARCH_1 = "data/datos12.dat";
+	final static String ARCH_2 = "data/datos15.dat";
+	final static String ARCH_3 = "data/datos30.dat";
 	
 	private int tamano;
 	private int[][] flujo;
@@ -33,22 +33,17 @@ public class Matrices {
 	        archivo = new File (file);
 	        
 	        in = new Scanner(archivo);
-	        
-	         // Lectura del fichero
-	         String linea;
+	  
 	         this.tamano = in.nextInt();
 	         
-	         in.nextLine();
-	         
-	         for(int i = 0; i < tamano; i++){
-	        	 for(int j = 0; j < tamano; j++){
-	        		flujo[i][j] = in.nextInt(); 
-	        	 } 
-	         }
+	         flujo = new int[tamano][tamano];
+	         distancias = new int[tamano][tamano];
+	         llenaMatriz(flujo, in);
+	         llenaMatriz(distancias, in);
 	            
 	      }
 	      catch(Exception e){
-	         e.printStackTrace();
+	    	  System.out.println(e.getMessage());
 	      }finally{
 	    	  try {
 					if (in != null)
@@ -57,6 +52,17 @@ public class Matrices {
 					System.out.println("ERROR: " + ex.getMessage());
 				}
 	      }
+	}
+
+	
+	
+	private void llenaMatriz(int[][] m, Scanner in) {
+        for(int i = 0; i < tamano; i++){
+       	 for(int j = 0; j < tamano; j++){
+       		m[i][j] = in.nextInt(); 
+
+       	 } 
+       }
 	}
 
 	private String chooseFile(int archivo) {
