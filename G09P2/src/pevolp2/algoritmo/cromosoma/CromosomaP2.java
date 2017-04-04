@@ -1,5 +1,6 @@
 package pevolp2.algoritmo.cromosoma;
 
+import pevolp2.algoritmo.AGenetico;
 import pevolp2.algoritmo.gen.Gen;
 
 public class CromosomaP2 extends Cromosoma {
@@ -24,12 +25,23 @@ public class CromosomaP2 extends Cromosoma {
 
 	@Override
 	public double evalua() {
-		return 0;
+		int fitness = 0;
+		int[][] flujos = AGenetico.getFlujos();
+		int[][] distancias = AGenetico.getDistancias();
+		for(int i = 0; i < N_GENES; i++)
+		{
+			for(int j = 0; i < N_GENES; j++)
+			{
+				// Faltan las matrices de flujos y distancias.
+				fitness += (flujos[i][j] * distancias[genes[i].getAlelo()[0]][genes[j].getAlelo()[0]]); 
+			}
+		}
+		this.fitness_bruto = fitness;
+		return fitness;
 	}
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
