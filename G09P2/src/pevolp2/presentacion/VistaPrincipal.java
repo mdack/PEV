@@ -101,7 +101,7 @@ public class VistaPrincipal extends JFrame{
 		lproCruce = new JLabel("Probabilidad de cruce:");
 		lproMutacion = new JLabel("Probabilidad de Mutación:");
 		lprecision = new JLabel("Precisión:");
-		lfuncion = new JLabel("Función a optimizar:");
+		lfuncion = new JLabel("Datos a optimizar:");
 		lvalorN = new JLabel("Valor de n:");
 		lseleccion = new JLabel("Tipo de selección");
 		lelitismo = new JLabel("Selección por elitismo");	
