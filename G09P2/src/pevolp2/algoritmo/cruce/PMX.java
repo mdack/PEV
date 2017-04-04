@@ -13,7 +13,7 @@ public class PMX extends Cruce {
 		int puntoA, puntoB;
 		ArrayList<Integer> al1 = new ArrayList<Integer>();
 		ArrayList<Integer> al2 = new ArrayList<Integer>();
-		// Calculo de puntos de cruce
+		// Calculo de puntos de cruce.
 		Random rnd = new Random();
 		puntoA = rnd.nextInt(padre1.getLongitud());
 		puntoB = rnd.nextInt(padre1.getLongitud() - puntoA);
