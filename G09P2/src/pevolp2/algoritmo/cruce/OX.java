@@ -23,21 +23,48 @@ public class OX extends Cruce {
 		ArrayList<Integer> p2 = new ArrayList<Integer>();
 		llenaArray(p2, padre1);
 		
-		completaArray(p1, padre1);
-		
+		completaArrayFinal(p1, padre1);
+		completaArrayInicio(p1, padre1);
+		completaArrayFinal(p2, padre2);
+		completaArrayInicio(p2, padre2);
 	}
 
-	private void completaArray(ArrayList<Integer> p1, Cromosoma padre) {
-		
+	private void completaArrayInicio(ArrayList<Integer> p, Cromosoma padre) {
+		int k = 0;
+		for(int i = 0; i < puntoB; i++){
+			if(!buscaElemento(p, padre.getGenes()[i].getAlelo()[0])){
+				p.add(k, padre.getGenes()[i].getAlelo()[0]);
+				k++;
+			}
+		}
+	}
+
+	private void completaArrayFinal(ArrayList<Integer> p, Cromosoma padre) {
+		int k = puntoB;
 		for(int i = puntoB; i < padre.getNGenes(); i++){
+			if(!buscaElemento(p, padre.getGenes()[i].getAlelo()[0])){
+				p.add(k, padre.getGenes()[i].getAlelo()[0]);
+				k++;
+			}
 		}
 		
 	}
 
-	private void llenaArray(ArrayList<Integer> p1, Cromosoma padre) {
+	private boolean buscaElemento(ArrayList<Integer> p, int elem) {
+		boolean enc = false;
+		int i = puntoA;
+	
+		while(i < puntoB && !enc){
+			if(p.get(i) == elem) enc = true;
+			i++;
+		}
+		return false;
+	}
+
+	private void llenaArray(ArrayList<Integer> p, Cromosoma padre) {
 		
 		for(int i = puntoA; i < puntoB; i++){
-			p1.add(i, padre.getGenes()[i].getAlelo()[0]);
+			p.add(i, padre.getGenes()[i].getAlelo()[0]);
 		}
 	}
 
