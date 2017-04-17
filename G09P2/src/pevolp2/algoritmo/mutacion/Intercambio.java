@@ -25,6 +25,7 @@ public class Intercambio extends Mutacion {
 			int temp = crom.getGenes()[pos2].getAlelo();
 			crom.getGenes()[pos2].setAlelo(crom.getGenes()[pos1].getAlelo());
 			crom.getGenes()[pos1].setAlelo(temp);
+			crom.setFitness_bruto(crom.evalua());
 			pob[i] = crom.copia();
 		}
 	}
