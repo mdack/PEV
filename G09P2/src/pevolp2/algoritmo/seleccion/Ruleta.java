@@ -8,10 +8,7 @@ import pevolp2.algoritmo.cromosoma.Cromosoma;
 
 public class Ruleta extends Seleccion {
 
-	public Ruleta(int func) {
-		super(func);
-		// TODO Auto-generated constructor stub
-	}
+	public Ruleta() {}
 	
 	public Cromosoma[] selecciona(Cromosoma[] poblacion, int tamPob){
 		int[] sel_super = new int[tamPob];

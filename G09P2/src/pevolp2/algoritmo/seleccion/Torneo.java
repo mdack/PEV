@@ -9,10 +9,8 @@ public class Torneo extends Seleccion {
 	private static final double P = 0.75;
 	private int tipo_torneo;
 	
-	public Torneo(int func, int tipo) {
-		super(func);
+	public Torneo(int tipo) {
 		tipo_torneo = tipo;
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

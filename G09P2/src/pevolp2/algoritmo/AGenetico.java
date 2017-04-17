@@ -25,6 +25,7 @@ public class AGenetico {
 	
 	private static int[][] flujos;
 	private static int[][] distancias;
+	private static int n;
 	
 	private Cromosoma[] poblacion, elite; // Poblacion
 	private int tamPob; // Tamaño de la poblacion
@@ -36,11 +37,9 @@ public class AGenetico {
 	private double tolerancia; // Tolerancia
 	private double mejorAbs; // Fitness mejor absoluto.
 	private int tamElite;
-	private int func;
-	private int n;
 	private boolean maximizar;
 	
-	public AGenetico(int poblacion, int generaciones, double porcCruces, double porcMutacion, double precision, boolean elitismo,int funcion, int nVar){
+	public AGenetico(int poblacion, int generaciones, double porcCruces, double porcMutacion, double precision, boolean elitismo,int arch){
 		tamPob = poblacion;
 		numMaxGen = generaciones;
 		probCruce = porcCruces;
@@ -50,11 +49,11 @@ public class AGenetico {
 			tamElite = (int) (tamPob * 0.02);
 			elite = new Cromosoma[tamElite];
 		}
-		n = nVar;
-		if(funcion != 2) maximizar = false;
-		else maximizar = true;
-		
-		func = funcion;
+	
+		Matrices m = new Matrices(arch);
+		flujos = m.getFlujo();
+		distancias = m.getDistancias();
+		n = m.getTamano();
 	}
 	
 	public void inicializar() {
@@ -167,7 +166,7 @@ public class AGenetico {
 		}
 		case 3:
 		{
-			m = new Heuristica(probMut);
+			m = new Heuristica(probMut, 4);
 			m.mutar(poblacion);
 			break;
 		}
@@ -249,11 +248,11 @@ public class AGenetico {
 	
 	public void seleccion(int tipo) {
 		if(tipo == 0){
-			poblacion = new Ruleta(func).selecciona(poblacion, tamPob);
+			poblacion = new Ruleta().selecciona(poblacion, tamPob);
 		}else if(tipo == 1){
-			poblacion = new Estocastico(func).selecciona(poblacion, tamPob);
+			poblacion = new Estocastico().selecciona(poblacion, tamPob);
 		}else{
-			poblacion = new Torneo(func, tipo).selecciona(poblacion, tamPob);
+			poblacion = new Torneo(tipo).selecciona(poblacion, tamPob);
 		}
 	}
 

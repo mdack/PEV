@@ -6,8 +6,7 @@ public class Estocastico extends Seleccion {
 	
 	private double marca;
 	
-	public Estocastico(int func) {
-		super(func);
+	public Estocastico() {
 	}
 
 	@Override

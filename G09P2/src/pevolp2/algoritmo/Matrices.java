@@ -83,5 +83,18 @@ public class Matrices {
 		}
 		return nombFile;
 	}
+	
+	public int getTamano() {
+		return tamano;
+	}
+
+	public int[][] getFlujo() {
+		return flujo;
+	}
+
+	public int[][] getDistancias() {
+		return distancias;
+	}
+
 
 }

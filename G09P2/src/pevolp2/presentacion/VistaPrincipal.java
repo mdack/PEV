@@ -13,8 +13,8 @@ public class VistaPrincipal extends JFrame{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JLabel lnGen, ltamPob, lproCruce, lproMutacion, lprecision, lfuncion, lvalorN,lelitismo, lseleccion, ltipoMut, ltipoCruce;
-	private JTextField tnGen, ttamPob, tproCruce, tproMutacion, tprecision, tvalorN;
+	private JLabel lnGen, ltamPob, lproCruce, lproMutacion, lprecision, lfuncion, lelitismo, lseleccion, ltipoMut, ltipoCruce;
+	private JTextField tnGen, ttamPob, tproCruce, tproMutacion, tprecision;
 	private JComboBox<String> cFuncion, cseleccion, celitismo, cmutacion, ccruce;
 	private JButton button;
 	private static JTextArea area;
@@ -102,7 +102,6 @@ public class VistaPrincipal extends JFrame{
 		lproMutacion = new JLabel("Probabilidad de Mutación:");
 		lprecision = new JLabel("Precisión:");
 		lfuncion = new JLabel("Datos a optimizar:");
-		lvalorN = new JLabel("Valor de n:");
 		lseleccion = new JLabel("Tipo de selección");
 		lelitismo = new JLabel("Selección por elitismo");	
 		ltipoMut = new JLabel("Tipo mutación: ");
@@ -119,8 +118,6 @@ public class VistaPrincipal extends JFrame{
 		tproMutacion.setText("5");
 		tprecision = new JTextField();
 		tprecision.setText("0.001");
-		tvalorN = new JTextField();
-		tvalorN.setText("1");
 		
 		//combos
 		cFuncion = new JComboBox<String>();
@@ -171,12 +168,16 @@ public class VistaPrincipal extends JFrame{
 		button = new JButton("Comenzar");
 		button.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
+				String n = "";
 				numGeneraciones = 0;
 				plot.removeAllPlots();
 				mejoresAbs = null;
 				mejoresGen = null;
 				mediasGen = null;
-				new ALVistaPrincipal(tnGen, ttamPob, tproCruce, tproMutacion, tprecision, cseleccion, celitismo, cFuncion, tvalorN).action();
+				if(cmutacion.getSelectedIndex() == 3){
+					n = JOptionPane.showInputDialog("Valor de n");
+				}
+				new ALVistaPrincipal(tnGen, ttamPob, tproCruce, tproMutacion, tprecision, cseleccion, celitismo, cFuncion, cmutacion, ccruce, n).action();
 				plot.setFixedBounds(0, 0, Integer.parseInt(tnGen.getText()));
 			}
 		});
@@ -196,7 +197,7 @@ public class VistaPrincipal extends JFrame{
 	}
 
 	private void addWest() {
-		panelW.setLayout(new GridLayout(11, 2, 20, 20));
+		panelW.setLayout(new GridLayout(10, 2, 20, 20));
 		panelW.setBorder(BorderFactory.createTitledBorder("Parámetros"));
 		
 		panelW.add(lnGen);
@@ -222,9 +223,6 @@ public class VistaPrincipal extends JFrame{
 		
 		panelW.add(lfuncion);
 		panelW.add(cFuncion);
-		
-		panelW.add(lvalorN);
-		panelW.add(tvalorN);
 		
 		panelW.add(lseleccion);
 		panelW.add(cseleccion);
