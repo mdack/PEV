@@ -4,20 +4,29 @@ import pevolp2.algoritmo.cromosoma.Cromosoma;
 
 public class Intercambio extends Mutacion {
 	
-	public Intercambio(){}
 	
+	public Intercambio(double prob) {
+		super(prob);
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
-	public void mutar(Cromosoma crom) {
-		int pos1 = (int) (Math.random()*crom.getNGenes());
-		int pos2 = (int) (Math.random()*crom.getNGenes());
+	public void mutar(Cromosoma[] pob) {
 		
-		while(pos1 == pos2){
-			pos2 = (int) (Math.random()*crom.getNGenes());
+		for(int i = 0; i < pob.length; i++){
+			Cromosoma crom = pob[i];
+			int pos1 = (int) (Math.random()*crom.getNGenes());
+			int pos2 = (int) (Math.random()*crom.getNGenes());
+			
+			while(pos1 == pos2){
+				pos2 = (int) (Math.random()*crom.getNGenes());
+			}
+			
+			int temp = crom.getGenes()[pos2].getAlelo();
+			crom.getGenes()[pos2].setAlelo(crom.getGenes()[pos1].getAlelo());
+			crom.getGenes()[pos1].setAlelo(temp);
+			pob[i] = crom.copia();
 		}
-		
-		int temp = crom.getGenes()[pos2].getAlelo();
-		crom.getGenes()[pos2].setAlelo(crom.getGenes()[pos1].getAlelo());
-		crom.getGenes()[pos1].setAlelo(temp);
 	}
 
 }

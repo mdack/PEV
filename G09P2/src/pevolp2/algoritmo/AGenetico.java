@@ -149,26 +149,26 @@ public class AGenetico {
 		switch(tipo){
 		case 0:
 		{
-			m = new Insercion();
-			m.mutar();
+			m = new Insercion(probMut);
+			m.mutar(poblacion);
 			break;
 		}
 		case 1:
 		{
-			m = new Intercambio();
-			m.mutar();
+			m = new Intercambio(probMut);
+			m.mutar(poblacion);
 			break;
 		}
 		case 2:
 		{
-			m = new Inversion();
-			m.mutar();
+			m = new Inversion(probMut);
+			m.mutar(poblacion);
 			break;
 		}
 		case 3:
 		{
-			m = new Heuristica();
-			m.mutar();
+			m = new Heuristica(probMut);
+			m.mutar(poblacion);
 			break;
 		}
 		case 4:

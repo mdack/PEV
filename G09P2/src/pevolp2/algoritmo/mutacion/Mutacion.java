@@ -3,10 +3,12 @@ package pevolp2.algoritmo.mutacion;
 import pevolp2.algoritmo.cromosoma.*;
 
 public abstract class Mutacion {
-
-	public Mutacion() {
-		// TODO Auto-generated constructor stub
+	
+	protected double prob_mutacion;
+	
+	public Mutacion(double prob) {
+		this.prob_mutacion = prob;
 	}
 	
-	public abstract void mutar(Cromosoma crom);
+	public abstract void mutar(Cromosoma[] poblacion);
 }
