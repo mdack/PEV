@@ -8,9 +8,20 @@ public class CromosomaP2 extends Cromosoma {
 	public CromosomaP2(int n){
 		N_GENES = n;
 		genes = new Gen[N_GENES];
+		boolean[] aux_genes = new boolean[n];
+		
+		for(int i = 0; i < n; i++){
+			aux_genes[i] = false;
+		}
 				
-		for(int i = 0; i < N_GENES; i++){	
-			this.genes[i] = new Gen(n);
+		for(int i = 0; i < N_GENES; i++){
+			Gen aux = new Gen(n);
+			
+			while(aux_genes[aux.getAlelo()-1]){
+				aux = new Gen(n);
+			}
+			aux_genes[aux.getAlelo()-1] = true;
+			this.genes[i] = aux.copia();
 		}		
 		this.fenotipo = fenotipo(0);
 		this.fitness_bruto = evalua();
@@ -28,13 +39,12 @@ public class CromosomaP2 extends Cromosoma {
 		int[][] distancias = AGenetico.getDistancias();
 		for(int i = 0; i < N_GENES; i++)
 		{
-			for(int j = 0; i < N_GENES; j++)
+			for(int j = 0; j < N_GENES; j++)
 			{
 				// Faltan las matrices de flujos y distancias.
-				fitness += (flujos[i][j] * distancias[genes[i].getAlelo()][genes[j].getAlelo()]); 
+				fitness += (flujos[i][j] * distancias[genes[i].getAlelo()-1][genes[j].getAlelo()-1]); 
 			}
 		}
-		this.fitness_bruto = fitness;
 		return fitness;
 	}
 

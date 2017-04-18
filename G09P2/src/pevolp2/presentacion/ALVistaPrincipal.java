@@ -6,7 +6,7 @@ import javax.swing.JTextField;
 
 public class ALVistaPrincipal{
 	
-	int nGeneracion, tamPoblacion, funcion, n, tipoSel;
+	int nGeneracion, tamPoblacion, funcion,tipoSel;
 	int tmutacion, tcruce;
 	double probCruce;
 	double precision;
@@ -14,7 +14,7 @@ public class ALVistaPrincipal{
 	boolean elitismo = true;
 	
 	public ALVistaPrincipal(JTextField tnGen, JTextField ttamPob, JTextField tproCruce, JTextField tproMutacion,
-			JTextField tprecision, JComboBox<String> cseleccion,JComboBox<String> celitismo,   JComboBox<String> cfuncion, JComboBox<String> cmutacion, JComboBox<String> ccruce, String n2) {
+			JTextField tprecision, JComboBox<String> cseleccion,JComboBox<String> celitismo,   JComboBox<String> cfuncion, JComboBox<String> cmutacion, JComboBox<String> ccruce) {
 		try{
 			nGeneracion = Integer.parseInt(tnGen.getText());
 			tamPoblacion = Integer.parseInt(ttamPob.getText());
@@ -34,17 +34,6 @@ public class ALVistaPrincipal{
 					tmutacion = cmutacion.getSelectedIndex();
 					tcruce = ccruce.getSelectedIndex();
 					
-					if(tmutacion == 3){
-						int aux = Integer.parseInt(n2);
-						if(aux < tamPoblacion && aux >= 0){
-							n = aux;
-						}else{
-							JOptionPane.showMessageDialog(new JFrame(),
-								    "El valor de n debe estar entre 0 y el tamaño de la población",
-								    "Valor de n incorrecto",
-								    JOptionPane.ERROR_MESSAGE);
-						}
-					}
 				}else{
 					JOptionPane.showMessageDialog(new JFrame(),
 						    "El porcentaje debe de ser entre 0 y 100%",
