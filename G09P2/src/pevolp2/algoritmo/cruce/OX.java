@@ -1,6 +1,7 @@
 package pevolp2.algoritmo.cruce;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import pevolp2.algoritmo.cromosoma.Cromosoma;
 
@@ -16,11 +17,11 @@ public class OX extends Cruce {
 
 	@Override
 	public void cruzar(Cromosoma padre1, Cromosoma padre2, Cromosoma hijo1, Cromosoma hijo2) {
-		generaPuntos(padre1.getLongitud());	
+		generaPuntos(padre1.getNGenes());	
 		
-		ArrayList<Integer> p1 = new ArrayList<Integer>();
+		ArrayList<Integer> p1 = new ArrayList<Integer>(padre1.getNGenes());
 		llenaArray(p1, padre2);
-		ArrayList<Integer> p2 = new ArrayList<Integer>();
+		ArrayList<Integer> p2 = new ArrayList<Integer>(padre2.getNGenes());
 		llenaArray(p2, padre1);
 		
 		completaArrayFinal(p1, padre1);
@@ -73,17 +74,24 @@ public class OX extends Cruce {
 
 	private void llenaArray(ArrayList<Integer> p, Cromosoma padre) {
 		
+		for(int i = 0; i < padre.getNGenes(); i++){
+			p.add(i, 0);
+		}
+		
 		for(int i = puntoA; i < puntoB; i++){
 			p.add(i, padre.getGenes()[i].getAlelo());
 		}
 	}
 
 	private void generaPuntos(int longitud) {
-		puntoA = (int) ((Math.random() * longitud) + 1);
+		Random rnd = new Random();
+		int p1 = longitud - 2;
+		puntoA = rnd.nextInt(p1)+1;
 		
-		while(puntoA < puntoB){
-			puntoB = (int) ((Math.random() * longitud) + 1);
-		}
+		do{
+		int aux = rnd.nextInt(longitud-puntoA);
+		puntoB = puntoA + aux;
+		}while(puntoB == puntoA);
 		
 	}
 	

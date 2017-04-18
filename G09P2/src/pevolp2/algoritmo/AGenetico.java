@@ -166,7 +166,7 @@ public class AGenetico {
 		}
 		case 3:
 		{
-			m = new Heuristica(probMut, 4);
+			m = new Heuristica(probMut);
 			m.mutar(poblacion);
 			break;
 		}

@@ -6,11 +6,13 @@ import pevolp2.algoritmo.cromosoma.Cromosoma;
 
 public class Heuristica extends Mutacion {
 	
+	private static final int n = 3;
+	
 	private ArrayList<Integer> mejor;
 	private double mejor_aptitud;
 	private int[] lugares;
 	
-	public Heuristica(double prob, int n) {
+	public Heuristica(double prob) {
 		super(prob);
 		mejor = new ArrayList<Integer>();
 		mejor_aptitud = Double.MAX_VALUE;
