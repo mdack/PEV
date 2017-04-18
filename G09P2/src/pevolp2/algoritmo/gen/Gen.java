@@ -13,7 +13,7 @@ public class Gen {
 		longitud = n;
 		
 		Random rnd = new Random();
-		int random = rnd.nextInt(n);
+		int random = rnd.nextInt(n)+1;
 		gen = random;
 		
 	}
