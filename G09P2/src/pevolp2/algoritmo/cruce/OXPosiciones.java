@@ -63,6 +63,7 @@ public class OXPosiciones extends Cruce {
 					k++;
 					if(k >= padre1.getNGenes()) k = 0;
 				}
+				
 				al2.add(padre2.getGenes()[k].getAlelo());
 				hijo2.getGenes()[j].setAlelo(padre2.getGenes()[k].getAlelo());
 			}
