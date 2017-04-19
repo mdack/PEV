@@ -50,7 +50,6 @@ public abstract class Cromosoma {
 	
 	public abstract double fenotipo(int pos);
 	public abstract double evalua();
-	public abstract String toString();
 	public abstract Cromosoma copia();
 	public int getLongitud() {
 		return longitud;
@@ -58,4 +57,16 @@ public abstract class Cromosoma {
 	public void setLongitud(int longitud) {
 		this.longitud = longitud;
 	}
+	
+
+	@Override
+	public String toString() {
+		String cadena = "";
+		for(int i = 0; i < N_GENES-1; i++){
+			cadena += " " + genes[i].getAlelo() + " -";
+		}
+		cadena += " " + genes[N_GENES-1].getAlelo();
+		return cadena;
+	}
+
 }

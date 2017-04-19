@@ -9,14 +9,13 @@ public class CX extends Cruce {
 		ini = 0;
 	}
 	@Override
-	public void cruzar(Cromosoma padre1, Cromosoma padre2, Cromosoma hijo1,	Cromosoma hijo2) {
-			
-		inicializarHijo(hijo1);
-		inicializarHijo(hijo2);
-		
+	public void cruzar(Cromosoma padre1, Cromosoma padre2, Cromosoma hijo1,	Cromosoma hijo2) {	
 		ini = padre1.getGenes()[0].getAlelo();
 		
 		if(ini != padre2.getGenes()[0].getAlelo()){
+			inicializarHijo(hijo1);
+			inicializarHijo(hijo2);
+			
 			hijo1.getGenes()[0].setAlelo(ini);
 			hijo2.getGenes()[0].setAlelo(padre2.getGenes()[0].getAlelo());
 			cruzarAux(padre1, padre2, hijo1, hijo2, padre2.getGenes()[0].getAlelo());

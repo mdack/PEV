@@ -49,11 +49,6 @@ public class CromosomaP2 extends Cromosoma {
 	}
 
 	@Override
-	public String toString() {
-		return null;
-	}
-
-	@Override
 	public Cromosoma copia() {
 		CromosomaP2 aux = new CromosomaP2(N_GENES);
 		aux.fitness = this.fitness;
