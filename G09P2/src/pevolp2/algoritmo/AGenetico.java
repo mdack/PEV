@@ -34,17 +34,18 @@ public class AGenetico {
 	private int posMejor; // Posicion en la poblacion
 	private double probCruce; // Probabilidad de cruce
 	private double probMut; // Probabilidad de mutacion
-	private double tolerancia; // Tolerancia
 	private double mejorAbs; // Fitness mejor absoluto.
 	private int tamElite;
+	private int tipoCruce;
 	private boolean maximizar;
 	
-	public AGenetico(int poblacion, int generaciones, double porcCruces, double porcMutacion, double precision, boolean elitismo,int arch){
+	public AGenetico(int poblacion, int generaciones, double porcCruces, double porcMutacion, boolean elitismo,int arch, int tcruce){
 		tamPob = poblacion;
 		numMaxGen = generaciones;
 		probCruce = porcCruces;
 		probMut = porcMutacion;
-		tolerancia = precision;
+		tipoCruce = tcruce;
+		maximizar = false;
 		if(elitismo){
 			tamElite = (int) (tamPob * 0.02);
 			elite = new Cromosoma[tamElite];
@@ -65,45 +66,25 @@ public class AGenetico {
 	
 	public void evaluar(){
 		double sumaAdap;
-		if(maximizar) sumaAdap = revisar_adaptacion_maximizar();
-		else sumaAdap = revisar_adaptacion_minimizar();
+		sumaAdap = revisar_adaptacion_minimizar();
 		
 		double fitnessBrutoAcum = 0; // Para calcular la media mas tarde.
 		double bestFitness;
 		double puntAcum = 0;
-		if(maximizar){
-			bestFitness = -1000000;
-			for(int i = 0; i < tamPob; i++){
-				poblacion[i].evalua();
-				double fit = poblacion[i].getFitness_bruto();
-				fitnessBrutoAcum += fit;
-				if(fit > bestFitness){
-					bestFitness = fit;
-					this.posMejor = i;
-				}
-				poblacion[i].setPunt(poblacion[i].getFitness()/sumaAdap);
-				puntAcum += poblacion[i].getFitness()/sumaAdap;
-				poblacion[i].setPuntAcum(puntAcum);
+		bestFitness = Double.MAX_VALUE;
+		for(int i = 0; i < tamPob; i++){
+			double fit = poblacion[i].getFitness_bruto();
+			fitnessBrutoAcum += fit;
+			if(fit < bestFitness){
+				bestFitness = fit;
+				this.posMejor = i;
 			}
-			this.elMejor = this.poblacion[posMejor].copia();
-			if(bestFitness > this.mejorAbs) this.mejorAbs = bestFitness;
+			poblacion[i].setPunt(poblacion[i].getFitness()/sumaAdap);
+			puntAcum += poblacion[i].getFitness()/sumaAdap;
+			poblacion[i].setPuntAcum(puntAcum);
 		}
-		else{
-			bestFitness = Double.MAX_VALUE;
-			for(int i = 0; i < tamPob; i++){
-				double fit = poblacion[i].getFitness_bruto();
-				fitnessBrutoAcum += fit;
-				if(fit < bestFitness){
-					bestFitness = fit;
-					this.posMejor = i;
-				}
-				poblacion[i].setPunt(poblacion[i].getFitness()/sumaAdap);
-				puntAcum += poblacion[i].getFitness()/sumaAdap;
-				poblacion[i].setPuntAcum(puntAcum);
-			}
-			this.elMejor = this.poblacion[posMejor].copia();
-			if(bestFitness < this.mejorAbs) this.mejorAbs = bestFitness;
-		}
+		this.elMejor = this.poblacion[posMejor].copia();
+		if(bestFitness < this.mejorAbs) this.mejorAbs = bestFitness;
 		
 		VistaPrincipal.addData(mejorAbs, elMejor.getFitness_bruto(), fitnessBrutoAcum/tamPob);
 	}
@@ -119,24 +100,6 @@ public class AGenetico {
 		for(int i = 0; i < tamPob; i++)
 		{
 			double adapFit = cmax - poblacion[i].getFitness_bruto();
-			sumaAdap += adapFit;
-			poblacion[i].setFitness(adapFit);
-		}
-		return sumaAdap;
-	}
-	
-	public double revisar_adaptacion_maximizar(){
-		double cmin = Double.MAX_VALUE;
-		for(int i = 0; i < tamPob; i++)
-		{
-			double fit = poblacion[i].getFitness_bruto();
-			if(fit < cmin) cmin = fit;
-		}
-		cmin = Math.abs(cmin);
-		double sumaAdap = 0;
-		for(int i = 0; i < tamPob; i++)
-		{
-			double adapFit = cmin + poblacion[i].getFitness_bruto();
 			sumaAdap += adapFit;
 			poblacion[i].setFitness(adapFit);
 		}
@@ -261,7 +224,6 @@ public class AGenetico {
 		int selCruce[] = new int[tamPob];
 		
 		int numSelCruce = 0;
-		int puntoCruce;
 		double prob;
 		Cromosoma hijo1 = nuevoCromosoma();
 		Cromosoma hijo2 = nuevoCromosoma();
@@ -277,12 +239,11 @@ public class AGenetico {
 		if((numSelCruce % 2) == 1) numSelCruce--;
 		Cromosoma[] nuevaPob = new Cromosoma[tamPob];
 		
-		puntoCruce = rnd.nextInt(poblacion[0].getLongitud());
 		for(int i = 0; i < numSelCruce; i += 2)
 		{
 			int padre1 = selCruce[i];
 			int padre2 = selCruce[i+1];
-			cruce(poblacion[padre1], poblacion[padre2], hijo1, hijo2, puntoCruce);
+			cruce(poblacion[padre1], poblacion[padre2], hijo1, hijo2, tipoCruce);
 			nuevaPob[padre1] = hijo1.copia();
 			nuevaPob[padre2] = hijo2.copia();
 		}

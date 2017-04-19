@@ -5,27 +5,20 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import pevolp2.algoritmo.AGenetico;
-import pevolp2.algoritmo.cromosoma.Cromosoma;
-import pevolp2.algoritmo.cromosoma.CromosomaP2;
-import pevolp2.algoritmo.cruce.CX;
-import pevolp2.algoritmo.cruce.OX;
 
 public class ALVistaPrincipal{
 	
 	int nGeneracion, tamPoblacion, funcion,tipoSel;
 	int tmutacion, tcruce;
 	double probCruce;
-	double precision;
 	double probMutacion;
 	boolean elitismo = true;
 	
-	public ALVistaPrincipal(JTextField tnGen, JTextField ttamPob, JTextField tproCruce, JTextField tproMutacion,
-			JTextField tprecision, JComboBox<String> cseleccion,JComboBox<String> celitismo,   JComboBox<String> cfuncion, JComboBox<String> cmutacion, JComboBox<String> ccruce) {
+	public ALVistaPrincipal(JTextField tnGen, JTextField ttamPob, JTextField tproCruce, JTextField tproMutacion, JComboBox<String> cseleccion,JComboBox<String> celitismo,   JComboBox<String> cfuncion, JComboBox<String> cmutacion, JComboBox<String> ccruce) {
 		try{
 			nGeneracion = Integer.parseInt(tnGen.getText());
 			tamPoblacion = Integer.parseInt(ttamPob.getText());
 			probCruce = Double.parseDouble(tproCruce.getText());
-			precision = Double.parseDouble(tprecision.getText());
 			
 			if(probCruce < 100 && probCruce >= 0){
 				probMutacion = Double.parseDouble(tproMutacion.getText());
@@ -63,14 +56,14 @@ public class ALVistaPrincipal{
 	}
 
 	public void action() {
+		AGenetico AG = new AGenetico(tamPoblacion, nGeneracion, probCruce, probMutacion, elitismo, funcion, tcruce);
 
-		/*
-		algoritmoGenetico(AG, funcion+1);*/
+		algoritmoGenetico(AG);
 	}
-/*
-	private void algoritmoGenetico(AGenetico aG, int f) {
+
+	private void algoritmoGenetico(AGenetico aG) {
 		String cadena = "";
-		cadena += "***************** Función " + f + " *********************\n";
+		cadena += "***************** Archivo " + funcion + " *********************\n";
 		
 		aG.inicializar();
 		aG.evaluar();
@@ -85,12 +78,12 @@ public class ALVistaPrincipal{
 			}
 			aG.seleccion(tipoSel);
 			aG.reproduccion();
-			aG.mutacion();
+			aG.mutacion(tmutacion);
 			if(elitismo){
 				aG.insertaElite();
 			}
 			aG.evaluar();
 		}
 		VistaPrincipal.addText(cadena);
-	}*/
+	}
 }

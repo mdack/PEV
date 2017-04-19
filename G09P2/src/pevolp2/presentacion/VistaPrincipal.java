@@ -13,8 +13,8 @@ public class VistaPrincipal extends JFrame{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JLabel lnGen, ltamPob, lproCruce, lproMutacion, lprecision, lfuncion, lelitismo, lseleccion, ltipoMut, ltipoCruce, loperador;
-	private JTextField tnGen, ttamPob, tproCruce, tproMutacion, tprecision, toperador;
+	private JLabel lnGen, ltamPob, lproCruce, lproMutacion, lfuncion, lelitismo, lseleccion, ltipoMut, ltipoCruce, loperador;
+	private JTextField tnGen, ttamPob, tproCruce, tproMutacion, toperador;
 	private JComboBox<String> cFuncion, cseleccion, celitismo, cmutacion, ccruce;
 	private JButton button;
 	private static JTextArea area;
@@ -100,7 +100,6 @@ public class VistaPrincipal extends JFrame{
 		ltamPob = new JLabel("Tamaño de la Población:");
 		lproCruce = new JLabel("Probabilidad de cruce:");
 		lproMutacion = new JLabel("Probabilidad de Mutación:");
-		lprecision = new JLabel("Precisión:");
 		lfuncion = new JLabel("Datos a optimizar:");
 		lseleccion = new JLabel("Tipo de selección");
 		lelitismo = new JLabel("Selección por elitismo");	
@@ -116,9 +115,7 @@ public class VistaPrincipal extends JFrame{
 		tproCruce = new JTextField();
 		tproCruce.setText("60");
 		tproMutacion = new JTextField();
-		tproMutacion.setText("5");
-		tprecision = new JTextField();
-		tprecision.setText("0.001");
+		tproMutacion.setText("50");
 		toperador = new JTextField();
 		toperador.setText("5");
 		
@@ -176,7 +173,7 @@ public class VistaPrincipal extends JFrame{
 				mejoresAbs = null;
 				mejoresGen = null;
 				mediasGen = null;
-				new ALVistaPrincipal(tnGen, ttamPob, tproCruce, tproMutacion, tprecision, cseleccion, celitismo, cFuncion, cmutacion, ccruce).action();
+				new ALVistaPrincipal(tnGen, ttamPob, tproCruce, tproMutacion, cseleccion, celitismo, cFuncion, cmutacion, ccruce).action();
 				plot.setFixedBounds(0, 0, Integer.parseInt(tnGen.getText()));
 			}
 		});
@@ -196,7 +193,7 @@ public class VistaPrincipal extends JFrame{
 	}
 
 	private void addWest() {
-		panelW.setLayout(new GridLayout(11, 2, 20, 20));
+		panelW.setLayout(new GridLayout(10, 2, 20, 20));
 		panelW.setBorder(BorderFactory.createTitledBorder("Parámetros"));
 		
 		panelW.add(lnGen);
@@ -219,10 +216,7 @@ public class VistaPrincipal extends JFrame{
 		
 		panelW.add(loperador);
 		panelW.add(toperador);
-		
-		panelW.add(lprecision);
-		panelW.add(tprecision);
-		
+
 		panelW.add(lfuncion);
 		panelW.add(cFuncion);
 		
