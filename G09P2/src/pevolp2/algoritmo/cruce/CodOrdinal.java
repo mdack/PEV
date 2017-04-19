@@ -10,36 +10,70 @@ public class CodOrdinal extends Cruce {
 	
 	@Override
 	public void cruzar(Cromosoma padre1, Cromosoma padre2, Cromosoma hijo1,	Cromosoma hijo2) {
-		ArrayList<Integer> l1 = new ArrayList<Integer>();
-		ArrayList<Integer> l2 = new ArrayList<Integer>();
+		String cad1 = "";
+		String cad2 = "";
+
+		for(int i = 0; i < padre1.getNGenes(); i++){
+			cad1 += padre1.getGenes()[i].getAlelo() + " ";
+		}
+		for(int i = 0; i < padre1.getNGenes(); i++){
+			cad2 += padre2.getGenes()[i].getAlelo() + " ";
+		}
+		System.out.println(cad1);
+		System.out.println(cad2);
 		
-		inicializArray(l1, padre1);
-		inicializArray(l2, padre2);
+		int[] l1 = new int[padre1.getNGenes()];
+		int[] l2 = new int[padre2.getNGenes()];
 		
-		ordena(l1);
-		ordena(l2);
+		inicializArray(l1, padre1.getNGenes());
+		inicializArray(l2, padre2.getNGenes());
 		
 		int[] aux1 = obtienePosiciones(padre1, l1);
 		int[] aux2 = obtienePosiciones(padre2, l2);
 		
 		cruceSimple(aux1, aux2);
 		
-		inicializArray(l1, padre1);
-		inicializArray(l2, padre2);
-		
-		ordena(l1);
-		ordena(l2);
+		inicializArray(l1, padre1.getNGenes());
+		inicializArray(l2, padre2.getNGenes());
 		
 		llenaHijo(l1, aux1, hijo1);
 		llenaHijo(l2, aux2, hijo2);
+		
+		cad1 = ""; cad2 = "";
+		for(int i = 0; i < padre1.getNGenes(); i++){
+			cad1 += hijo1.getGenes()[i].getAlelo() + " ";
+		}
+		for(int i = 0; i < padre1.getNGenes(); i++){
+			cad2 += hijo2.getGenes()[i].getAlelo() + " ";
+		}
+		System.out.println(cad1);
+		System.out.println(cad2);
 	}
 
-	private void llenaHijo(ArrayList<Integer> l, int[] aux, Cromosoma hijo) {
-		
+	private void llenaHijo(int[] l, int[] aux, Cromosoma hijo) {
+
 		for(int i = 0; i < aux.length; i++){
-			hijo.getGenes()[i].setAlelo(l.get(aux[i]));
-			l.remove(i);
+			hijo.getGenes()[i].setAlelo(obtieneElemento(l, aux[i]));
 		}
+	}
+
+	private int obtieneElemento(int[] l, int pos) {
+		int p = -1;
+		int j = 0;
+		int i = 0;
+		
+		while(i < l.length && p == -1){
+			if(pos == j && l[i] != -1){
+				p = l[i];
+				l[i] = -1;
+			}
+			if(l[i] != -1){
+				j++;
+			}
+			i++;
+		}
+		
+		return p;
 	}
 
 	private void cruceSimple(int[] aux1, int[] aux2) {
@@ -53,55 +87,41 @@ public class CodOrdinal extends Cruce {
 		}
 	}
 
-	private int[] obtienePosiciones(Cromosoma padre, ArrayList<Integer> l) {
-		int[] posiciones = new int[l.size()];
+	private int[] obtienePosiciones(Cromosoma padre, int[] l) {
+		int[] posiciones = new int[l.length];
 		
 		for(int i = 0; i < padre.getNGenes(); i++){
 			int p = buscaElemento(l, padre.getGenes()[i].getAlelo());
 			posiciones[i] = p;
 		}
 		
-		return null;
+		return posiciones;
 	}
 
-	private int buscaElemento(ArrayList<Integer> l, int gen) {
+	private int buscaElemento(int[] l, int gen) {
 		int p = -1;
+		int j = 0;
 		int i = 0;
 		
-		while(i < l.size() && p == -1){
-			if(gen == l.get(i)){
-				p = i;
+		while(i < l.length && p == -1){
+			if(gen == l[i]){
+				l[i] = -1;
+				p = j;
 			}
 			else{
+				if(l[i] != -1) j++;
 				i++;
 			}
 		}
 		
-		if(p != -1){
-			l.remove(p);
-		}
 		return p;
 	}
 
-	private void inicializArray(ArrayList<Integer> l, Cromosoma padre) {
-		for(int i = 0; i < padre.getNGenes(); i++){
-			l.add(i, padre.getGenes()[i].getAlelo());
+	private void inicializArray(int[] l, int fin) {
+		for(int i = 0; i < fin; i++){
+			l[i] = i+1; 
 		}
 		
 	}
-	
-	private void ordena(ArrayList<Integer> list){
-		int temp;
-		for(int i = 0; i < list.size(); i++){
-			for(int j=i+1; j < list.size(); j++){
-				if(list.get(i) < list.get(j)){
-						temp = list.get(i);
-						list.add(i, list.get(j));
-						list.add(j, temp);
-				}
-			}
-		}
-	}
-	
-	
+		
 }
