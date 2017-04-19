@@ -1,7 +1,5 @@
 package pevolp2.algoritmo.cruce;
 
-import java.util.ArrayList;
-
 import pevolp2.algoritmo.cromosoma.Cromosoma;
 
 public class CodOrdinal extends Cruce {
