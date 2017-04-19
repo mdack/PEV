@@ -20,7 +20,7 @@ import pevolp2.algoritmo.seleccion.Estocastico;
 import pevolp2.algoritmo.seleccion.Ruleta;
 import pevolp2.algoritmo.seleccion.Torneo;
 import pevolp2.presentacion.VistaPrincipal;
-
+//hola
 public class AGenetico {
 	
 	private static int[][] flujos;
