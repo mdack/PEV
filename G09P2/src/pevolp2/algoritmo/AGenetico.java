@@ -175,27 +175,12 @@ public class AGenetico {
 
 	private void ordenaPoblacion() {
 		Cromosoma temp = null;
-		
-		if(maximizar)
-		{
-			for(int i = 0; i < tamPob; i++){
-				for(int j=i+1; j < tamPob; j++){
-					if(poblacion[i].getFitness_bruto() > poblacion[j].getFitness_bruto()){
-							temp = poblacion[i];
-							poblacion[i] = poblacion[j];
-							poblacion[j] = temp;
-					}
-				}
-			}
-		}
-		else{
-			for(int i = 0; i < tamPob; i++){
-				for(int j=i+1; j < tamPob; j++){
-					if(poblacion[i].getFitness_bruto() < poblacion[j].getFitness_bruto()){
-							temp = poblacion[i];
-							poblacion[i] = poblacion[j];
-							poblacion[j] = temp;
-					}
+		for(int i = 0; i < tamPob; i++){
+			for(int j=i+1; j < tamPob; j++){
+				if(poblacion[i].getFitness_bruto() < poblacion[j].getFitness_bruto()){
+					temp = poblacion[i];
+					poblacion[i] = poblacion[j];
+					poblacion[j] = temp;
 				}
 			}
 		}
