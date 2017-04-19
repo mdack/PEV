@@ -7,6 +7,7 @@ import javax.swing.JTextField;
 import pevolp2.algoritmo.AGenetico;
 import pevolp2.algoritmo.cromosoma.Cromosoma;
 import pevolp2.algoritmo.cromosoma.CromosomaP2;
+import pevolp2.algoritmo.cruce.CX;
 import pevolp2.algoritmo.cruce.OX;
 
 public class ALVistaPrincipal{
@@ -62,13 +63,7 @@ public class ALVistaPrincipal{
 	}
 
 	public void action() {
-		AGenetico AG = new AGenetico(tamPoblacion, nGeneracion, probCruce, probMutacion, precision, elitismo, 0);
-		Cromosoma a = new CromosomaP2(5);
-		Cromosoma b = new CromosomaP2(5);
-		Cromosoma h1 = new CromosomaP2(5);
-		Cromosoma h2 = new CromosomaP2(5);
-		
-		new OX().cruzar(a, b, h1, h2);
+
 		/*
 		algoritmoGenetico(AG, funcion+1);*/
 	}

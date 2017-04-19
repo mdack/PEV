@@ -1,6 +1,5 @@
 package pevolp2.algoritmo.cruce;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import pevolp2.algoritmo.cromosoma.Cromosoma;
@@ -21,13 +20,13 @@ public class OX extends Cruce {
 		
 		int[] p1 = new int[padre1.getNGenes()];
 		int[] p2 = new int[padre1.getNGenes()];
-		
+
 		llenaArray(p1, padre2);
 		llenaArray(p2, padre1);
 		
 		completaArray(p1, padre1);
 		completaArray(p2, padre2);
-		
+
 		genesHijo(p1, hijo1);
 		genesHijo(p2, hijo2);
 	}

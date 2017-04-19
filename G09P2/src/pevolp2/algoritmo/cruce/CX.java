@@ -2,53 +2,78 @@ package pevolp2.algoritmo.cruce;
 
 import pevolp2.algoritmo.cromosoma.Cromosoma;
 
-/*
- * Si el primer elemento es el mismo en los dos que hago??
- * Si el segundo elemento perteneciente al padre 2 está antes del puntoA qué hago
- */
 public class CX extends Cruce {
-	private int posA;
-	private int posB;
+	private static int ini;
+	
+	public CX(){
+		ini = 0;
+	}
 	@Override
 	public void cruzar(Cromosoma padre1, Cromosoma padre2, Cromosoma hijo1,	Cromosoma hijo2) {
-		if(iniPosiciones(padre1, padre2)){
-			llenaHijo(0, posA, hijo1, padre1);
-			llenaHijo(0, posA, hijo2, padre2);
-			hijo1.getGenes()[posA].setAlelo(padre1.getGenes()[posA].getAlelo());
-			hijo1.getGenes()[posA].setAlelo(padre2.getGenes()[posA].getAlelo());
-			llenaHijo(posA+1, posB, hijo1, padre2);
-			llenaHijo(posA+1, posB, hijo2, padre1);
-			hijo1.getGenes()[posB].setAlelo(padre1.getGenes()[posB].getAlelo());
-			hijo1.getGenes()[posB].setAlelo(padre2.getGenes()[posB].getAlelo());
-			if(posB < padre1.getNGenes()-1){
-				llenaHijo(posB+1, padre1.getNGenes(), hijo1, padre2);
-				llenaHijo(posB+1, padre2.getNGenes(), hijo2, padre1);
+		String cad1 = "";
+		String cad2 = "";
+	
+		for(int i = 0; i < padre1.getNGenes(); i++){
+			cad1 += padre1.getGenes()[i].getAlelo() + " ";
+		}
+		for(int i = 0; i < padre1.getNGenes(); i++){
+			cad2 += padre2.getGenes()[i].getAlelo() + " ";
+		}
+		System.out.println(cad1);
+		System.out.println(cad2);
+			
+		inicializarHijo(hijo1);
+		inicializarHijo(hijo2);
+		
+		ini = padre1.getGenes()[0].getAlelo();
+		
+		if(ini != padre2.getGenes()[0].getAlelo()){
+			hijo1.getGenes()[0].setAlelo(ini);
+			hijo2.getGenes()[0].setAlelo(padre2.getGenes()[0].getAlelo());
+			cruzarAux(padre1, padre2, hijo1, hijo2, padre2.getGenes()[0].getAlelo());
+		}
+					
+			cad1 = "";
+			cad2 = "";
+			for(int i = 0; i < padre1.getNGenes(); i++){
+				cad1 += hijo1.getGenes()[i].getAlelo() + " ";
 			}
+			for(int i = 0; i < padre1.getNGenes(); i++){
+				cad2 += hijo2.getGenes()[i].getAlelo() + " ";
+			}
+			System.out.println(cad1);
+			System.out.println(cad2);
 		}
 
-	}
-
-	private void llenaHijo(int ini, int fin, Cromosoma hijo, Cromosoma padre) {
+	private void cruzarAux(Cromosoma padre1, Cromosoma padre2, Cromosoma hijo1, Cromosoma hijo2, int elem) {
 		
-		for(int i = ini; i < fin; i++){
-			hijo.getGenes()[i].setAlelo(padre.getGenes()[i].getAlelo());
-		}
+		int pos = buscaElemento(padre1, elem);
+		int n = padre2.getGenes()[pos].getAlelo();
 		
-	}
-
-	private boolean iniPosiciones(Cromosoma padre1, Cromosoma padre2) {
+		hijo1.getGenes()[pos].setAlelo(padre1.getGenes()[pos].getAlelo());
+		hijo2.getGenes()[pos].setAlelo(n);
 		
-		if(padre1.getGenes()[0].getAlelo() != padre2.getGenes()[0].getAlelo()){
-			posA = buscaElemento(padre1, padre2.getGenes()[0].getAlelo());
-			int aux = buscaElemento(padre1, padre2.getGenes()[posA].getAlelo());
-			if(aux > posA){
-				posB = aux;
-				return true;
-			}else{
-				return false;
-			}
+		if(n == ini){
+			llenaHijo(hijo1, padre2);
+			llenaHijo(hijo2, padre1);
 		}else{
-			return false;
+			cruzarAux(padre1, padre2, hijo1, hijo2, n);
+		}
+	}
+
+	private void inicializarHijo(Cromosoma hijo) {
+		
+		for(int i = 0; i < hijo.getNGenes(); i++){
+			hijo.getGenes()[i].setAlelo(0);
+		}
+		
+	}
+	
+	private void llenaHijo(Cromosoma hijo, Cromosoma padre) {
+		
+		for(int i = 0; i < hijo.getNGenes(); i++){
+			if(hijo.getGenes()[i].getAlelo() == 0)
+				hijo.getGenes()[i].setAlelo(padre.getGenes()[i].getAlelo());
 		}
 		
 	}
