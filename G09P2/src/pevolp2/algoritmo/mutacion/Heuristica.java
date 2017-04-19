@@ -1,6 +1,7 @@
 package pevolp2.algoritmo.mutacion;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import pevolp2.algoritmo.cromosoma.Cromosoma;
 
@@ -8,9 +9,9 @@ public class Heuristica extends Mutacion {
 	
 	private static final int n = 3;
 	
-	private ArrayList<Integer> mejor;
-	private double mejor_aptitud;
-	private int[] lugares;
+	private ArrayList<Integer> mejor; //Guarda al mejor permutación
+	private double mejor_aptitud; //Guarda el mejor fitness del cromosoma
+	private int[] lugares; //Guardo posiciones del cromosoma seleccionadas para mutar
 	
 	public Heuristica(double prob) {
 		super(prob);
@@ -22,26 +23,42 @@ public class Heuristica extends Mutacion {
 
 	@Override
 	public void mutar(Cromosoma[] pob) {
-		
+		double prob;
 		for(int i = 0; i < pob.length; i++){
-			Cromosoma crom = pob[i];
-			ArrayList<Integer> genes = new ArrayList<Integer>();
-			ArrayList<Integer> aux = new ArrayList<Integer>();
-			obtieneGenes(genes, crom);
-			int m = n;
-			permuta(genes, aux, crom, m);
-			
-			for(int j = 0; j < n; j++){
-				crom.getGenes()[lugares[j]].setAlelo(mejor.get(j));
+			prob = Math.random();
+			if(prob < prob_mutacion){
+				Cromosoma crom = pob[i];
+				int[] genes = new int[n];
+				
+				obtieneGenes(genes, crom);
+				Arrays.sort(genes);
+				
+		        do {
+		            for(int j = 0; j < n; j++){
+		            	crom.getGenes()[lugares[j]].setAlelo(genes[j]);
+		            }
+		            double m = crom.evalua();	        	
+		        	if(m < mejor_aptitud){
+		        		mejor_aptitud = m;
+		        		mejor.clear();
+		        		for(int j = 0; j < n; j++)
+		        			mejor.add(j, genes[j]);
+		        		
+		        	}
+		        	
+		        } while (nextPermutation(genes));
+		        
+				for(int j = 0; j < n; j++){
+					crom.getGenes()[lugares[j]].setAlelo(mejor.get(j));
+				}
+				
+				crom.setFitness_bruto(crom.evalua());
+				pob[i] = crom.copia();
 			}
-			crom.setFitness_bruto(crom.evalua());
-			pob[i] = crom.copia();
 		}
 	}
 
-
-
-	private void obtieneGenes(ArrayList<Integer> genes, Cromosoma crom) {
+	private void obtieneGenes(int[] genes, Cromosoma crom) {
 		int pos;
 		boolean[] posiciones = new boolean[crom.getNGenes()];
 		
@@ -55,35 +72,41 @@ public class Heuristica extends Mutacion {
 				pos = (int) (Math.random()*crom.getNGenes());
 			}
 			lugares[i] = pos;
-			genes.add(crom.getGenes()[pos].getAlelo());
+			genes[i] = crom.getGenes()[pos].getAlelo();
 			posiciones[pos] = true;
 		}
-		
+		Arrays.sort(lugares);
 	}
+	
+	 private static boolean nextPermutation(int[] array) {
 
+	        int i = array.length - 1;
+	        while (i > 0 && array[i - 1] >= array[i]) {
+	            i--;
+	        }
 
-	private void permuta(ArrayList<Integer> list, ArrayList<Integer> aux, Cromosoma crom, int m) {
-		
-		if(m == 0){
-			for(int i = 0; i < aux.size(); i++){
-				crom.getGenes()[lugares[i]].setAlelo(aux.get(i));
-			}
-			double fit = crom.evalua();
-			if(fit < mejor_aptitud){
-				this.mejor_aptitud = fit;
-				mejor.clear();
-				for(int i = 0; i < aux.size(); i++){
-					mejor.add(aux.get(i));
-				}
-			}
-		}else{
-			for(int i = 0; i < list.size(); i++){
-				if(!aux.contains(list.get(i))){
-					aux.add(list.get(i));
-					permuta(list, aux, crom, m-1);
-				}
-			}
-		}
-	}
+	        if (i <= 0) {
+	            return false;
+	        }
+
+	        int j = array.length - 1;
+	        while (array[j] <= array[i - 1]) {
+	            j--;
+	        }
+
+	        int temp = array[i - 1];
+	        array[i - 1] = array[j];
+	        array[j] = temp;
+
+	        j = array.length - 1;
+	        while (i < j) {
+	            temp = array[i];
+	            array[i] = array[j];
+	            array[j] = temp;
+	            i++;
+	            j--;
+	        }
+	        return true;
+	    }
 
 }
