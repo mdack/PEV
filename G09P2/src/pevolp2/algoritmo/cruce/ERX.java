@@ -98,7 +98,7 @@ public class ERX extends Cruce {
 					}
 				}
 			}
-			// Comprueba que no ha habido bloqueos; si hubo bloqueo, empieza por la otra ciudad inicial.
+			// Comprueba que no ha habido bloqueos; si hubo bloqueo, empieza por el otro gen.
 			if(h1.size() == padre1.getNGenes()) hijo1ok = true;
 			else
 			{
