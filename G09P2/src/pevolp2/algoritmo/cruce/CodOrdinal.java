@@ -8,18 +8,6 @@ public class CodOrdinal extends Cruce {
 	
 	@Override
 	public void cruzar(Cromosoma padre1, Cromosoma padre2, Cromosoma hijo1,	Cromosoma hijo2) {
-		String cad1 = "";
-		String cad2 = "";
-
-		for(int i = 0; i < padre1.getNGenes(); i++){
-			cad1 += padre1.getGenes()[i].getAlelo() + " ";
-		}
-		for(int i = 0; i < padre1.getNGenes(); i++){
-			cad2 += padre2.getGenes()[i].getAlelo() + " ";
-		}
-		System.out.println(cad1);
-		System.out.println(cad2);
-		
 		int[] l1 = new int[padre1.getNGenes()];
 		int[] l2 = new int[padre2.getNGenes()];
 		
@@ -37,15 +25,6 @@ public class CodOrdinal extends Cruce {
 		llenaHijo(l1, aux1, hijo1);
 		llenaHijo(l2, aux2, hijo2);
 		
-		cad1 = ""; cad2 = "";
-		for(int i = 0; i < padre1.getNGenes(); i++){
-			cad1 += hijo1.getGenes()[i].getAlelo() + " ";
-		}
-		for(int i = 0; i < padre1.getNGenes(); i++){
-			cad2 += hijo2.getGenes()[i].getAlelo() + " ";
-		}
-		System.out.println(cad1);
-		System.out.println(cad2);
 	}
 
 	private void llenaHijo(int[] l, int[] aux, Cromosoma hijo) {
