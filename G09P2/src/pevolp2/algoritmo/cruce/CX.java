@@ -18,23 +18,19 @@ public class CX extends Cruce {
 			
 			hijo1.getGenes()[0].setAlelo(ini);
 			hijo2.getGenes()[0].setAlelo(padre2.getGenes()[0].getAlelo());
-			cruzarAux(padre1, padre2, hijo1, hijo2, padre2.getGenes()[0].getAlelo());
-		}
-	}
-
-	private void cruzarAux(Cromosoma padre1, Cromosoma padre2, Cromosoma hijo1, Cromosoma hijo2, int elem) {
-		
-		int pos = buscaElemento(padre1, elem);
-		int n = padre2.getGenes()[pos].getAlelo();
-		
-		hijo1.getGenes()[pos].setAlelo(padre1.getGenes()[pos].getAlelo());
-		hijo2.getGenes()[pos].setAlelo(n);
-		
-		if(n == ini){
+			
+			int pos = -1;
+			int n = padre2.getGenes()[0].getAlelo();
+			do{	
+				pos = buscaElemento(padre1, n);
+				n = padre2.getGenes()[pos].getAlelo();
+				
+				hijo1.getGenes()[pos].setAlelo(padre1.getGenes()[pos].getAlelo());
+				hijo2.getGenes()[pos].setAlelo(n);
+			}while(n != ini);
+			
 			llenaHijo(hijo1, padre2);
 			llenaHijo(hijo2, padre1);
-		}else{
-			cruzarAux(padre1, padre2, hijo1, hijo2, n);
 		}
 	}
 

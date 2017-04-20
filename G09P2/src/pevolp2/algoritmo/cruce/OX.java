@@ -90,10 +90,6 @@ public class OX extends Cruce {
 
 	private void llenaArray(int[] p, Cromosoma padre) {
 		
-		for(int i = 0; i < padre.getNGenes(); i++){
-			p[i] = 0;
-		}
-		
 		for(int i = puntoA; i < puntoB; i++){
 			p[i] = padre.getGenes()[i].getAlelo();
 			
