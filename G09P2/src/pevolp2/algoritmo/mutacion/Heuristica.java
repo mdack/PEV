@@ -1,6 +1,5 @@
 package pevolp2.algoritmo.mutacion;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import pevolp2.algoritmo.cromosoma.Cromosoma;
@@ -9,14 +8,14 @@ public class Heuristica extends Mutacion {
 	
 	private static final int n = 3;
 	
-	private ArrayList<Integer> mejor; //Guarda al mejor permutación
-	private double mejor_aptitud; //Guarda el mejor fitness del cromosoma
-	private int[] lugares; //Guardo posiciones del cromosoma seleccionadas para mutar
+	private static int[] mejor; //Guarda al mejor permutación
+	private static double mejor_aptitud; //Guarda el mejor fitness del cromosoma
+	private static int[] lugares; //Guardo posiciones del cromosoma seleccionadas para mutar
 	
 	public Heuristica(double prob) {
 		super(prob);
-		mejor = new ArrayList<Integer>();
-		mejor_aptitud = Double.MAX_VALUE;
+		mejor = new int[n];
+		mejor_aptitud = 10000000;
 		lugares = new int[n];
 	}
 
@@ -27,7 +26,7 @@ public class Heuristica extends Mutacion {
 		for(int i = 0; i < pob.length; i++){
 			prob = Math.random();
 			if(prob < prob_mutacion){
-				Cromosoma crom = pob[i];
+				Cromosoma crom = pob[i].copia();
 				int[] genes = new int[n];
 				
 				obtieneGenes(genes, crom);
@@ -40,23 +39,31 @@ public class Heuristica extends Mutacion {
 		            double m = crom.evalua();	        	
 		        	if(m < mejor_aptitud){
 		        		mejor_aptitud = m;
-		        		mejor.clear();
-		        		for(int j = 0; j < n; j++)
-		        			mejor.add(j, genes[j]);
+		        		for(int j = 0; j < n; j++){
+		        			mejor[j] = genes[j];
+		        		}
 		        		
 		        	}
 		        	
 		        } while (nextPermutation(genes));
 		        
 				for(int j = 0; j < n; j++){
-					crom.getGenes()[lugares[j]].setAlelo(mejor.get(j));
+					crom.getGenes()[lugares[j]].setAlelo(mejor[j]);
 				}
 				
-				crom.setFitness_bruto(crom.evalua());
+				crom.setFitness_bruto(pob[i].evalua());
 				pob[i] = crom.copia();
+				cleanAtributos();
 			}
 		}
 	}
+
+	private void cleanAtributos() {
+		mejor = new int[n];
+		lugares = new int[n];
+		mejor_aptitud = 10000000;
+	}
+
 
 	private void obtieneGenes(int[] genes, Cromosoma crom) {
 		int pos;
