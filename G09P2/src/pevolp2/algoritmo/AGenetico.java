@@ -31,6 +31,7 @@ public class AGenetico {
 	private int tamPob; // Tamaño de la poblacion
 	private int numMaxGen; // Numero maximo de generaciones
 	private Cromosoma elMejor; // Mejor cromosoma de la poblacion
+	private Cromosoma elMejorAbs;
 	private int posMejor; // Posicion en la poblacion
 	private double probCruce; // Probabilidad de cruce
 	private double probMut; // Probabilidad de mutacion
@@ -46,6 +47,7 @@ public class AGenetico {
 		probMut = porcMutacion;
 		tipoCruce = tcruce;
 		maximizar = false;
+		mejorAbs = Double.MAX_VALUE;
 		if(elitismo){
 			tamElite = (int) (tamPob * 0.02);
 			elite = new Cromosoma[tamElite];
@@ -59,19 +61,45 @@ public class AGenetico {
 	
 	public void inicializar() {
 		this.poblacion = new Cromosoma[tamPob];
-		for(int i = 0; i < tamPob; i++){
-			this.poblacion[i] = new CromosomaP2(n);
+		int factorial = getFactorial(n);
+		int[] genes = new int[n];
+		int i = 1;
+		boolean fin = true;
+		
+		poblacion[0] = new CromosomaP2(n);
+		for(int j = 0; j < n; j++){
+			genes[j] = j+1;
+			poblacion[0].getGenes()[j].setAlelo(j+1);
 		}
+		
+	    while (fin && i < tamPob && i < factorial){
+	    	   Cromosoma crom = new CromosomaP2(n);
+	    	   fin = nextPermutation(genes);
+	    	   for(int j = 0; j < n; j++){
+	    		   crom.getGenes()[j].setAlelo(genes[j]);
+	    	   }
+	    	   crom.setFitness_bruto(crom.evalua());
+	    	   poblacion[i] = crom;
+	    	   i++;
+	    }
+	    
+	    if(tamPob > factorial){
+	    	for(int j = i; j < tamPob; j++){
+	    		poblacion[j] = new CromosomaP2(n);
+	    	}
+	    }
+
 	}
-	
-	public void evaluar(){
+
+	public double evaluar(){
 		double sumaAdap;
 		sumaAdap = revisar_adaptacion_minimizar();
+		double media;
 		
 		double fitnessBrutoAcum = 0; // Para calcular la media mas tarde.
-		double bestFitness;
+		double bestFitness = Double.MAX_VALUE;
 		double puntAcum = 0;
-		bestFitness = Double.MAX_VALUE;
+
 		for(int i = 0; i < tamPob; i++){
 			double fit = poblacion[i].getFitness_bruto();
 			fitnessBrutoAcum += fit;
@@ -79,18 +107,25 @@ public class AGenetico {
 				bestFitness = fit;
 				this.posMejor = i;
 			}
-			poblacion[i].setPunt(poblacion[i].getFitness()/sumaAdap);
-			puntAcum += poblacion[i].getFitness()/sumaAdap;
+			poblacion[i].setPunt(poblacion[i].getFitness_bruto()/sumaAdap);
+			puntAcum += poblacion[i].getFitness_bruto()/sumaAdap;
 			poblacion[i].setPuntAcum(puntAcum);
 		}
 		this.elMejor = this.poblacion[posMejor].copia();
-		if(bestFitness < this.mejorAbs) this.mejorAbs = bestFitness;
+		if(bestFitness < this.mejorAbs) {
+			this.mejorAbs = bestFitness;
+			elMejorAbs = poblacion[posMejor].copia();
+		}
 		
+		media = fitnessBrutoAcum/tamPob;
 		VistaPrincipal.addData(mejorAbs, elMejor.getFitness_bruto(), fitnessBrutoAcum/tamPob);
+		
+		return media;
 	}
 	
 	public double revisar_adaptacion_minimizar(){
 		double cmax = -1000000;
+		
 		for(int i = 0; i < tamPob; i++)
 		{
 			double fit = poblacion[i].getFitness_bruto();
@@ -153,10 +188,16 @@ public class AGenetico {
 		String cadena = " ";
 		
 		cadena += "* Mejor de generación: \n";
-		cadena += this.elMejor.toString();
+		cadena += "  - Permutación: ";
+		cadena += this.elMejor.toString() + "\n";
+		cadena += "  - Coste óptimo: ";
+		cadena += elMejor.getFitness_bruto() + "\n";
 		cadena += "\n";
 		
-		cadena += "* Mejor absoluto: ";
+		cadena += "* Mejor absoluto: \n";
+		cadena += "  - Permutación: ";
+		cadena += elMejorAbs.toString() + "\n";
+		cadena += "  - Coste óptimo: ";
 		cadena += this.mejorAbs + "\n";
 		cadena += "\n";
 		
@@ -298,6 +339,16 @@ public class AGenetico {
 		}
 		}
 	}
+	
+    public static int getFactorial (int n){
+		int result;
+		
+		if(n==1||n==0)
+			return 1;
+ 
+		result = getFactorial(n-1)*n;
+		return result;
+	}
 
 	public boolean isMaximizar() {
 		return maximizar;
@@ -310,4 +361,35 @@ public class AGenetico {
 	public static int[][] getDistancias() {
 		return distancias;
 	}
+	
+	 private static boolean nextPermutation(int[] array) {
+
+	        int i = array.length - 1;
+	        while (i > 0 && array[i - 1] >= array[i]) {
+	            i--;
+	        }
+
+	        if (i <= 0) {
+	            return false;
+	        }
+
+	        int j = array.length - 1;
+	        while (array[j] <= array[i - 1]) {
+	            j--;
+	        }
+
+	        int temp = array[i - 1];
+	        array[i - 1] = array[j];
+	        array[j] = temp;
+
+	        j = array.length - 1;
+	        while (i < j) {
+	            temp = array[i];
+	            array[i] = array[j];
+	            array[j] = temp;
+	            i++;
+	            j--;
+	        }
+	        return true;
+	    }
 }
