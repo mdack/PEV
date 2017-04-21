@@ -27,7 +27,7 @@ public class OXPosiciones extends Cruce {
 		}
 		for(int i = 0; i < padre1.getNGenes(); i++)
 		{
-			if(!points.contains(i)){
+			if(points.contains(i)){
 				// Hijo 1
 				hijo1.getGenes()[i].setAlelo(padre2.getGenes()[i].getAlelo());
 				al1.add(padre2.getGenes()[i].getAlelo());
@@ -42,6 +42,7 @@ public class OXPosiciones extends Cruce {
 		for(int i = 0; i < padre1.getNGenes(); i++)
 		{
 			if(j >= padre1.getNGenes()) j = 0;
+			if(k >= padre1.getNGenes()) k = 0;
 			if(!points.contains(j))
 			{
 				while(al1.contains(padre1.getGenes()[k].getAlelo())){
@@ -51,12 +52,14 @@ public class OXPosiciones extends Cruce {
 				al1.add(padre1.getGenes()[k].getAlelo());
 				hijo1.getGenes()[j].setAlelo(padre1.getGenes()[k].getAlelo());
 			}
+			j++;
 		}
 		j = max + 1;
 		k = max + 1;
 		for(int i = 0; i < padre1.getNGenes(); i++)
 		{
 			if(j >= padre1.getNGenes()) j = 0;
+			if(k >= padre1.getNGenes()) k = 0;
 			if(!points.contains(j))
 			{
 				while(al2.contains(padre2.getGenes()[k].getAlelo())){
@@ -67,6 +70,7 @@ public class OXPosiciones extends Cruce {
 				al2.add(padre2.getGenes()[k].getAlelo());
 				hijo2.getGenes()[j].setAlelo(padre2.getGenes()[k].getAlelo());
 			}
+			j++;
 		}
 	}
 
