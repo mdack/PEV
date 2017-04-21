@@ -38,7 +38,6 @@ public class OXPosiciones extends Cruce {
 		}
 		int j = max + 1;
 		int k = max + 1;
-		int vueltas = padre1.getNGenes() - points.size();
 		for(int i = 0; i < padre1.getNGenes(); i++)
 		{
 			if(j >= padre1.getNGenes()) j = 0;
