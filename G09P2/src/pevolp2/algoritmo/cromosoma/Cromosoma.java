@@ -63,9 +63,9 @@ public abstract class Cromosoma {
 	public String toString() {
 		String cadena = "";
 		for(int i = 0; i < N_GENES-1; i++){
-			cadena += " " + genes[i].getAlelo() + " -";
+			cadena += " " + (genes[i].getAlelo()-1) + " -";
 		}
-		cadena += " " + genes[N_GENES-1].getAlelo();
+		cadena += " " + (genes[N_GENES-1].getAlelo()-1);
 		return cadena;
 	}
 
