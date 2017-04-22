@@ -31,6 +31,9 @@ public class CX extends Cruce {
 			
 			llenaHijo(hijo1, padre2);
 			llenaHijo(hijo2, padre1);
+			
+			hijo1.setFitness_bruto(hijo1.evalua());
+			hijo2.setFitness_bruto(hijo2.evalua());
 		}
 	}
 

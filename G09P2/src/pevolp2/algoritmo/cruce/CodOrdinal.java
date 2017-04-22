@@ -25,6 +25,8 @@ public class CodOrdinal extends Cruce {
 		llenaHijo(l1, aux1, hijo1);
 		llenaHijo(l2, aux2, hijo2);
 		
+		hijo1.setFitness_bruto(hijo1.evalua());
+		hijo2.setFitness_bruto(hijo2.evalua());
 	}
 
 	private void llenaHijo(int[] l, int[] aux, Cromosoma hijo) {

@@ -29,6 +29,9 @@ public class OX extends Cruce {
 
 		genesHijo(p1, hijo1);
 		genesHijo(p2, hijo2);
+		
+		hijo1.setFitness_bruto(hijo1.evalua());
+		hijo2.setFitness_bruto(hijo2.evalua());
 	}
 
 	private void genesHijo(int[] p, Cromosoma hijo) {
