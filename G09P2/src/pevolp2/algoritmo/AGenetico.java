@@ -100,9 +100,13 @@ public class AGenetico {
 				pos = (int) (Math.random()*tamPob);
 			}while(perm[pos]);
 			
+			//Se copia la permutacion elegida en los genes de ese cromosoma 
 			for(int k = 0; k < n; k++){
 				poblacion[i].getGenes()[k].setAlelo(permutaciones[pos][k]);
 			}
+			//recalculamos el fitness
+			poblacion[i].setFitness_bruto(poblacion[i].evalua());
+			//marcamos esa posicion a true para no volver a coger esa permutacion
 			perm[pos] = true;
 		}
 
