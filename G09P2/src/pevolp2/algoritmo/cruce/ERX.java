@@ -55,7 +55,7 @@ public class ERX extends Cruce {
 					ArrayList<Integer> map1 = mapeado.get(camino1);
 					for(int j = 0; j < map1.size(); j++) 
 						if(mapeado.get(map1.get(j)).size() < minCam && !h1.contains(map1.get(j))) minCam = mapeado.get(map1.get(j)).size();
-					// Ahora que tenemos el numero minimo de conexiones, se guardan los genes que tienen ese numero de conexiones.
+					// Ahora que tenemos el numero minimo de conexiones se guardan los genes que tienen ese numero de conexiones.
 					ArrayList<Integer> conn1 = new ArrayList<Integer>();
 					for(int j = 0; j < map1.size(); j++)
 						if(mapeado.get(map1.get(j)).size() == minCam && !h1.contains(map1.get(j))) conn1.add(map1.get(j));
