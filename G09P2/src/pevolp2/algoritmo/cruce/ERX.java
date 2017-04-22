@@ -22,16 +22,17 @@ public class ERX extends Cruce {
 		
 		// Bucle de mapeado de conexiones
 		ArrayList<ArrayList<Integer>> mapeado = new ArrayList<ArrayList<Integer>>();
+		for(int i = 0; i <= padre1.getNGenes(); i++) mapeado.add(i, null);
 		for(int i = 1; i <= padre1.getNGenes(); i++)
 		{
 			int index1 = c1.indexOf(i);
 			int index2 = c2.indexOf(i);
 			ArrayList<Integer> mapGen = new ArrayList<Integer>();
-			if(index1 - 1 >= 0) mapGen.add(padre1.getGenes()[index1-1].getAlelo());
-			if(index1 + 1 < padre1.getNGenes()) mapGen.add(padre1.getGenes()[index1+1].getAlelo());
-			if(index2 - 1 >= 0) mapGen.add(padre2.getGenes()[index2-1].getAlelo());
-			if(index2 + 1 < padre2.getNGenes()) mapGen.add(padre2.getGenes()[index2+1].getAlelo());
-			mapeado.add(i, mapGen);
+			if(index1 - 1 >= 0 && !mapGen.contains(padre1.getGenes()[index1-1].getAlelo())) mapGen.add(padre1.getGenes()[index1-1].getAlelo());
+			if(index1 + 1 < padre1.getNGenes() && !mapGen.contains(padre1.getGenes()[index1+1].getAlelo())) mapGen.add(padre1.getGenes()[index1+1].getAlelo());
+			if(index2 - 1 >= 0 && !mapGen.contains(padre2.getGenes()[index2-1].getAlelo())) mapGen.add(padre2.getGenes()[index2-1].getAlelo());
+			if(index2 + 1 < padre2.getNGenes() && !mapGen.contains(padre2.getGenes()[index2+1].getAlelo())) mapGen.add(padre2.getGenes()[index2+1].getAlelo());
+			mapeado.set(i, mapGen);
 		}
 		int camino1 = padre2.getGenes()[0].getAlelo();
 		int camino2 = padre1.getGenes()[0].getAlelo();
@@ -41,6 +42,8 @@ public class ERX extends Cruce {
 		h2.add(camino2);
 		boolean hijo1ok = false;
 		boolean hijo2ok = false;
+		boolean blocked1 = false;
+		boolean blocked2 = false;
 		while(!hijo1ok || !hijo2ok)
 		{
 			for(int i = 1; i < padre1.getNGenes(); i++)
@@ -51,7 +54,7 @@ public class ERX extends Cruce {
 					int minCam = Integer.MAX_VALUE;
 					ArrayList<Integer> map1 = mapeado.get(camino1);
 					for(int j = 0; j < map1.size(); j++) 
-						if(mapeado.get(map1.get(j)).size() > minCam && !h1.contains(map1.get(j))) minCam = mapeado.get(map1.get(j)).size();
+						if(mapeado.get(map1.get(j)).size() < minCam && !h1.contains(map1.get(j))) minCam = mapeado.get(map1.get(j)).size();
 					// Ahora que tenemos el numero minimo de conexiones, se guardan los genes que tienen ese numero de conexiones.
 					ArrayList<Integer> conn1 = new ArrayList<Integer>();
 					for(int j = 0; j < map1.size(); j++)
@@ -77,7 +80,7 @@ public class ERX extends Cruce {
 					int minCam = Integer.MAX_VALUE;
 					ArrayList<Integer> map2 = mapeado.get(camino2);
 					for(int j = 0; j < map2.size(); j++) 
-						if(mapeado.get(map2.get(j)).size() > minCam && !h2.contains(map2.get(j))) minCam = mapeado.get(map2.get(j)).size();
+						if(mapeado.get(map2.get(j)).size() < minCam && !h2.contains(map2.get(j))) minCam = mapeado.get(map2.get(j)).size();
 					// Ahora que tenemos el numero minimo de conexiones, se guardan los genes que tienen ese numero de conexiones.
 					ArrayList<Integer> conn2 = new ArrayList<Integer>();
 					for(int j = 0; j < map2.size(); j++)
@@ -102,7 +105,14 @@ public class ERX extends Cruce {
 			if(h1.size() == padre1.getNGenes()) hijo1ok = true;
 			else
 			{
-				camino1 = padre1.getGenes()[0].getAlelo();
+				Random rnd = new Random();
+				if(!blocked1)
+				{
+					camino1 = padre1.getGenes()[0].getAlelo();
+					blocked1 = true;
+				}
+				else
+					camino1 = rnd.nextInt(padre1.getNGenes())+1;
 				h1 = new ArrayList<Integer>();
 				hijo1.getGenes()[0].setAlelo(camino1);
 				h1.add(camino1);
@@ -110,10 +120,17 @@ public class ERX extends Cruce {
 			if(h2.size() == padre2.getNGenes()) hijo2ok = true;
 			else
 			{
-				camino2 = padre2.getGenes()[0].getAlelo();
-				h1 = new ArrayList<Integer>();
-				hijo1.getGenes()[0].setAlelo(camino2);
-				h1.add(camino2);
+				Random rnd = new Random();
+				if(!blocked2)
+				{
+					camino2 = padre2.getGenes()[0].getAlelo();
+					blocked2 = true;
+				}
+				else
+					camino2 = rnd.nextInt(padre2.getNGenes())+1;
+				h2 = new ArrayList<Integer>();
+				hijo2.getGenes()[0].setAlelo(camino2);
+				h2.add(camino2);
 			}
 		}
 	}

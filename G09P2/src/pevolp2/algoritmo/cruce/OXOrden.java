@@ -43,23 +43,6 @@ public class OXOrden extends Cruce {
 			}
 		}
 		Iterator<Integer> it = points.iterator();
-		Iterator<Integer> it1 = al1.iterator();
-		Iterator<Integer> it2 = al2.iterator();
-		/*
-		while(it.hasNext() && it1.hasNext())
-		{
-			int pos = it.next();
-			int posRelativa = it1.next();
-			hijo1.getGenes()[posRelativa].setAlelo(padre1.getGenes()[pos].getAlelo());
-		}
-		it = points.iterator();
-		while(it.hasNext() && it2.hasNext())
-		{
-			int pos = it.next();
-			int posRelativa = it2.next();
-			hijo2.getGenes()[posRelativa].setAlelo(padre2.getGenes()[pos].getAlelo());
-		}
-		*/
 		int pos = -1;
 		boolean used = false;
 		for(int i = 0; i < padre1.getNGenes(); i++)
