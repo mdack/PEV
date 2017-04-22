@@ -11,6 +11,7 @@ import pevolp2.algoritmo.cruce.OX;
 import pevolp2.algoritmo.cruce.OXOrden;
 import pevolp2.algoritmo.cruce.OXPosiciones;
 import pevolp2.algoritmo.cruce.PMX;
+import pevolp2.algoritmo.cruce.Propio;
 import pevolp2.algoritmo.mutacion.Heuristica;
 import pevolp2.algoritmo.mutacion.Insercion;
 import pevolp2.algoritmo.mutacion.Intercambio;
@@ -63,7 +64,12 @@ public class AGenetico {
 		
 		this.poblacion = new Cromosoma[tamPob];
 		int factorial = getFactorial(n); //Cantidad de permutaciones que se podrán utilizar
-		int[][] permutaciones = new int[tamPob*5][n]; //Aquí estarán todas las permutaciones posibles
+		int tam; //Esto es para pruebas
+		if(n == 5)
+			tam = factorial;
+		else
+			tam = tamPob*10;
+		int[][] permutaciones = new int[tam][n]; //Aquí estarán todas las permutaciones posibles
 		int[] aux = new int[n];//Auxiliar que contendrá una permutación 
 		
 		//Inicializamos
@@ -351,7 +357,8 @@ public class AGenetico {
 		}
 		case 7:
 		{
-			// Propio
+			c = new Propio();
+			c.cruzar(padre1, padre2, hijo1, hijo2);
 			break;
 		}
 		}

@@ -51,7 +51,7 @@ public class Heuristica extends Mutacion {
 					crom.getGenes()[lugares[j]].setAlelo(mejor[j]);
 				}
 				
-				crom.setFitness_bruto(pob[i].evalua());
+				crom.setFitness_bruto(crom.evalua());
 				pob[i] = crom.copia();
 				cleanAtributos();
 			}
