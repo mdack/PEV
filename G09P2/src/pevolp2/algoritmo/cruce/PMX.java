@@ -88,8 +88,6 @@ public class PMX extends Cruce {
 			}
 			pos++;
 		}
-		int a = 0;
-		a = 1;
 	}
 
 }

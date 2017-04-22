@@ -72,8 +72,6 @@ public class OXOrden extends Cruce {
 			}
 			if(used) pos = -1;
 		}
-		int a = 0;
-		a = 1;
 	}
 
 }
