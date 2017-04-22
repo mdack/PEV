@@ -115,7 +115,7 @@ public class VistaPrincipal extends JFrame{
 		tproCruce = new JTextField();
 		tproCruce.setText("60");
 		tproMutacion = new JTextField();
-		tproMutacion.setText("50");
+		tproMutacion.setText("10");
 		toperador = new JTextField();
 		toperador.setText("5");
 		
