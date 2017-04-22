@@ -33,6 +33,7 @@ public class Inversion extends Mutacion {
 				{
 					c.getGenes()[j].setAlelo(s.pop());
 				}
+				c.setFitness_bruto(c.evalua());
 				pob[i] = c.copia();
 			}
 		}

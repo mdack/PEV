@@ -44,6 +44,7 @@ public class Insercion extends Mutacion {
 						}
 						c.getGenes()[posicionDondeInsertar].setAlelo(aux);
 					}
+					c.setFitness_bruto(c.evalua());
 					pob[i] = c.copia();
 				}
 			}

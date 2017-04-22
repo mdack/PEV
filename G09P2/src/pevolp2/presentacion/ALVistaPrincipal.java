@@ -79,6 +79,7 @@ public class ALVistaPrincipal{
 			aG.seleccion(tipoSel);
 			aG.reproduccion();
 			aG.mutacion(tmutacion);
+			aG.mutacion(2);
 			if(elitismo){
 				aG.insertaElite();
 			}
