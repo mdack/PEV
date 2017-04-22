@@ -2,6 +2,11 @@ package pevolp2.algoritmo.cruce;
 
 import pevolp2.algoritmo.cromosoma.Cromosoma;
 
+/**
+ * Fija la primera y la ultima posición, 
+ * a partir de eso llena el segmento de genes centra con los genes del otro padre
+ * según su orden y si están o no en el hijo que se está procesando.
+ */
 public class Propio extends Cruce {
 	
 	public Propio() {
