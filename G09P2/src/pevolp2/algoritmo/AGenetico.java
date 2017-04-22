@@ -92,9 +92,9 @@ public class AGenetico {
 			j++;
 		}
 		
-		boolean[] perm = new boolean[factorial]; //Para cromprobar que no se eligan las misma permutaciones
+		boolean[] perm = new boolean[tam]; //Para cromprobar que no se eligan las misma permutaciones
 		int pos;
-		for(int i = 0; i < tamPob && i < factorial; i++){
+		for(int i = 0; i < tamPob && i < tam; i++){
 			poblacion[i] = new CromosomaP2(n);
 			do{ //Se elije al azar una permutación válida
 				pos = (int) (Math.random()*tamPob);
@@ -110,8 +110,8 @@ public class AGenetico {
 			perm[pos] = true;
 		}
 
-	    if(tamPob > factorial){
-	    	for(int k = factorial; k < tamPob; k++){
+	    if(tamPob > tam){
+	    	for(int k = tam; k < tamPob; k++){
 	    		poblacion[k] = new CromosomaP2(n);
 	    	}
 	    }

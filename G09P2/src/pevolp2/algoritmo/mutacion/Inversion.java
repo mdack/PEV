@@ -21,9 +21,9 @@ public class Inversion extends Mutacion {
 			if(p < prob_mutacion)
 			{
 				Cromosoma c = pob[i];
-				int puntoA = rnd.nextInt(c.getLongitud());
-				int puntoB = rnd.nextInt(c.getLongitud() - puntoA);
-				puntoB += puntoA;
+				int puntoA = rnd.nextInt(c.getNGenes());
+				int puntoB = rnd.nextInt(c.getNGenes() - puntoA);
+				puntoB += puntoA+1;
 				Stack<Integer> s = new Stack<Integer>();
 				for(int j = puntoA; j < puntoB; j++)
 				{
