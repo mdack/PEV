@@ -60,32 +60,49 @@ public class AGenetico {
 	}
 	
 	public void inicializar() {
-		this.poblacion = new Cromosoma[tamPob];
-		int factorial = getFactorial(n);
-		int[] genes = new int[n];
-		int i = 1;
-		boolean fin = true;
 		
-		poblacion[0] = new CromosomaP2(n);
-		for(int j = 0; j < n; j++){
-			genes[j] = j+1;
-			poblacion[0].getGenes()[j].setAlelo(j+1);
+		this.poblacion = new Cromosoma[tamPob];
+		int factorial = getFactorial(n); //Cantidad de permutaciones que se podrán utilizar
+		int[][] permutaciones = new int[tamPob*5][n]; //Aquí estarán todas las permutaciones posibles
+		int[] aux = new int[n];//Auxiliar que contendrá una permutación 
+		
+		//Inicializamos
+		for(int i = 0; i < n; i++){
+			aux[i] = i+1;
+			permutaciones[0][i] = i+1;
 		}
 		
-	    while (fin && i < tamPob && i < factorial){
-	    	   Cromosoma crom = new CromosomaP2(n);
-	    	   fin = nextPermutation(genes);
-	    	   for(int j = 0; j < n; j++){
-	    		   crom.getGenes()[j].setAlelo(genes[j]);
-	    	   }
-	    	   crom.setFitness_bruto(crom.evalua());
-	    	   poblacion[i] = crom;
-	    	   i++;
-	    }
-	    
+		//Generamos permutaciones
+		int j = 1;
+		boolean next = true;
+		while(next && j < tamPob){
+			next = nextPermutation(aux);
+			
+			if(next) {
+				for(int k = 0; k < n; k++){
+					permutaciones[j][k] = aux[k];
+				}
+			}
+			j++;
+		}
+		
+		boolean[] perm = new boolean[factorial]; //Para cromprobar que no se eligan las misma permutaciones
+		int pos;
+		for(int i = 0; i < tamPob && i < factorial; i++){
+			poblacion[i] = new CromosomaP2(n);
+			do{ //Se elije al azar una permutación válida
+				pos = (int) (Math.random()*tamPob);
+			}while(perm[pos]);
+			
+			for(int k = 0; k < n; k++){
+				poblacion[i].getGenes()[k].setAlelo(permutaciones[pos][k]);
+			}
+			perm[pos] = true;
+		}
+
 	    if(tamPob > factorial){
-	    	for(int j = i; j < tamPob; j++){
-	    		poblacion[j] = new CromosomaP2(n);
+	    	for(int k = factorial; k < tamPob; k++){
+	    		poblacion[k] = new CromosomaP2(n);
 	    	}
 	    }
 
