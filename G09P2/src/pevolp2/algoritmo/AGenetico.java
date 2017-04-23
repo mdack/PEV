@@ -34,15 +34,23 @@ public class AGenetico {
 	private int tamPob; // Tamaño de la poblacion
 	private int numMaxGen; // Numero maximo de generaciones
 	private Cromosoma elMejor; // Mejor cromosoma de la poblacion
+	private Cromosoma elPeor;
 	private Cromosoma elMejorAbs;
+	private Cromosoma elPeorAbs;
 	private int posMejor; // Posicion en la poblacion
+	private int posPeor;
 	private double probCruce; // Probabilidad de cruce
 	private double probMut; // Probabilidad de mutacion
 	private double probOperador; // Probabilidad de efecto de operador especial
 	private double mejorAbs; // Fitness mejor absoluto.
+	private double peorAbs;
 	private int tamElite;
 	private int tipoCruce;
 	private boolean maximizar;
+	private double sumaMedias;
+	private int totalCruces;
+	private int totalMutaciones;
+	private int totalInversiones;
 	
 	public AGenetico(int poblacion, int generaciones, double porcCruces, double porcMutacion, double porcOperador, boolean elitismo,int arch, int tcruce){
 		tamPob = poblacion;
@@ -62,6 +70,10 @@ public class AGenetico {
 		flujos = m.getFlujo();
 		distancias = m.getDistancias();
 		n = m.getTamano();
+		sumaMedias = 0;
+		totalCruces = 0;
+		totalMutaciones = 0;
+		totalInversiones = 0;
 	}
 	
 	public void inicializar() {
@@ -107,6 +119,7 @@ public class AGenetico {
 		
 		double fitnessBrutoAcum = 0; // Para calcular la media mas tarde.
 		double bestFitness = Double.MAX_VALUE;
+		double worstFitness = Double.MIN_VALUE;
 		double puntAcum = 0;
 
 		for(int i = 0; i < tamPob; i++){
@@ -116,17 +129,27 @@ public class AGenetico {
 				bestFitness = fit;
 				this.posMejor = i;
 			}
+			if(fit > worstFitness){
+				worstFitness = fit;
+				this.posPeor = i;
+			}
 			poblacion[i].setPunt(poblacion[i].getFitness_bruto()/sumaAdap);
 			puntAcum += poblacion[i].getFitness_bruto()/sumaAdap;
 			poblacion[i].setPuntAcum(puntAcum);
 		}
 		this.elMejor = this.poblacion[posMejor].copia();
+		this.elPeor = this.poblacion[posMejor].copia();
 		if(bestFitness < this.mejorAbs) {
 			this.mejorAbs = bestFitness;
 			elMejorAbs = poblacion[posMejor].copia();
 		}
+		if(worstFitness > this.peorAbs){
+			this.peorAbs = worstFitness;
+			this.elPeorAbs = poblacion[posPeor].copia();
+		}
 		
 		media = fitnessBrutoAcum/tamPob;
+		sumaMedias += media;
 		VistaPrincipal.addData(mejorAbs, elMejor.getFitness_bruto(), fitnessBrutoAcum/tamPob);
 		
 		return media;
@@ -152,38 +175,40 @@ public class AGenetico {
 	
 	public void mutacion(int tipo) {
 		Mutacion m;
+		int numMutaciones = 0;
 		switch(tipo){
 		case 0:
 		{
 			m = new Insercion(probMut);
-			m.mutar(poblacion);
+			numMutaciones = m.mutar(poblacion);
 			break;
 		}
 		case 1:
 		{
 			m = new Intercambio(probMut);
-			m.mutar(poblacion);
+			numMutaciones = m.mutar(poblacion);
 			break;
 		}
 		case 2:
 		{
 			m = new Inversion(probMut);
-			m.mutar(poblacion);
+			numMutaciones = m.mutar(poblacion);
 			break;
 		}
 		case 3:
 		{
 			m = new Heuristica(probMut);
-			m.mutar(poblacion);
+			numMutaciones = m.mutar(poblacion);
 			break;
 		}
 		case 4:
 		{
 			m = new MutPropia(probMut);
-			m.mutar(poblacion);
+			numMutaciones = m.mutar(poblacion);
 			break;
 		}
 		}
+		this.totalMutaciones += numMutaciones;
 	}
 	
 	public int getPosMejor(){
@@ -197,19 +222,31 @@ public class AGenetico {
 	public String toString() {
 		String cadena = " ";
 		
-		cadena += "* Mejor de generación: \n";
-		cadena += "  - Permutación: ";
-		cadena += this.elMejor.toString() + "\n";
-		cadena += "  - Coste óptimo: ";
-		cadena += elMejor.getFitness_bruto() + "\n";
-		cadena += "\n";
-		
 		cadena += "* Mejor absoluto: \n";
 		cadena += "  - Permutación: ";
 		cadena += elMejorAbs.toString() + "\n";
 		cadena += "  - Coste óptimo: ";
 		cadena += this.mejorAbs + "\n";
 		cadena += "\n";
+		
+		cadena += "* Peor absoluto: \n";
+		cadena += "  - Permutación: ";
+		cadena += elPeorAbs.toString() + "\n";
+		cadena += "  - Coste óptimo: ";
+		cadena += this.peorAbs + "\n";
+		cadena += "\n";
+		
+		cadena += "Media de fitness: \n";
+		cadena += this.sumaMedias/this.numMaxGen + "\n\n";
+		
+		cadena += "Numero total de cruces: \n";
+		cadena += this.totalCruces + "\n\n";
+		
+		cadena += "Numero total de mutaciones: \n";
+		cadena += this.totalMutaciones + "\n\n";
+		
+		cadena += "Numero total de inversiones: \n";
+		cadena += this.totalInversiones + "\n\n";
 		
 		return cadena;
 	}
@@ -282,6 +319,7 @@ public class AGenetico {
 			cruce(poblacion[padre1], poblacion[padre2], hijo1, hijo2, tipoCruce);
 			nuevaPob[padre1] = hijo1.copia();
 			nuevaPob[padre2] = hijo2.copia();
+			this.totalCruces++;
 		}
 		for(int i = 0; i < tamPob; i++)
 		{
@@ -360,6 +398,7 @@ public class AGenetico {
 			double p = rnd.nextDouble();
 			if(p < probOperador)
 			{
+				totalInversiones++;
 				Cromosoma c = poblacion[i];
 				int puntoA = rnd.nextInt(c.getNGenes());
 				int puntoB = rnd.nextInt(c.getNGenes() - puntoA);

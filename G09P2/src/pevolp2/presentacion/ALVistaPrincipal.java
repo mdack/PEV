@@ -72,10 +72,10 @@ public class ALVistaPrincipal{
 		aG.evaluar();
 		for(int i = 0; i < aG.getNumMaxGen(); i++)
 		{	
-			cadena += "--------------------------------------------------------------\n";
-			cadena += ("* Generación " + (i+1) + "\n");
-			cadena += "--------------------------------------------------------------\n";
-			cadena += aG.toString();
+//			cadena += "--------------------------------------------------------------\n";
+//			cadena += ("* Generación " + (i+1) + "\n");
+//			cadena += "--------------------------------------------------------------\n";
+//			cadena += aG.toString();
 			if(elitismo){
 				aG.seleccionaElite();
 			}
@@ -88,6 +88,7 @@ public class ALVistaPrincipal{
 			}
 			aG.evaluar();
 		}
+		cadena += aG.toString();
 		VistaPrincipal.addText(cadena);
 	}
 }

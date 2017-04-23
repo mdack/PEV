@@ -10,12 +10,14 @@ public class Intercambio extends Mutacion {
 	}
 
 	@Override
-	public void mutar(Cromosoma[] pob) {
+	public int mutar(Cromosoma[] pob) {
+		int mutaciones = 0;
 		double prob;
 		for(int i = 0; i < pob.length; i++){
 			prob = Math.random();
 			
 			if(prob < prob_mutacion){
+				mutaciones++;
 				Cromosoma crom = pob[i];
 				
 				int pos1 = (int) (Math.random()*crom.getNGenes());
@@ -33,6 +35,7 @@ public class Intercambio extends Mutacion {
 				pob[i] = crom.copia();
 			}
 		}
+		return mutaciones;
 	}
 
 }

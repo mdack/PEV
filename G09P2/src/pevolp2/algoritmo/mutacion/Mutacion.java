@@ -10,5 +10,5 @@ public abstract class Mutacion {
 		this.prob_mutacion = prob;
 	}
 	
-	public abstract void mutar(Cromosoma[] poblacion);
+	public abstract int mutar(Cromosoma[] poblacion);
 }

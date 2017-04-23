@@ -18,13 +18,15 @@ public class MutPropia extends Mutacion {
 	}
 
 	@Override
-	public void mutar(Cromosoma[] pob) {
+	public int mutar(Cromosoma[] pob) {
+		int mutaciones = 0;
 		Random rnd = new Random();
 		for(int i = 0; i < pob.length; i++)
 		{
 			double p = rnd.nextDouble();
 			if(p < prob_mutacion)
 			{
+				mutaciones++;
 				Cromosoma c = pob[i];
 				int puntoA = rnd.nextInt(c.getNGenes());
 				int puntoB = rnd.nextInt(c.getNGenes() - puntoA);
@@ -62,6 +64,7 @@ public class MutPropia extends Mutacion {
 				pob[i].setFitness_bruto(pob[i].evalua());
 			}
 		}
+		return mutaciones;
 	}
 
 }
