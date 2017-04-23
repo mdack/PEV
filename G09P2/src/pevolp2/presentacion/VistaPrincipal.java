@@ -174,7 +174,7 @@ public class VistaPrincipal extends JFrame{
 				mejoresAbs = null;
 				mejoresGen = null;
 				mediasGen = null;
-				new ALVistaPrincipal(tnGen, ttamPob, tproCruce, tproMutacion, cseleccion, celitismo, cFuncion, cmutacion, ccruce).action();
+				new ALVistaPrincipal(tnGen, ttamPob, tproCruce, tproMutacion, toperador, cseleccion, celitismo, cFuncion, cmutacion, ccruce).action();
 				plot.setFixedBounds(0, 0, Integer.parseInt(tnGen.getText()));
 			}
 		});

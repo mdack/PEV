@@ -37,16 +37,18 @@ public class AGenetico {
 	private int posMejor; // Posicion en la poblacion
 	private double probCruce; // Probabilidad de cruce
 	private double probMut; // Probabilidad de mutacion
+	private double probOperador; // Probabilidad de efecto de operador especial
 	private double mejorAbs; // Fitness mejor absoluto.
 	private int tamElite;
 	private int tipoCruce;
 	private boolean maximizar;
 	
-	public AGenetico(int poblacion, int generaciones, double porcCruces, double porcMutacion, boolean elitismo,int arch, int tcruce){
+	public AGenetico(int poblacion, int generaciones, double porcCruces, double porcMutacion, double porcOperador, boolean elitismo,int arch, int tcruce){
 		tamPob = poblacion;
 		numMaxGen = generaciones;
 		probCruce = porcCruces;
 		probMut = porcMutacion;
+		probOperador = porcOperador;
 		tipoCruce = tcruce;
 		maximizar = false;
 		mejorAbs = Double.MAX_VALUE;
@@ -393,6 +395,11 @@ public class AGenetico {
 		}
 		hijo1 = hijo1.copia();
 		hijo2 = hijo2.copia();
+	}
+	
+	public void operadorEspecial(){
+		Mutacion m = new Inversion(probOperador);
+		m.mutar(poblacion);
 	}
 	
     public static int getFactorial (int n){

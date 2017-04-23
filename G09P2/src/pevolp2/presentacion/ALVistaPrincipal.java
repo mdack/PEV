@@ -12,19 +12,22 @@ public class ALVistaPrincipal{
 	int tmutacion, tcruce;
 	double probCruce;
 	double probMutacion;
+	double probOperador;
 	boolean elitismo = true;
 	
-	public ALVistaPrincipal(JTextField tnGen, JTextField ttamPob, JTextField tproCruce, JTextField tproMutacion, JComboBox<String> cseleccion,JComboBox<String> celitismo,   JComboBox<String> cfuncion, JComboBox<String> cmutacion, JComboBox<String> ccruce) {
+	public ALVistaPrincipal(JTextField tnGen, JTextField ttamPob, JTextField tproCruce, JTextField tproMutacion, JTextField tOperador, JComboBox<String> cseleccion,JComboBox<String> celitismo,   JComboBox<String> cfuncion, JComboBox<String> cmutacion, JComboBox<String> ccruce) {
 		try{
 			nGeneracion = Integer.parseInt(tnGen.getText());
 			tamPoblacion = Integer.parseInt(ttamPob.getText());
 			probCruce = Double.parseDouble(tproCruce.getText());
+			probOperador = Double.parseDouble(tOperador.getText());
 			
-			if(probCruce < 100 && probCruce >= 0){
+			if(probCruce <= 100 && probCruce >= 0 && probOperador <= 100 && probOperador >= 0){
 				probMutacion = Double.parseDouble(tproMutacion.getText());
-				if(probMutacion < 100 && probMutacion >= 0){
+				if(probMutacion <= 100 && probMutacion >= 0){
 					probCruce = probCruce/100;
 					probMutacion = probMutacion/100;
+					probOperador = probOperador/100;
 					if(celitismo.getSelectedIndex() == 0){
 						elitismo = false;
 					}
@@ -36,14 +39,14 @@ public class ALVistaPrincipal{
 				}else{
 					JOptionPane.showMessageDialog(new JFrame(),
 						    "El porcentaje debe de ser entre 0 y 100%",
-						    "Probabilidad de Cruce incorrecta",
+						    "Probabilidad incorrecta",
 						    JOptionPane.ERROR_MESSAGE);
 				}
 			}
 			else{
 				JOptionPane.showMessageDialog(new JFrame(),
 					    "El porcentaje debe de ser entre 0 y 100%",
-					    "Probabilidad de Cruce incorrecta",
+					    "Probabilidad incorrecta",
 					    JOptionPane.ERROR_MESSAGE);
 			}
 			
@@ -56,7 +59,7 @@ public class ALVistaPrincipal{
 	}
 
 	public void action() {
-		AGenetico AG = new AGenetico(tamPoblacion, nGeneracion, probCruce, probMutacion, elitismo, funcion, tcruce);
+		AGenetico AG = new AGenetico(tamPoblacion, nGeneracion, probCruce, probMutacion, probOperador, elitismo, funcion, tcruce);
 
 		algoritmoGenetico(AG);
 	}
@@ -79,7 +82,7 @@ public class ALVistaPrincipal{
 			aG.seleccion(tipoSel);
 			aG.reproduccion();
 			aG.mutacion(tmutacion);
-			aG.mutacion(2);
+			aG.operadorEspecial();
 			if(elitismo){
 				aG.insertaElite();
 			}
