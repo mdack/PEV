@@ -63,59 +63,82 @@ public class AGenetico {
 	public void inicializar() {
 		
 		this.poblacion = new Cromosoma[tamPob];
-		int factorial = getFactorial(n); //Cantidad de permutaciones que se podrán utilizar
-		int tam; //Esto es para pruebas
-		if(n == 5)
-			tam = factorial;
-		else
-			tam = tamPob*10;
-		int[][] permutaciones = new int[tam][n]; //Aquí estarán todas las permutaciones posibles
-		int[] aux = new int[n];//Auxiliar que contendrá una permutación 
-		
-		//Inicializamos
-		for(int i = 0; i < n; i++){
-			aux[i] = i+1;
-			permutaciones[0][i] = i+1;
-		}
-		
-		//Generamos permutaciones
-		int j = 1;
-		boolean next = true;
-		while(next && j < tamPob){
-			next = nextPermutation(aux);
-			
-			if(next) {
-				for(int k = 0; k < n; k++){
-					permutaciones[j][k] = aux[k];
-				}
-			}
-			j++;
-		}
-		
-		boolean[] perm = new boolean[tam]; //Para cromprobar que no se eligan las misma permutaciones
-		int pos;
-		for(int i = 0; i < tamPob && i < tam; i++){
-			poblacion[i] = new CromosomaP2(n);
-			do{ //Se elije al azar una permutación válida
-				pos = (int) (Math.random()*tamPob);
-			}while(perm[pos]);
-			
-			//Se copia la permutacion elegida en los genes de ese cromosoma 
-			for(int k = 0; k < n; k++){
-				poblacion[i].getGenes()[k].setAlelo(permutaciones[pos][k]);
-			}
-			//recalculamos el fitness
-			poblacion[i].setFitness_bruto(poblacion[i].evalua());
-			//marcamos esa posicion a true para no volver a coger esa permutacion
-			perm[pos] = true;
-		}
+//		int factorial = getFactorial(n); //Cantidad de permutaciones que se podrán utilizar
+//		int tam; //Esto es para pruebas
+//		if(n == 5)
+//			tam = factorial;
+//		else
+//			tam = tamPob*10;
+//		int[][] permutaciones = new int[tam][n]; //Aquí estarán todas las permutaciones posibles
+//		int[] aux = new int[n];//Auxiliar que contendrá una permutación 
+//		
+//		//Inicializamos
+//		for(int i = 0; i < n; i++){
+//			aux[i] = i+1;
+//			permutaciones[0][i] = i+1;
+//		}
+//		
+//		//Generamos permutaciones
+//		int j = 1;
+//		boolean next = true;
+//		while(next && j < tamPob){
+//			next = nextPermutation(aux);
+//			
+//			if(next) {
+//				for(int k = 0; k < n; k++){
+//					permutaciones[j][k] = aux[k];
+//				}
+//			}
+//			j++;
+//		}
+//		
+//		boolean[] perm = new boolean[factorial/3]; //Para cromprobar que no se eligan las misma permutaciones
+//		int pos;
+//		for(int i = 0; i < tamPob && i < tam; i++){
+//			poblacion[i] = new CromosomaP2(n);
+//			do{ //Se elije al azar una permutación válida
+//				pos = (int) (Math.random()*tamPob);
+//			}while(perm[pos]);
+//			
+//			//Se copia la permutacion elegida en los genes de ese cromosoma 
+//			for(int k = 0; k < n; k++){
+//				poblacion[i].getGenes()[k].setAlelo(permutaciones[pos][k]);
+//			}
+//			//recalculamos el fitness
+//			poblacion[i].setFitness_bruto(poblacion[i].evalua());
+//			//marcamos esa posicion a true para no volver a coger esa permutacion
+//			perm[pos] = true;
+//		}
+		poblacion[0] = new CromosomaP2(n);
+    	for(int k = 1; k < tamPob; k++){
+    		Cromosoma c = new CromosomaP2(n);
+    		
+    		while(buscaIndividuo(c)){
+    			c = new CromosomaP2(n);
+    		}
+    		
+    		poblacion[k] = c.copia();
+    		
+    	}
 
-	    if(tamPob > tam){
-	    	for(int k = tam; k < tamPob; k++){
-	    		poblacion[k] = new CromosomaP2(n);
-	    	}
-	    }
 
+	}
+
+	private boolean buscaIndividuo(Cromosoma c) {
+		boolean enc = false;
+		int i = 0;
+		int j = 0;
+		while(i < tamPob && !enc && poblacion[i] != null){
+			enc = true;
+			while(j < n && enc){
+				if(c.getGenes()[j].getAlelo() != poblacion[i].getGenes()[j].getAlelo()) enc = false;    
+				j++;
+			}
+			i++;
+			j = 0;
+			
+		}
+		return enc;
 	}
 
 	public double evaluar(){
