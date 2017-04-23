@@ -1,9 +1,9 @@
 package pevolp2.algoritmo.cruce;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import pevolp2.algoritmo.cromosoma.Cromosoma;
+import pevolp2.algoritmo.cromosoma.CromosomaP2;
 
 public class ERX extends Cruce {
 
@@ -34,147 +34,88 @@ public class ERX extends Cruce {
 			if(index2 + 1 < padre2.getNGenes() && !mapGen.contains(padre2.getGenes()[index2+1].getAlelo())) mapGen.add(padre2.getGenes()[index2+1].getAlelo());
 			mapeado.set(i, mapGen);
 		}
-		int camino1 = padre2.getGenes()[0].getAlelo();
-		int camino2 = padre1.getGenes()[0].getAlelo();
-		hijo1.getGenes()[0].setAlelo(camino1);
-		h1.add(camino1);
-		hijo2.getGenes()[0].setAlelo(camino2);
-		h2.add(camino2);
-		boolean hijo1ok = false;
-		boolean hijo2ok = false;
-		boolean blocked1 = false;
-		boolean blocked2 = false;
-		boolean limit1 = false;
-		boolean limit2 = false;
-		while(!hijo1ok || !hijo2ok)
-		{
-			for(int i = 1; i < padre1.getNGenes(); i++)
-			{
-				if(!hijo1ok)
-				{
-					// Hijo 1
-					int minCam = Integer.MAX_VALUE;
-					ArrayList<Integer> map1 = mapeado.get(camino1);
-					for(int j = 0; j < map1.size(); j++) 
-						if(mapeado.get(map1.get(j)).size() < minCam && !h1.contains(map1.get(j))) minCam = mapeado.get(map1.get(j)).size();
-					// Ahora que tenemos el numero minimo de conexiones se guardan los genes que tienen ese numero de conexiones.
-					ArrayList<Integer> conn1 = new ArrayList<Integer>();
-					for(int j = 0; j < map1.size(); j++)
-						if(mapeado.get(map1.get(j)).size() == minCam && !h1.contains(map1.get(j))) conn1.add(map1.get(j));
-					if(conn1.size() == 0){
-						hijo1ok = false;
-						h1.clear();
-					}
-					if(conn1.size() == 1) 
-					{
-						if(!h1.contains(conn1.get(0)))
-						{
-							hijo1.getGenes()[i].setAlelo(conn1.get(0));
-							h1.add(conn1.get(0));
-							camino1 = conn1.get(0);
-						}
-					}
-					else if(conn1.size() > 1)
-					{
-						Random rnd = new Random();
-						int ind = rnd.nextInt(conn1.size());
-						int vueltas = 0;
-						while(!h1.contains(conn1.get(ind)) && vueltas < conn1.size()*2){
-							ind = rnd.nextInt(conn1.size());
-							vueltas++;
-						}
-						if(!h1.contains(conn1.get(ind)))
-						{
-							hijo1.getGenes()[i].setAlelo(conn1.get(ind));
-							h1.add(conn1.get(ind));
-							camino1 = conn1.get(ind);
-						}
-					}
-				}
-				if(!hijo2ok)
-				{
-					// Hijo 2
-					int minCam = Integer.MAX_VALUE;
-					ArrayList<Integer> map2 = mapeado.get(camino2);
-					for(int j = 0; j < map2.size(); j++) 
-						if(mapeado.get(map2.get(j)).size() < minCam && !h2.contains(map2.get(j))) minCam = mapeado.get(map2.get(j)).size();
-					// Ahora que tenemos el numero minimo de conexiones, se guardan los genes que tienen ese numero de conexiones.
-					ArrayList<Integer> conn2 = new ArrayList<Integer>();
-					for(int j = 0; j < map2.size(); j++)
-						if(mapeado.get(map2.get(j)).size() == minCam && !h2.contains(map2.get(j))) conn2.add(map2.get(j));
-					if(conn2.size() == 0){
-						h2.clear();
-						hijo2ok = false;
-					}
-					else if(conn2.size() == 1) 
-					{
-						if(!h2.contains(conn2.get(0)))
-						{
-							hijo2.getGenes()[i].setAlelo(conn2.get(0));
-							h2.add(conn2.get(0));
-							camino2 = conn2.get(0);
-						}
-					}
-					else if(conn2.size() > 1)
-					{
-						Random rnd = new Random();
-						int ind = rnd.nextInt(conn2.size());
-						int vueltas = 0;
-						while(!h2.contains(conn2.get(ind)) && vueltas < conn2.size()*2){
-							ind = rnd.nextInt(conn2.size());
-							vueltas++;
-						}
-						if(!h2.contains(conn2.get(ind)))
-						{
-							hijo2.getGenes()[i].setAlelo(conn2.get(ind));
-							h2.add(conn2.get(ind));
-							camino2 = conn2.get(ind);
-						}
-					}
-				}
-			}
-			// Comprueba que no ha habido bloqueos; si hubo bloqueo, empieza por el otro gen
-			if(h1.size() == padre1.getNGenes()) hijo1ok = true;
-			else
-			{
-				if(!blocked1)
-				{
-					camino1 = padre1.getGenes()[0].getAlelo();
-					blocked1 = true;
-				}
-				else
-				{
-					hijo1ok = true;
-					hijo1 = padre1.copia();
-				}
-				h1 = new ArrayList<Integer>();
-				if(!hijo1ok)
-					hijo1.getGenes()[0].setAlelo(camino1);
-				h1.add(camino1);
-			}
-			if(h2.size() == padre2.getNGenes()) hijo2ok = true;
-			else
-			{
-				if(!blocked2)
-				{
-					camino2 = padre2.getGenes()[0].getAlelo();
-					blocked2 = true;
-				}
-				else
-				{
-					hijo2ok = true;
-					hijo2 = padre2.copia();
-				}
-				h2 = new ArrayList<Integer>();
-				if(!hijo2ok)
-					hijo2.getGenes()[0].setAlelo(camino2);
-				h2.add(camino2);
+		
+		boolean[] posiciones = new boolean[mapeado.size()]; //Controlar no coger elementos ya usados
+		ArrayList<Integer> conexiones = mapeado.get(padre1.getGenes()[0].getAlelo()); //conexion que se va a analizar
+		posiciones[padre1.getGenes()[0].getAlelo()] = true;
+		h1.add(padre1.getGenes()[0].getAlelo());
+		int cont = 0;
+		int elem;
+		boolean fin = false;
+		
+		while(cont < padre1.getNGenes()-1 && !fin){
+		
+			elem = obtieneSiguiente(posiciones, conexiones, mapeado);
+			if(elem != 0){
+				h1.add(elem);
+				posiciones[elem] = true;
+				conexiones = mapeado.get(elem);
+				cont++;
+			}else{
+				fin = true;
 			}
 		}
-		hijo1.setFitness_bruto(hijo1.evalua());
-		hijo2.setFitness_bruto(hijo2.evalua());
-//		hijo1 = hijo1.copia();
-//		hijo2 = hijo2.copia();
+		
+		if(fin){
+			hijo1 = new CromosomaP2(padre1.getNGenes());
+		}else{
+			llenaHijo(h1, hijo1);
+		}
+		
+		posiciones = new boolean[mapeado.size()];
+		conexiones = mapeado.get(padre2.getGenes()[0].getAlelo());
+		posiciones[padre2.getGenes()[0].getAlelo()] = true;
+		h2.add(padre2.getGenes()[0].getAlelo());
+		cont = 0;
+		elem = 0;
+		fin = false;
+		
+		while(cont < padre1.getNGenes()-1 && !fin){
+			
+			elem = obtieneSiguiente(posiciones, conexiones, mapeado);
+			if(elem != 0){
+				h2.add(elem);
+				posiciones[elem] = true;
+				conexiones = mapeado.get(elem);
+				cont++;
+			}else{
+				fin = true;
+			}
+		}
+		
+		if(fin){
+			hijo2 = new CromosomaP2(padre2.getNGenes());
+		}else{
+			llenaHijo(h2, hijo2);
+		}
+				
+	}
+
+	private void llenaHijo(ArrayList<Integer> h, Cromosoma hijo) {
+		
+		for(int i = 0; i < h.size(); i++){
+			hijo.getGenes()[i].setAlelo(h.get(i));
+		}
+		
+		hijo.setFitness_bruto(hijo.evalua());
+		
+	}
+
+	private int obtieneSiguiente(boolean[] posiciones, ArrayList<Integer> conexiones, ArrayList<ArrayList<Integer>> mapeado) {
+		int size = 5000;
+		int p = 0;
+		
+		for(int i = 0; i < conexiones.size(); i++){
+			if(!posiciones[conexiones.get(i)]){ //Si esa posicion en la tabla no ha sido ya utilizada se coge
+				if(mapeado.get(conexiones.get(i)).size() < size){ //Si el tamaño de es el más pequeño se coge
+					p = conexiones.get(i);
+					size = mapeado.get(conexiones.get(i)).size();
+				}
+			}
+		}
+		
+		
+		return p;
 	}
 
 }
