@@ -16,6 +16,7 @@ import pevolp2.algoritmo.mutacion.Heuristica;
 import pevolp2.algoritmo.mutacion.Insercion;
 import pevolp2.algoritmo.mutacion.Intercambio;
 import pevolp2.algoritmo.mutacion.Inversion;
+import pevolp2.algoritmo.mutacion.MutPropia;
 import pevolp2.algoritmo.mutacion.Mutacion;
 import pevolp2.algoritmo.seleccion.Estocastico;
 import pevolp2.algoritmo.seleccion.Ruleta;
@@ -220,7 +221,8 @@ public class AGenetico {
 		}
 		case 4:
 		{
-			// Propio
+			m = new MutPropia(probMut);
+			m.mutar(poblacion);
 			break;
 		}
 		}
@@ -389,6 +391,8 @@ public class AGenetico {
 			break;
 		}
 		}
+		hijo1 = hijo1.copia();
+		hijo2 = hijo2.copia();
 	}
 	
     public static int getFactorial (int n){

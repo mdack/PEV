@@ -81,7 +81,7 @@ public class VistaPrincipal extends JFrame{
 	}
 
 	private void initComponents() {
-		this.setTitle("Practica 1 - PEV");
+		this.setTitle("Practica 2 - PEV");
 		this.setResizable(false);
 		this.setMinimumSize(new Dimension(1200,650));	
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);	
@@ -121,6 +121,7 @@ public class VistaPrincipal extends JFrame{
 		
 		//combos
 		cFuncion = new JComboBox<String>();
+		cFuncion.addItem("Prueba");
 		cFuncion.addItem("Datos 12");
 		cFuncion.addItem("Datos 15");
 		cFuncion.addItem("Datos 30");
