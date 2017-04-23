@@ -44,8 +44,8 @@ public class ERX extends Cruce {
 		boolean hijo2ok = false;
 		boolean blocked1 = false;
 		boolean blocked2 = false;
-		int limit1 = 0;
-		int limit2 = 0;
+		boolean limit1 = false;
+		boolean limit2 = false;
 		while(!hijo1ok || !hijo2ok)
 		{
 			for(int i = 1; i < padre1.getNGenes(); i++)
@@ -61,6 +61,10 @@ public class ERX extends Cruce {
 					ArrayList<Integer> conn1 = new ArrayList<Integer>();
 					for(int j = 0; j < map1.size(); j++)
 						if(mapeado.get(map1.get(j)).size() == minCam && !h1.contains(map1.get(j))) conn1.add(map1.get(j));
+					if(conn1.size() == 0){
+						hijo1ok = false;
+						h1.clear();
+					}
 					if(conn1.size() == 1) 
 					{
 						if(!h1.contains(conn1.get(0)))
@@ -98,7 +102,11 @@ public class ERX extends Cruce {
 					ArrayList<Integer> conn2 = new ArrayList<Integer>();
 					for(int j = 0; j < map2.size(); j++)
 						if(mapeado.get(map2.get(j)).size() == minCam && !h2.contains(map2.get(j))) conn2.add(map2.get(j));
-					if(conn2.size() == 1) 
+					if(conn2.size() == 0){
+						h2.clear();
+						hijo2ok = false;
+					}
+					else if(conn2.size() == 1) 
 					{
 						if(!h2.contains(conn2.get(0)))
 						{
@@ -129,7 +137,6 @@ public class ERX extends Cruce {
 			if(h1.size() == padre1.getNGenes()) hijo1ok = true;
 			else
 			{
-				Random rnd = new Random();
 				if(!blocked1)
 				{
 					camino1 = padre1.getGenes()[0].getAlelo();
@@ -137,16 +144,8 @@ public class ERX extends Cruce {
 				}
 				else
 				{
-					if(limit1 < 10)
-					{
-						camino1 = rnd.nextInt(padre1.getNGenes())+1;
-						limit1++;
-					}
-					else
-					{
-						hijo1ok = true;
-						hijo1 = padre1.copia();
-					}
+					hijo1ok = true;
+					hijo1 = padre1.copia();
 				}
 				h1 = new ArrayList<Integer>();
 				if(!hijo1ok)
@@ -156,7 +155,6 @@ public class ERX extends Cruce {
 			if(h2.size() == padre2.getNGenes()) hijo2ok = true;
 			else
 			{
-				Random rnd = new Random();
 				if(!blocked2)
 				{
 					camino2 = padre2.getGenes()[0].getAlelo();
@@ -164,16 +162,8 @@ public class ERX extends Cruce {
 				}
 				else
 				{
-					if(limit2 < 10)
-					{
-						camino2 = rnd.nextInt(padre2.getNGenes())+1;
-						limit2++;
-					}
-					else
-					{
-						hijo2ok = true;
-						hijo2 = padre2.copia();
-					}
+					hijo2ok = true;
+					hijo2 = padre2.copia();
 				}
 				h2 = new ArrayList<Integer>();
 				if(!hijo2ok)
