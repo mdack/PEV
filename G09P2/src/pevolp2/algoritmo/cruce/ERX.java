@@ -171,8 +171,10 @@ public class ERX extends Cruce {
 				h2.add(camino2);
 			}
 		}
-		hijo1 = hijo1.copia();
-		hijo2 = hijo2.copia();
+		hijo1.setFitness_bruto(hijo1.evalua());
+		hijo2.setFitness_bruto(hijo2.evalua());
+//		hijo1 = hijo1.copia();
+//		hijo2 = hijo2.copia();
 	}
 
 }

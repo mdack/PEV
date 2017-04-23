@@ -72,6 +72,8 @@ public class OXOrden extends Cruce {
 			}
 			if(used) pos = -1;
 		}
+		hijo1.setFitness_bruto(hijo1.evalua());
+		hijo2.setFitness_bruto(hijo2.evalua());
 	}
 
 }

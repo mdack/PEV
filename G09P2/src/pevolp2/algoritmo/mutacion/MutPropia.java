@@ -58,6 +58,8 @@ public class MutPropia extends Mutacion {
 				double fitFinal = cFinal.evalua();
 				if(fitPrincipio < fitFinal) pob[i] = cPrincipio.copia();
 				else pob[i] = cFinal.copia();
+				
+				pob[i].setFitness_bruto(pob[i].evalua());
 			}
 		}
 	}
