@@ -88,6 +88,8 @@ public class PMX extends Cruce {
 			}
 			pos++;
 		}
+		hijo1.setFitness_bruto(hijo1.evalua());
+		hijo2.setFitness_bruto(hijo2.evalua());
 	}
 
 }
