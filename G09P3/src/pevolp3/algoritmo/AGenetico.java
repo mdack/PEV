@@ -3,25 +3,9 @@ import java.util.Random;
 import java.util.Stack;
 
 import pevolp3.algoritmo.cromosoma.Cromosoma;
-import pevolp3.algoritmo.cromosoma.CromosomaP2;
-import pevolp3.algoritmo.cruce.CX;
-import pevolp3.algoritmo.cruce.CodOrdinal;
+import pevolp3.algoritmo.cromosoma.CromosomaP3;
 import pevolp3.algoritmo.cruce.Cruce;
-import pevolp3.algoritmo.cruce.ERX;
-import pevolp3.algoritmo.cruce.OX;
-import pevolp3.algoritmo.cruce.OXOrden;
-import pevolp3.algoritmo.cruce.OXPosiciones;
-import pevolp3.algoritmo.cruce.PMX;
-import pevolp3.algoritmo.cruce.Propio;
-import pevolp3.algoritmo.mutacion.Heuristica;
-import pevolp3.algoritmo.mutacion.Insercion;
-import pevolp3.algoritmo.mutacion.Intercambio;
-import pevolp3.algoritmo.mutacion.Inversion;
-import pevolp3.algoritmo.mutacion.MutPropia;
 import pevolp3.algoritmo.mutacion.Mutacion;
-import pevolp3.algoritmo.seleccion.Estocastico;
-import pevolp3.algoritmo.seleccion.Ruleta;
-import pevolp3.algoritmo.seleccion.Torneo;
 import pevolp3.presentacion.VistaPrincipal;
 //hola
 public class AGenetico {
@@ -66,10 +50,6 @@ public class AGenetico {
 			elite = new Cromosoma[tamElite];
 		}
 	
-		Matrices m = new Matrices(arch);
-		flujos = m.getFlujo();
-		distancias = m.getDistancias();
-		n = m.getTamano();
 		sumaMedias = 0;
 		totalCruces = 0;
 		totalMutaciones = 0;
@@ -80,12 +60,12 @@ public class AGenetico {
 		
 		this.poblacion = new Cromosoma[tamPob];
 
-		poblacion[0] = new CromosomaP2(n);
+		poblacion[0] = new CromosomaP3(n);
     	for(int k = 1; k < tamPob; k++){
-    		Cromosoma c = new CromosomaP2(n);
+    		Cromosoma c = new CromosomaP3(n);
     		
     		while(buscaIndividuo(c)){
-    			c = new CromosomaP2(n);
+    			c = new CromosomaP3(n);
     		}
     		
     		poblacion[k] = c.copia();
@@ -174,36 +154,36 @@ public class AGenetico {
 	}
 	
 	public void mutacion(int tipo) {
-		Mutacion m;
+		Mutacion m = null;
 		int numMutaciones = 0;
 		switch(tipo){
 		case 0:
 		{
-			m = new Insercion(probMut);
+//			m = new Insercion(probMut);
 			numMutaciones = m.mutar(poblacion);
 			break;
 		}
 		case 1:
 		{
-			m = new Intercambio(probMut);
+//			m = new Intercambio(probMut);
 			numMutaciones = m.mutar(poblacion);
 			break;
 		}
 		case 2:
 		{
-			m = new Inversion(probMut);
+//			m = new Inversion(probMut);
 			numMutaciones = m.mutar(poblacion);
 			break;
 		}
 		case 3:
 		{
-			m = new Heuristica(probMut);
+//			m = new Heuristica(probMut);
 			numMutaciones = m.mutar(poblacion);
 			break;
 		}
 		case 4:
 		{
-			m = new MutPropia(probMut);
+//			m = new MutPropia(probMut);
 			numMutaciones = m.mutar(poblacion);
 			break;
 		}
@@ -284,11 +264,11 @@ public class AGenetico {
 	
 	public void seleccion(int tipo) {
 		if(tipo == 0){
-			poblacion = new Ruleta().selecciona(poblacion, tamPob);
+//			poblacion = new Ruleta().selecciona(poblacion, tamPob);
 		}else if(tipo == 1){
-			poblacion = new Estocastico().selecciona(poblacion, tamPob);
+//			poblacion = new Estocastico().selecciona(poblacion, tamPob);
 		}else{
-			poblacion = new Torneo(tipo).selecciona(poblacion, tamPob);
+//			poblacion = new Torneo(tipo).selecciona(poblacion, tamPob);
 		}
 	}
 
@@ -330,59 +310,59 @@ public class AGenetico {
 	}
 		
 	private Cromosoma nuevoCromosoma() {
-		return new CromosomaP2(n);
+		return new CromosomaP3(n);
 	}
 
 	private void cruce(Cromosoma padre1, Cromosoma padre2, Cromosoma hijo1, Cromosoma hijo2, int tipo)
 	{
-		Cruce c;
+		Cruce c = null;
 		switch(tipo)
 		{
 		case 0:
 		{
-			c = new PMX();
+//			c = new PMX();
 			c.cruzar(padre1, padre2, hijo1, hijo2);
 			break;
 		}
 		case 1:
 		{
-			c = new OX();
+//			c = new OX();
 			c.cruzar(padre1, padre2, hijo1, hijo2);
 			break;
 		}
 		case 2:
 		{
-			c = new OXPosiciones();
+//			c = new OXPosiciones();
 			c.cruzar(padre1, padre2, hijo1, hijo2);
 			break;
 		}
 		case 3:
 		{
-			c = new OXOrden();
+//			c = new OXOrden();
 			c.cruzar(padre1, padre2, hijo1, hijo2);
 			break;
 		}
 		case 4:
 		{
-			c = new CX();
+//			c = new CX();
 			c.cruzar(padre1, padre2, hijo1, hijo2);
 			break;
 		}
 		case 5:
 		{
-			c = new ERX();
+//			c = new ERX();
 			c.cruzar(padre1, padre2, hijo1, hijo2);
 			break;
 		}
 		case 6:
 		{
-			c = new CodOrdinal();
+//			c = new CodOrdinal();
 			c.cruzar(padre1, padre2, hijo1, hijo2);
 			break;
 		}
 		case 7:
 		{
-			c = new Propio();
+//			c = new Propio();
 			c.cruzar(padre1, padre2, hijo1, hijo2);
 			break;
 		}
@@ -406,7 +386,7 @@ public class AGenetico {
 				Stack<Integer> s = new Stack<Integer>();
 				for(int j = puntoA; j < puntoB; j++)
 				{
-					s.push(c.getGenes()[j].getAlelo());
+//					s.push(c.getGenes()[j].getAlelo());
 				}
 				for(int j = puntoA; j < puntoB; j++)
 				{
