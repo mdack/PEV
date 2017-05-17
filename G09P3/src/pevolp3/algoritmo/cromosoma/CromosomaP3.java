@@ -11,7 +11,6 @@ public class CromosomaP3 extends Cromosoma {
 
 	@Override
 	public double fenotipo(int pos) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
