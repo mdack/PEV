@@ -118,6 +118,86 @@ public class Arbol{
 		}
 	}
 	
+	public void inicializacionCreciente(int p){
+		
+		if(p < profundidad){
+			Random rnd = new Random();
+			int func = 0;
+			
+			if(useIF){
+				func = rnd.nextInt(Cromosoma.funciones.length);
+			}else{
+				func = rnd.nextInt(Cromosoma.funciones.length-1);
+			}
+			
+			this.valor = Cromosoma.funciones[func];
+			creaHijos(p);
+		}else{
+			Random rnd = new Random();
+			int terminal;
+			terminal = rnd.nextInt(Cromosoma.terminales.length);
+			valor = Cromosoma.terminales[terminal];
+			numHijos = 0;
+		}
+	}
+	
+	private void inicializacionCrecienteAux(int p){
+		
+		if(p < profundidad){
+			Random rnd = new Random();
+			int rango;
+			
+			if(useIF){
+				rango = Cromosoma.funciones.length + Cromosoma.terminales.length;
+				
+				int pos = rnd.nextInt(rango);
+				
+				if(pos >= Cromosoma.funciones.length){
+					pos -= Cromosoma.funciones.length;
+					valor = Cromosoma.terminales[pos];
+					
+				}else{
+					valor = Cromosoma.funciones[pos];
+					creaHijos(p);
+				}
+			}
+			else{
+				rango = Cromosoma.funciones.length + Cromosoma.terminales.length - 1;
+				
+				int pos = rnd.nextInt(rango);
+				
+				if(pos >= (Cromosoma.funciones.length-1)){
+					pos -= Cromosoma.funciones.length;
+					valor = Cromosoma.terminales[pos];
+				}else{
+					valor = Cromosoma.funciones[pos];
+					creaHijos(p);
+				}
+			}
+		}
+		else{
+			Random rnd = new Random();
+			int terminal;
+			terminal = rnd.nextInt(Cromosoma.terminales.length);
+			valor = Cromosoma.terminales[terminal];
+			numHijos = 0;
+		}
+	}
+
+	private void creaHijos(int p) {
+		int nHijos = 2;
+		if(valor.equals("IF")) nHijos = 3;
+		if(valor.equals("NOT")) nHijos = 1;
+		
+		for(int i = 0; i < nHijos; i++){
+			Arbol hijo = new Arbol(profundidad, useIF);
+			hijo.setPadre(this);
+			hijo.inicializacionCrecienteAux(p+1);
+			hijos.add(hijo);
+			numHijos++;
+		}
+	}
+	
 //	private void inicializar(Arbol a, int termRestantes){
 //		Random rnd = new Random();
 //		for(int i = 0; i < termRestantes; i++)
