@@ -9,32 +9,35 @@ import pevolp3.algoritmo.AGenetico;
 public class ALVistaPrincipal{
 	
 	int nGeneracion, tamPoblacion, funcion,tipoSel;
-	int tmutacion, tcruce;
+	int tmutacion;
+	int tCreacion;
 	double probCruce;
 	double probMutacion;
-	double probOperador;
 	boolean elitismo = true;
+	boolean funIf = true;
 	
-	public ALVistaPrincipal(JTextField tnGen, JTextField ttamPob, JTextField tproCruce, JTextField tproMutacion, JTextField tOperador, JComboBox<String> cseleccion,JComboBox<String> celitismo,   JComboBox<String> cfuncion, JComboBox<String> cmutacion, JComboBox<String> ccruce) {
+	public ALVistaPrincipal(JTextField tnGen, JTextField ttamPob, JTextField tproCruce, JTextField tproMutacion, JComboBox<String> cif, JComboBox<String> cseleccion,JComboBox<String> celitismo,   JComboBox<String> cfuncion, JComboBox<String> cmutacion, JComboBox<String> ccreacion) {
 		try{
 			nGeneracion = Integer.parseInt(tnGen.getText());
 			tamPoblacion = Integer.parseInt(ttamPob.getText());
 			probCruce = Double.parseDouble(tproCruce.getText());
-			probOperador = Double.parseDouble(tOperador.getText());
 			
-			if(probCruce <= 100 && probCruce >= 0 && probOperador <= 100 && probOperador >= 0){
+			
+			if(probCruce <= 100 && probCruce >= 0){
 				probMutacion = Double.parseDouble(tproMutacion.getText());
 				if(probMutacion <= 100 && probMutacion >= 0){
 					probCruce = probCruce/100;
 					probMutacion = probMutacion/100;
-					probOperador = probOperador/100;
 					if(celitismo.getSelectedIndex() == 0){
 						elitismo = false;
+					}
+					if(cif.getSelectedIndex() == 0){
+						funIf = false;
 					}
 					tipoSel = cseleccion.getSelectedIndex();
 					funcion = cfuncion.getSelectedIndex();
 					tmutacion = cmutacion.getSelectedIndex();
-					tcruce = ccruce.getSelectedIndex();
+					tCreacion = ccreacion.getSelectedIndex();
 					
 				}else{
 					JOptionPane.showMessageDialog(new JFrame(),
@@ -59,9 +62,9 @@ public class ALVistaPrincipal{
 	}
 
 	public void action() {
-		AGenetico AG = new AGenetico(tamPoblacion, nGeneracion, probCruce, probMutacion, probOperador, elitismo, funcion, tcruce);
-
-		algoritmoGenetico(AG);
+//		AGenetico AG = new AGenetico(tamPoblacion, nGeneracion, probCruce, probMutacion, funIf, elitismo, funcion, tCreacion);
+//
+//		algoritmoGenetico(AG);
 	}
 
 	private void algoritmoGenetico(AGenetico aG) {

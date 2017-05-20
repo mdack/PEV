@@ -13,9 +13,9 @@ public class VistaPrincipal extends JFrame{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JLabel lnGen, ltamPob, lproCruce, lproMutacion, lfuncion, lelitismo, lseleccion, ltipoMut, ltipoCruce, loperador;
-	private JTextField tnGen, ttamPob, tproCruce, tproMutacion, toperador;
-	private JComboBox<String> cFuncion, cseleccion, celitismo, cmutacion, ccruce;
+	private JLabel lnGen, ltamPob, lproCruce, lproMutacion, lfuncion, lelitismo, lseleccion, ltipoMut, lif, ltipoCreacion;
+	private JTextField tnGen, ttamPob, tproCruce, tproMutacion;
+	private JComboBox<String> cFuncion, cseleccion, celitismo, cmutacion, cif, ccreacion;
 	private JButton button;
 	private static JTextArea area;
 	private JScrollPane scroll;
@@ -81,7 +81,7 @@ public class VistaPrincipal extends JFrame{
 	}
 
 	private void initComponents() {
-		this.setTitle("Practica 2 - PEV");
+		this.setTitle("Practica 3 - PEV");
 		this.setResizable(false);
 		this.setMinimumSize(new Dimension(1200,650));	
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);	
@@ -100,12 +100,12 @@ public class VistaPrincipal extends JFrame{
 		ltamPob = new JLabel("Tamaño de la Población:");
 		lproCruce = new JLabel("Probabilidad de cruce:");
 		lproMutacion = new JLabel("Probabilidad de Mutación:");
-		lfuncion = new JLabel("Datos a optimizar:");
+		lfuncion = new JLabel("Tipo de multiplexor:");
 		lseleccion = new JLabel("Tipo de selección");
 		lelitismo = new JLabel("Selección por elitismo");	
 		ltipoMut = new JLabel("Tipo mutación: ");
-		ltipoCruce = new JLabel("Tipo cruce: ");
-		loperador = new JLabel("Porcentaje operador: ");
+		lif = new JLabel("¿Función IF?: ");
+		ltipoCreacion = new JLabel("Creación de árboles:");
 	
 		//texto
 		tnGen = new JTextField();
@@ -116,16 +116,12 @@ public class VistaPrincipal extends JFrame{
 		tproCruce.setText("60");
 		tproMutacion = new JTextField();
 		tproMutacion.setText("10");
-		toperador = new JTextField();
-		toperador.setText("5");
+
 		
 		//combos
 		cFuncion = new JComboBox<String>();
-		cFuncion.addItem("Prueba");
-		cFuncion.addItem("Datos 12");
-		cFuncion.addItem("Datos 15");
-		cFuncion.addItem("Datos 30");
-
+		cFuncion.addItem("6 Entradas");
+		cFuncion.addItem("11 Entradas");
 		
 	
 		cseleccion = new JComboBox<String>();
@@ -139,21 +135,18 @@ public class VistaPrincipal extends JFrame{
 		celitismo.addItem("Si");
 		
 		cmutacion = new JComboBox<String>();
-		cmutacion.addItem("Inserción");
-		cmutacion.addItem("Intercambio");
-		cmutacion.addItem("Inversión");
-		cmutacion.addItem("Heurística");
-		cmutacion.addItem("Propio");
+		cmutacion.addItem("Funcional");
+		cmutacion.addItem("Terminal");
+		cmutacion.addItem("Permutación");
+				
+		cif = new JComboBox<String>();
+		cif.addItem("No");
+		cif.addItem("Si");
 		
-		ccruce = new JComboBox<String>();
-		ccruce.addItem("PMX");
-		ccruce.addItem("OX");
-		ccruce.addItem("OX-Posiciones");
-		ccruce.addItem("OX-Orden");
-		ccruce.addItem("CX");
-		ccruce.addItem("ERX");
-		ccruce.addItem("Codificación Ordinal");
-		ccruce.addItem("Propio");
+		ccreacion = new JComboBox<String>();
+		ccreacion.addItem("Creciente");
+		ccreacion.addItem("Completa");
+		ccreacion.addItem("Ramped H&H");
 		
 		//Grafica
 		plot = new Plot2DPanel();
@@ -174,7 +167,7 @@ public class VistaPrincipal extends JFrame{
 				mejoresAbs = null;
 				mejoresGen = null;
 				mediasGen = null;
-				new ALVistaPrincipal(tnGen, ttamPob, tproCruce, tproMutacion, toperador, cseleccion, celitismo, cFuncion, cmutacion, ccruce).action();
+				new ALVistaPrincipal(tnGen, ttamPob, tproCruce, tproMutacion, cif, cseleccion, celitismo, cFuncion, cmutacion, ccreacion).action();
 				plot.setFixedBounds(0, 0, Integer.parseInt(tnGen.getText()));
 			}
 		});
@@ -194,7 +187,7 @@ public class VistaPrincipal extends JFrame{
 	}
 
 	private void addWest() {
-		panelW.setLayout(new GridLayout(10, 2, 20, 20));
+		panelW.setLayout(new GridLayout(10, 2, 30, 30));
 		panelW.setBorder(BorderFactory.createTitledBorder("Parámetros"));
 		
 		panelW.add(lnGen);
@@ -202,24 +195,24 @@ public class VistaPrincipal extends JFrame{
 		
 		panelW.add(ltamPob);
 		panelW.add(ttamPob);
+				
+		panelW.add(lfuncion);
+		panelW.add(cFuncion);
 		
-		panelW.add(ltipoCruce);
-		panelW.add(ccruce);
+		panelW.add(lif);
+		panelW.add(cif);
 		
-		panelW.add(lproCruce);
-		panelW.add(tproCruce);
+		panelW.add(ltipoCreacion);
+		panelW.add(ccreacion);
 		
 		panelW.add(ltipoMut);
 		panelW.add(cmutacion);
 		
+		panelW.add(lproCruce);
+		panelW.add(tproCruce);
+		
 		panelW.add(lproMutacion);
 		panelW.add(tproMutacion);
-		
-		panelW.add(loperador);
-		panelW.add(toperador);
-
-		panelW.add(lfuncion);
-		panelW.add(cFuncion);
 		
 		panelW.add(lseleccion);
 		panelW.add(cseleccion);
