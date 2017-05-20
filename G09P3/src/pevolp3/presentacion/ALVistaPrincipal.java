@@ -62,9 +62,9 @@ public class ALVistaPrincipal{
 	}
 
 	public void action() {
-//		AGenetico AG = new AGenetico(tamPoblacion, nGeneracion, probCruce, probMutacion, funIf, elitismo, funcion, tCreacion);
-//
-//		algoritmoGenetico(AG);
+		AGenetico AG = new AGenetico(tamPoblacion, nGeneracion, probCruce, probMutacion, elitismo, funcion, tmutacion, tCreacion, funIf);
+
+		algoritmoGenetico(AG);
 	}
 
 	private void algoritmoGenetico(AGenetico aG) {
@@ -85,7 +85,7 @@ public class ALVistaPrincipal{
 			aG.seleccion(tipoSel);
 			aG.reproduccion();
 			aG.mutacion(tmutacion);
-			aG.operadorEspecial();
+
 			if(elitismo){
 				aG.insertaElite();
 			}

@@ -3,16 +3,16 @@ import java.util.Random;
 import java.util.Stack;
 
 import pevolp3.algoritmo.cromosoma.Cromosoma;
-import pevolp3.algoritmo.cromosoma.CromosomaP3;
 import pevolp3.algoritmo.cruce.Cruce;
 import pevolp3.algoritmo.mutacion.Mutacion;
+import pevolp3.algoritmo.seleccion.Estocastico;
+import pevolp3.algoritmo.seleccion.Ruleta;
+import pevolp3.algoritmo.seleccion.Torneo;
 import pevolp3.presentacion.VistaPrincipal;
-//hola
+
 public class AGenetico {
 	
-	private static int[][] flujos;
-	private static int[][] distancias;
-	private static int n;
+	private static final int PROFUNDIDAD = 2;
 	
 	private Cromosoma[] poblacion, elite; // Poblacion
 	private int tamPob; // Tamaño de la poblacion
@@ -29,22 +29,24 @@ public class AGenetico {
 	private double mejorAbs; // Fitness mejor absoluto.
 	private double peorAbs;
 	private int tamElite;
-	private int tipoCruce;
+	private int tipoCreacion;
+	private int tipoMultiplexor;
 	private boolean maximizar;
+	private boolean useIF;
 	private double sumaMedias;
 	private int totalCruces;
 	private int totalMutaciones;
 	private int totalInversiones;
 	
-	public AGenetico(int poblacion, int generaciones, double porcCruces, double porcMutacion, double porcOperador, boolean elitismo,int arch, int tcruce){
+	public AGenetico(int poblacion, int generaciones, double porcCruces, double porcMutacion, boolean elitismo, int multiplexor, int tmutacion,int tinicializacion, boolean useIf){
 		tamPob = poblacion;
 		numMaxGen = generaciones;
 		probCruce = porcCruces;
 		probMut = porcMutacion;
-		probOperador = porcOperador;
-		tipoCruce = tcruce;
 		maximizar = false;
 		mejorAbs = Double.MAX_VALUE;
+		tipoCreacion = tinicializacion;
+		tipoMultiplexor = multiplexor;
 		if(elitismo){
 			tamElite = (int) (tamPob * 0.02);
 			elite = new Cromosoma[tamElite];
@@ -54,20 +56,16 @@ public class AGenetico {
 		totalCruces = 0;
 		totalMutaciones = 0;
 		totalInversiones = 0;
+		useIF = useIf;
 	}
 	
 	public void inicializar() {
 		
 		this.poblacion = new Cromosoma[tamPob];
 
-		poblacion[0] = new CromosomaP3(n);
+		poblacion[0] = new Cromosoma(PROFUNDIDAD, tipoCreacion, useIF);
     	for(int k = 1; k < tamPob; k++){
-    		Cromosoma c = new CromosomaP3(n);
-    		
-    		while(buscaIndividuo(c)){
-    			c = new CromosomaP3(n);
-    		}
-    		
+    		Cromosoma c = new Cromosoma(PROFUNDIDAD, tipoCreacion, useIF);   		
     		poblacion[k] = c.copia();
     		
     	}
@@ -75,22 +73,6 @@ public class AGenetico {
 
 	}
 
-	private boolean buscaIndividuo(Cromosoma c) {
-		boolean enc = false;
-		int i = 0;
-		int j = 0;
-		while(i < tamPob && !enc && poblacion[i] != null){
-			enc = true;
-			while(j < n && enc){
-				if(c.getGenes()[j].getAlelo() != poblacion[i].getGenes()[j].getAlelo()) enc = false;    
-				j++;
-			}
-			i++;
-			j = 0;
-			
-		}
-		return enc;
-	}
 
 	public double evaluar(){
 		double sumaAdap;
@@ -264,11 +246,11 @@ public class AGenetico {
 	
 	public void seleccion(int tipo) {
 		if(tipo == 0){
-//			poblacion = new Ruleta().selecciona(poblacion, tamPob);
+			poblacion = new Ruleta().selecciona(poblacion, tamPob);
 		}else if(tipo == 1){
-//			poblacion = new Estocastico().selecciona(poblacion, tamPob);
+			poblacion = new Estocastico().selecciona(poblacion, tamPob);
 		}else{
-//			poblacion = new Torneo(tipo).selecciona(poblacion, tamPob);
+			poblacion = new Torneo(tipo).selecciona(poblacion, tamPob);
 		}
 	}
 
@@ -278,8 +260,8 @@ public class AGenetico {
 		
 		int numSelCruce = 0;
 		double prob;
-		Cromosoma hijo1 = nuevoCromosoma();
-		Cromosoma hijo2 = nuevoCromosoma();
+		Cromosoma hijo1 = new Cromosoma(PROFUNDIDAD, tipoCreacion, useIF);
+		Cromosoma hijo2 = new Cromosoma(PROFUNDIDAD, tipoCreacion, useIF);
 		Random rnd = new Random();
 		
 		for(int i = 0; i < tamPob; i++){
@@ -296,7 +278,7 @@ public class AGenetico {
 		{
 			int padre1 = selCruce[i];
 			int padre2 = selCruce[i+1];
-			cruce(poblacion[padre1], poblacion[padre2], hijo1, hijo2, tipoCruce);
+			//cruce(poblacion[padre1], poblacion[padre2], hijo1, hijo2, tipoCruce);
 			nuevaPob[padre1] = hijo1.copia();
 			nuevaPob[padre2] = hijo2.copia();
 			this.totalCruces++;
@@ -309,116 +291,38 @@ public class AGenetico {
 			poblacion[i] = nuevaPob[i].copia();
 	}
 		
-	private Cromosoma nuevoCromosoma() {
-		return new CromosomaP3(n);
-	}
 
 	private void cruce(Cromosoma padre1, Cromosoma padre2, Cromosoma hijo1, Cromosoma hijo2, int tipo)
 	{
 		Cruce c = null;
-		switch(tipo)
-		{
-		case 0:
-		{
-//			c = new PMX();
-			c.cruzar(padre1, padre2, hijo1, hijo2);
-			break;
-		}
-		case 1:
-		{
-//			c = new OX();
-			c.cruzar(padre1, padre2, hijo1, hijo2);
-			break;
-		}
-		case 2:
-		{
-//			c = new OXPosiciones();
-			c.cruzar(padre1, padre2, hijo1, hijo2);
-			break;
-		}
-		case 3:
-		{
-//			c = new OXOrden();
-			c.cruzar(padre1, padre2, hijo1, hijo2);
-			break;
-		}
-		case 4:
-		{
-//			c = new CX();
-			c.cruzar(padre1, padre2, hijo1, hijo2);
-			break;
-		}
-		case 5:
-		{
-//			c = new ERX();
-			c.cruzar(padre1, padre2, hijo1, hijo2);
-			break;
-		}
-		case 6:
-		{
-//			c = new CodOrdinal();
-			c.cruzar(padre1, padre2, hijo1, hijo2);
-			break;
-		}
-		case 7:
-		{
-//			c = new Propio();
-			c.cruzar(padre1, padre2, hijo1, hijo2);
-			break;
-		}
-		}
-		hijo1 = hijo1.copia();
-		hijo2 = hijo2.copia();
 	}
 	
-	public void operadorEspecial(){
-		Random rnd = new Random();
-		for(int i = 0; i < poblacion.length; i++)
-		{
-			double p = rnd.nextDouble();
-			if(p < probOperador)
-			{
-				totalInversiones++;
-				Cromosoma c = poblacion[i];
-				int puntoA = rnd.nextInt(c.getNGenes());
-				int puntoB = rnd.nextInt(c.getNGenes() - puntoA);
-				puntoB += puntoA+1;
-				Stack<Integer> s = new Stack<Integer>();
-				for(int j = puntoA; j < puntoB; j++)
-				{
-//					s.push(c.getGenes()[j].getAlelo());
-				}
-				for(int j = puntoA; j < puntoB; j++)
-				{
-					c.getGenes()[j].setAlelo(s.pop());
-				}
-				c.setFitness_bruto(c.evalua());
-				if(c.getFitness_bruto() < poblacion[i].getFitness_bruto())
-					poblacion[i] = c.copia();
-			}
-		}
-	}
-	
-    public static int getFactorial (int n){
-		int result;
-		
-		if(n==1||n==0)
-			return 1;
- 
-		result = getFactorial(n-1)*n;
-		return result;
-	}
-
-	public boolean isMaximizar() {
-		return maximizar;
-	}
-
-	public static int[][] getFlujos() {
-		return flujos;
-	}
-
-	public static int[][] getDistancias() {
-		return distancias;
-	}
+//	public void operadorEspecial(){
+//		Random rnd = new Random();
+//		for(int i = 0; i < poblacion.length; i++)
+//		{
+//			double p = rnd.nextDouble();
+//			if(p < probOperador)
+//			{
+//				totalInversiones++;
+//				Cromosoma c = poblacion[i];
+//				int puntoA = rnd.nextInt(c.getNGenes());
+//				int puntoB = rnd.nextInt(c.getNGenes() - puntoA);
+//				puntoB += puntoA+1;
+//				Stack<Integer> s = new Stack<Integer>();
+//				for(int j = puntoA; j < puntoB; j++)
+//				{
+////					s.push(c.getGenes()[j].getAlelo());
+//				}
+//				for(int j = puntoA; j < puntoB; j++)
+//				{
+//					c.getGenes()[j].setAlelo(s.pop());
+//				}
+//				c.setFitness_bruto(c.evalua());
+//				if(c.getFitness_bruto() < poblacion[i].getFitness_bruto())
+//					poblacion[i] = c.copia();
+//			}
+//		}
+//	}
 
 }
