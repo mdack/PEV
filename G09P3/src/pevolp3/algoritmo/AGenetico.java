@@ -62,13 +62,17 @@ public class AGenetico {
 	public void inicializar() {
 		
 		this.poblacion = new Cromosoma[tamPob];
-
-		poblacion[0] = new Cromosoma(PROFUNDIDAD, tipoCreacion, useIF);
-    	for(int k = 1; k < tamPob; k++){
-    		Cromosoma c = new Cromosoma(PROFUNDIDAD, tipoCreacion, useIF);   		
-    		poblacion[k] = c.copia();
-    		
-    	}
+		
+		if(tipoCreacion != 2){
+			poblacion[0] = new Cromosoma(PROFUNDIDAD, tipoCreacion, useIF);
+	    	for(int k = 1; k < tamPob; k++){
+	    		Cromosoma c = new Cromosoma(PROFUNDIDAD, tipoCreacion, useIF);   		
+	    		poblacion[k] = c.copia();
+	    		
+	    	}
+		}else{
+			//Aquí inicialización por Ramped Half-and-Half
+		}
 
 
 	}

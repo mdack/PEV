@@ -16,7 +16,15 @@ public class Cromosoma {
 	
 	public Cromosoma(int profundidad, int tipoCreacion, boolean useIf) {
 		arbol = new Arbol(profundidad, useIf);
-		arbol.inicializacionCompleta(0);
+		switch(tipoCreacion){
+		case 0:
+			arbol.inicializacionCreciente(0);
+			break;
+		case 1:
+			arbol.inicializacionCompleta(0);
+			break;
+		}
+
 	}
 	public double getFitness() {
 		return fitness;
