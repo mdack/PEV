@@ -129,6 +129,7 @@ public class Arbol{
 }
 	
 	public void inicializacionCreciente(int p){
+		int n = 0;
 		
 		if(p < profundidad){
 			Random rnd = new Random();
@@ -141,7 +142,7 @@ public class Arbol{
 			}
 			
 			this.valor = Cromosoma.funciones[func];
-			creaHijos(p);
+			n = creaHijos(p, n);
 		}else{
 			Random rnd = new Random();
 			int terminal;
@@ -149,9 +150,11 @@ public class Arbol{
 			valor = Cromosoma.terminales[terminal];
 			numHijos = 0;
 		}
+		numNodos = n;
 	}
 	
-	private void inicializacionCrecienteAux(int p){
+	private int inicializacionCrecienteAux(int p, int nodos){
+		int n = nodos;		
 		
 		if(p < profundidad){
 			Random rnd = new Random();
@@ -168,7 +171,7 @@ public class Arbol{
 					
 				}else{
 					valor = Cromosoma.funciones[pos];
-					creaHijos(p);
+					n = creaHijos(p, n);
 				}
 			}
 			else{
@@ -181,7 +184,7 @@ public class Arbol{
 					valor = Cromosoma.terminales[pos];
 				}else{
 					valor = Cromosoma.funciones[pos];
-					creaHijos(p);
+					n = creaHijos(p, n);
 				}
 			}
 		}
@@ -192,20 +195,25 @@ public class Arbol{
 			valor = Cromosoma.terminales[terminal];
 			numHijos = 0;
 		}
+		return n;
 	}
 
-	private void creaHijos(int p) {
+	private int creaHijos(int p, int nodos) {
+		int n = nodos;
 		int nHijos = 2;
+		
 		if(valor.equals("IF")) nHijos = 3;
 		if(valor.equals("NOT")) nHijos = 1;
 		
 		for(int i = 0; i < nHijos; i++){
 			Arbol hijo = new Arbol(profundidad, useIF);
 			hijo.setPadre(this);
-			hijo.inicializacionCrecienteAux(p+1);
+			n++;
+			n = hijo.inicializacionCrecienteAux(p+1, n);
 			hijos.add(hijo);
 			numHijos++;
 		}
+		return n;
 	}
 	
 	/**
