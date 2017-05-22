@@ -108,6 +108,7 @@ public class Arbol{
 		for(int i = 0; i < nHijos; i++){
 			Arbol hijo = new Arbol(profundidad, useIF);
 			hijo.setPadre(this);
+			esRaiz = true;
 			n++;
 			n = hijo.inicializacionCompleta(p+1, n);
 			hijos.add(hijo);
@@ -120,10 +121,11 @@ public class Arbol{
 		this.setEsHoja(true);
 		terminal = rnd.nextInt(Cromosoma.terminales.length);
 		valor = Cromosoma.terminales[terminal];
+		esHoja = true;
 		numHijos = 0;
 	}
 	
-	numNodos = n;
+	setNumNodos(n);
 	
 	return n;
 }
@@ -142,15 +144,17 @@ public class Arbol{
 			}
 			
 			this.valor = Cromosoma.funciones[func];
+			esRaiz = true;
 			n = creaHijos(p, n);
 		}else{
 			Random rnd = new Random();
 			int terminal;
 			terminal = rnd.nextInt(Cromosoma.terminales.length);
 			valor = Cromosoma.terminales[terminal];
+			esHoja = true;
 			numHijos = 0;
 		}
-		numNodos = n;
+		setNumNodos(n);
 	}
 	
 	private int inicializacionCrecienteAux(int p, int nodos){
@@ -168,9 +172,11 @@ public class Arbol{
 				if(pos >= Cromosoma.funciones.length){
 					pos -= Cromosoma.funciones.length;
 					valor = Cromosoma.terminales[pos];
+					esHoja = true;
 					
 				}else{
 					valor = Cromosoma.funciones[pos];
+					esRaiz = true;
 					n = creaHijos(p, n);
 				}
 			}
@@ -182,8 +188,10 @@ public class Arbol{
 				if(pos >= (Cromosoma.funciones.length-1)){
 					pos -= Cromosoma.funciones.length;
 					valor = Cromosoma.terminales[pos];
+					esHoja = true;
 				}else{
 					valor = Cromosoma.funciones[pos];
+					esRaiz = true;
 					n = creaHijos(p, n);
 				}
 			}
@@ -193,8 +201,10 @@ public class Arbol{
 			int terminal;
 			terminal = rnd.nextInt(Cromosoma.terminales.length);
 			valor = Cromosoma.terminales[terminal];
+			esHoja = true;
 			numHijos = 0;
 		}
+		setNumNodos(n);
 		return n;
 	}
 
@@ -221,7 +231,7 @@ public class Arbol{
 	 * @param hijos Hijos del árbol a analizar
 	 * @param nodos Array donde se guardan los terminales
 	 */
-	private void getTerminales(ArrayList<Arbol> hijos, ArrayList<Arbol> nodos) {
+	public void getTerminales(ArrayList<Arbol> hijos, ArrayList<Arbol> nodos) {
 		
 		for(int i = 0; i < hijos.size(); i++){
 			if(hijos.get(i).isEsHoja()){
@@ -232,12 +242,38 @@ public class Arbol{
 		}
 	}
 	
+	public void insertTerminal(Arbol terminal, int index, int pos){
+		for(int i = 0; i < hijos.size(); i++){
+			if(hijos.get(i).isEsHoja() && (pos == index)){
+				hijos.set(i, terminal);
+			}else if(hijos.get(i).esHoja && (pos != index)){
+				pos++;
+				insertTerminal(terminal, index, pos);
+			}else{
+				insertTerminal(terminal, index, pos);
+			}
+		}
+	}
+	
+	public void insertFuncion(Arbol terminal, int index, int pos){
+		for(int i = 0; i < hijos.size(); i++){
+			if(hijos.get(i).esRaiz && (pos == index)){
+				hijos.set(i, terminal);
+			}else if(hijos.get(i).esRaiz && (pos != index)){
+				pos++;
+				insertTerminal(terminal, index, pos);
+			}else{
+				insertTerminal(terminal, index, pos);
+			}
+		}
+	}
+	
 	/**
 	 * Devuelve los nodos internos del árbol
 	 * @param hijos Hijos del árbol a analizar
 	 * @param nodos Array donde se guardan las funciones
 	 */
-	private void getFunciones(ArrayList<Arbol> hijos, ArrayList<Arbol> nodos) {
+	public void getFunciones(ArrayList<Arbol> hijos, ArrayList<Arbol> nodos) {
 		
 		for(int i = 0; i < hijos.size(); i++){
 			if(hijos.get(i).isEsRaiz()){
@@ -262,6 +298,14 @@ public class Arbol{
 
 	public void setEsRaiz(boolean esRaiz) {
 		this.esRaiz = esRaiz;
+	}
+
+	public int getNumNodos() {
+		return numNodos;
+	}
+
+	public void setNumNodos(int numNodos) {
+		this.numNodos = numNodos;
 	}
 
 	
