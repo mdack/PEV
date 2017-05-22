@@ -12,7 +12,7 @@ import pevolp3.presentacion.VistaPrincipal;
 
 public class AGenetico {
 	
-	private static final int PROFUNDIDAD = 2;
+	private static int PROFUNDIDAD;
 	
 	private Cromosoma[] poblacion, elite; // Poblacion
 	private int tamPob; // Tamaño de la poblacion
@@ -38,7 +38,7 @@ public class AGenetico {
 	private int totalMutaciones;
 	private int totalInversiones;
 	
-	public AGenetico(int poblacion, int generaciones, double porcCruces, double porcMutacion, boolean elitismo, int multiplexor, int tmutacion,int tinicializacion, boolean useIf){
+	public AGenetico(int poblacion, int generaciones, double porcCruces, double porcMutacion, boolean elitismo, int multiplexor, int tmutacion,int tinicializacion, boolean useIf, int profundidad){
 		tamPob = poblacion;
 		numMaxGen = generaciones;
 		probCruce = porcCruces;
@@ -57,6 +57,7 @@ public class AGenetico {
 		totalMutaciones = 0;
 		totalInversiones = 0;
 		useIF = useIf;
+		PROFUNDIDAD = profundidad;
 	}
 	
 	public void inicializar() {

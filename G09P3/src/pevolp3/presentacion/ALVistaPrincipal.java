@@ -15,13 +15,14 @@ public class ALVistaPrincipal{
 	double probMutacion;
 	boolean elitismo = true;
 	boolean funIf = true;
+	int profundidad;
 	
-	public ALVistaPrincipal(JTextField tnGen, JTextField ttamPob, JTextField tproCruce, JTextField tproMutacion, JComboBox<String> cif, JComboBox<String> cseleccion,JComboBox<String> celitismo,   JComboBox<String> cfuncion, JComboBox<String> cmutacion, JComboBox<String> ccreacion) {
+	public ALVistaPrincipal(JTextField tprofundidad, JTextField tnGen, JTextField ttamPob, JTextField tproCruce, JTextField tproMutacion, JComboBox<String> cif, JComboBox<String> cseleccion,JComboBox<String> celitismo,   JComboBox<String> cfuncion, JComboBox<String> cmutacion, JComboBox<String> ccreacion) {
 		try{
 			nGeneracion = Integer.parseInt(tnGen.getText());
 			tamPoblacion = Integer.parseInt(ttamPob.getText());
 			probCruce = Double.parseDouble(tproCruce.getText());
-			
+			profundidad = Integer.parseInt(tprofundidad.getText());
 			
 			if(probCruce <= 100 && probCruce >= 0){
 				probMutacion = Double.parseDouble(tproMutacion.getText());
@@ -62,7 +63,7 @@ public class ALVistaPrincipal{
 	}
 
 	public void action() {
-		AGenetico AG = new AGenetico(tamPoblacion, nGeneracion, probCruce, probMutacion, elitismo, funcion, tmutacion, tCreacion, funIf);
+		AGenetico AG = new AGenetico(tamPoblacion, nGeneracion, probCruce, probMutacion, elitismo, funcion, tmutacion, tCreacion, funIf, profundidad);
 
 		algoritmoGenetico(AG);
 	}

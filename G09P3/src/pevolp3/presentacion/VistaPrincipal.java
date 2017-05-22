@@ -13,8 +13,8 @@ public class VistaPrincipal extends JFrame{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JLabel lnGen, ltamPob, lproCruce, lproMutacion, lfuncion, lelitismo, lseleccion, ltipoMut, lif, ltipoCreacion;
-	private JTextField tnGen, ttamPob, tproCruce, tproMutacion;
+	private JLabel lnGen, ltamPob, lproCruce, lproMutacion, lfuncion, lelitismo, lseleccion, ltipoMut, lif, ltipoCreacion, lprofundidad;
+	private JTextField tnGen, ttamPob, tproCruce, tproMutacion, tProfundidad;
 	private JComboBox<String> cFuncion, cseleccion, celitismo, cmutacion, cif, ccreacion;
 	private JButton button;
 	private static JTextArea area;
@@ -106,6 +106,7 @@ public class VistaPrincipal extends JFrame{
 		ltipoMut = new JLabel("Tipo mutación: ");
 		lif = new JLabel("¿Función IF?: ");
 		ltipoCreacion = new JLabel("Creación de árboles:");
+		lprofundidad = new JLabel("Máxima Profundidad: ");
 	
 		//texto
 		tnGen = new JTextField();
@@ -116,6 +117,8 @@ public class VistaPrincipal extends JFrame{
 		tproCruce.setText("60");
 		tproMutacion = new JTextField();
 		tproMutacion.setText("10");
+		this.tProfundidad = new JTextField();
+		tProfundidad.setText("4");
 
 		
 		//combos
@@ -167,7 +170,7 @@ public class VistaPrincipal extends JFrame{
 				mejoresAbs = null;
 				mejoresGen = null;
 				mediasGen = null;
-				new ALVistaPrincipal(tnGen, ttamPob, tproCruce, tproMutacion, cif, cseleccion, celitismo, cFuncion, cmutacion, ccreacion).action();
+				new ALVistaPrincipal(tProfundidad, tnGen, ttamPob, tproCruce, tproMutacion, cif, cseleccion, celitismo, cFuncion, cmutacion, ccreacion).action();
 				plot.setFixedBounds(0, 0, Integer.parseInt(tnGen.getText()));
 			}
 		});
@@ -187,7 +190,7 @@ public class VistaPrincipal extends JFrame{
 	}
 
 	private void addWest() {
-		panelW.setLayout(new GridLayout(10, 2, 30, 30));
+		panelW.setLayout(new GridLayout(11, 2, 25, 25));
 		panelW.setBorder(BorderFactory.createTitledBorder("Parámetros"));
 		
 		panelW.add(lnGen);
@@ -204,6 +207,9 @@ public class VistaPrincipal extends JFrame{
 		
 		panelW.add(ltipoCreacion);
 		panelW.add(ccreacion);
+		
+		panelW.add(lprofundidad);
+		panelW.add(tProfundidad);
 		
 		panelW.add(ltipoMut);
 		panelW.add(cmutacion);
