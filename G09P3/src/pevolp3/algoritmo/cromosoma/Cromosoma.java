@@ -23,7 +23,7 @@ public class Cromosoma {
 			arbol.inicializacionCreciente(0);
 			break;
 		case 1:
-			arbol.inicializacionCompleta(0);
+			arbol.inicializacionCompleta(0,0);
 			break;
 		}
 
