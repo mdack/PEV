@@ -72,7 +72,30 @@ public class AGenetico {
 	    		
 	    	}
 		}else{
-			//Aquí inicialización por Ramped Half-and-Half
+			int grupos = PROFUNDIDAD - 1;
+			int prof = 2;
+			int tamGrupo = tamPob/grupos;
+			int primGrupo = 0;
+			int ultGrupo = 0;
+			int mitadGrupo = 0;
+			int k = 0;
+			for(int i = 0; i < grupos; i++){
+				primGrupo = k;
+				ultGrupo = tamGrupo * (i+1);
+				mitadGrupo = tamGrupo / 2 + primGrupo;
+				while(k < ultGrupo){
+					if(k <= mitadGrupo){
+						Cromosoma c = new Cromosoma(prof, 0, useIF);
+						poblacion[k] = c.copia();
+					}
+					else{
+						Cromosoma c = new Cromosoma(prof, 1, useIF);
+						poblacion[k] = c.copia();
+					}
+					k++;
+				}
+				prof++;
+			}
 		}
 
 

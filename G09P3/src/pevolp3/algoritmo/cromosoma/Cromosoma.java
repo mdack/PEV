@@ -1,5 +1,7 @@
 package pevolp3.algoritmo.cromosoma;
 
+import java.util.ArrayList;
+
 import pevolp3.algoritmo.arbol.Arbol;
 
 public class Cromosoma {
@@ -57,13 +59,12 @@ public class Cromosoma {
 	}
 
 	public double evalua() {
-		// TODO Auto-generated method stub
+		ArrayList<String> func = arbol.toArray();
 		return 0;
 	}
 
 	public Cromosoma copia() {
-		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 
 }
