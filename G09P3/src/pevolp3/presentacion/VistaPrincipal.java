@@ -121,7 +121,7 @@ public class VistaPrincipal extends JFrame{
 		tProfundidad.setText("4");
 
 		
-		//combos
+		//combo
 		cFuncion = new JComboBox<String>();
 		cFuncion.addItem("6 Entradas");
 		cFuncion.addItem("11 Entradas");

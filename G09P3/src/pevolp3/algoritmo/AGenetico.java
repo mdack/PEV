@@ -13,7 +13,7 @@ import pevolp3.presentacion.VistaPrincipal;
 public class AGenetico {
 	
 	private static int PROFUNDIDAD;
-	
+	//h
 	private Cromosoma[] poblacion, elite; // Poblacion
 	private int tamPob; // Tamaño de la poblacion
 	private int numMaxGen; // Numero maximo de generaciones
