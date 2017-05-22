@@ -7,6 +7,7 @@ import pevolp3.algoritmo.cromosoma.Cromosoma;
 
 
 public class Arbol{	
+
 	private String valor;
 	private ArrayList<Arbol> hijos;
 	private int numHijos;
@@ -242,28 +243,30 @@ public class Arbol{
 		}
 	}
 	
-	public void insertTerminal(Arbol terminal, int index, int pos){
-		for(int i = 0; i < hijos.size(); i++){
-			if(hijos.get(i).isEsHoja() && (pos == index)){
-				hijos.set(i, terminal);
-			}else if(hijos.get(i).esHoja && (pos != index)){
+	public void insertTerminal(ArrayList<Arbol> list_hijos, Arbol terminal, int index, int pos){
+		for(int i = 0; i < list_hijos.size(); i++){
+			if(list_hijos.get(i).isEsHoja() && (pos == index)){
+				terminal.padre = list_hijos.get(i).padre;
+				list_hijos.set(i, terminal);
+			}else if(list_hijos.get(i).esHoja && (pos != index)){
 				pos++;
-				insertTerminal(terminal, index, pos);
+				insertTerminal(list_hijos.get(i).hijos, terminal, index, pos);
 			}else{
-				insertTerminal(terminal, index, pos);
+				insertTerminal(list_hijos.get(i).hijos,terminal, index, pos);
 			}
 		}
 	}
 	
-	public void insertFuncion(Arbol terminal, int index, int pos){
-		for(int i = 0; i < hijos.size(); i++){
-			if(hijos.get(i).esRaiz && (pos == index)){
-				hijos.set(i, terminal);
-			}else if(hijos.get(i).esRaiz && (pos != index)){
+	public void insertFuncion(ArrayList<Arbol> list_hijos, Arbol terminal, int index, int pos){
+		for(int i = 0; i < list_hijos.size(); i++){
+			if(list_hijos.get(i).esRaiz && (pos == index)){
+				terminal.padre = list_hijos.get(i).padre;
+				list_hijos.set(i, terminal);
+			}else if(list_hijos.get(i).esRaiz && (pos != index)){
 				pos++;
-				insertTerminal(terminal, index, pos);
+				insertFuncion(list_hijos.get(i).hijos, terminal, index, pos);
 			}else{
-				insertTerminal(terminal, index, pos);
+				insertFuncion(list_hijos.get(i).hijos,terminal, index, pos);
 			}
 		}
 	}
@@ -278,7 +281,7 @@ public class Arbol{
 		for(int i = 0; i < hijos.size(); i++){
 			if(hijos.get(i).isEsRaiz()){
 				nodos.add(hijos.get(i));
-				getFunciones(hijos, nodos);
+				getFunciones(hijos.get(i).hijos, nodos);
 			}
 		}
 		
@@ -306,6 +309,11 @@ public class Arbol{
 
 	public void setNumNodos(int numNodos) {
 		this.numNodos = numNodos;
+	}
+	
+	@Override
+	public String toString() {
+		return "[" + valor + " -> hijos:" + hijos.toString() + "]";
 	}
 
 	

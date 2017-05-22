@@ -18,9 +18,6 @@ public class Cruce {
 		ArrayList<Arbol> nodos_selec1 = new ArrayList<Arbol>();
 		ArrayList<Arbol> nodos_selec2 = new ArrayList<Arbol>();
 		
-		ArrayList<String> p1 = padre1.getArbol().toArray();
-		ArrayList<String> p2 = padre2.getArbol().toArray();
-		
 		nodos_selec1 = obtieneNodos(padre1.getArbol());
 		nodos_selec2 = obtieneNodos(padre2.getArbol());
 		
@@ -31,22 +28,36 @@ public class Cruce {
 		hijo1.setArbol(padre1.getArbol());
 		hijo2.setArbol(padre2.getArbol());
 		
-		Arbol temp = nodos_selec1.get(puntoCruce1);
-		if(temp.isEsHoja()){
-			hijo1.getArbol().insertTerminal(nodos_selec2.get(puntoCruce2), puntoCruce1, 0);
-		}else{
-			hijo2.getArbol().insertTerminal(temp, puntoCruce2, 0);
-		}
+		Arbol temp1 = nodos_selec1.get(puntoCruce1);
+		Arbol temp2 = nodos_selec2.get(puntoCruce2);
+		
+		corte(hijo1, temp2, puntoCruce1, temp1.isEsRaiz());
+		corte(hijo2, temp1, puntoCruce2, temp2.isEsRaiz());
+
+		
 		
 //		hijo1.evalua();
 //		hijo2.evalua();
 	}
 	
+	private void corte(Cromosoma hijo, Arbol temp, int puntoCruce, boolean esRaiz) {
+		
+		if(!esRaiz){
+			hijo.getArbol().insertTerminal(hijo.getArbol().getHijos(), temp, puntoCruce, 0);
+		}else{
+			hijo.getArbol().insertFuncion(hijo.getArbol().getHijos(), temp, puntoCruce, 0);
+		}
+		
+	}
+
 	private ArrayList<Arbol> obtieneNodos(Arbol arbol) {
 		ArrayList<Arbol> nodos = new ArrayList<Arbol>();
 		
 		if(seleccionaFunciones()){
 			arbol.getFunciones(arbol.getHijos(), nodos);
+			if(nodos.size() == 0){
+				arbol.getTerminales(arbol.getHijos(), nodos);
+			}
 		}else{
 			arbol.getTerminales(arbol.getHijos(), nodos);
 		}
