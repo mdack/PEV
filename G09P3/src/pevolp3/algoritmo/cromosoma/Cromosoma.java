@@ -15,7 +15,7 @@ public class Cromosoma {
 	private double punt;
 	private double puntAcum;
 	private double fenotipo;
-	
+		
 	public Cromosoma(int profundidad, int tipoCreacion, boolean useIf) {
 		arbol = new Arbol(profundidad, useIf);
 		switch(tipoCreacion){
@@ -66,5 +66,13 @@ public class Cromosoma {
 	public Cromosoma copia() {
 		return this;
 	}
+	
+	public Arbol getArbol() {
+		return arbol;
+	}
+	public void setArbol(Arbol arbol) {
+		this.arbol = arbol;
+	}
+
 
 }
