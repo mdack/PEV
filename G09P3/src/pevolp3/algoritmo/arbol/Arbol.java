@@ -202,7 +202,7 @@ public class Arbol{
 				int pos = rnd.nextInt(rango);
 				
 				if(pos >= (Cromosoma.funciones.length-1)){
-					pos -= Cromosoma.funciones.length;
+					pos -= Cromosoma.funciones.length-1;
 					valor = Cromosoma.terminales[pos];
 					esHoja = true;
 				}else{
@@ -253,23 +253,25 @@ public class Arbol{
 			if(hijos.get(i).isEsHoja()){
 				nodos.add(hijos.get(i));
 			}else{
-				getTerminales(hijos, nodos);
+				getTerminales(hijos.get(i).getHijos(), nodos);
 			}
 		}
 	}
 	
-	public void insertTerminal(ArrayList<Arbol> list_hijos, Arbol terminal, int index, int pos){
-		for(int i = 0; i < list_hijos.size(); i++){
+	public boolean insertTerminal(ArrayList<Arbol> list_hijos, Arbol terminal, int index, int pos){
+		boolean fin = false;
+		for(int i = 0; i < list_hijos.size() && !fin; i++){
 			if(list_hijos.get(i).isEsHoja() && (pos == index)){
 				terminal.padre = list_hijos.get(i).padre;
 				list_hijos.set(i, terminal);
+				fin = true;
 			}else if(list_hijos.get(i).esHoja && (pos != index)){
-				pos++;
-				insertTerminal(list_hijos.get(i).hijos, terminal, index, pos);
+				pos++;	
 			}else{
-				insertTerminal(list_hijos.get(i).hijos,terminal, index, pos);
+				fin = insertTerminal(list_hijos.get(i).hijos,terminal, index, pos);
 			}
 		}
+		return fin;
 	}
 	
 	public void insertFuncion(ArrayList<Arbol> list_hijos, Arbol terminal, int index, int pos){
@@ -280,8 +282,6 @@ public class Arbol{
 			}else if(list_hijos.get(i).esRaiz && (pos != index)){
 				pos++;
 				insertFuncion(list_hijos.get(i).hijos, terminal, index, pos);
-			}else{
-				insertFuncion(list_hijos.get(i).hijos,terminal, index, pos);
 			}
 		}
 	}
