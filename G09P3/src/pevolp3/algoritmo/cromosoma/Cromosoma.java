@@ -90,13 +90,15 @@ public class Cromosoma {
 
 	public double evalua() {
 		ArrayList<String> func = arbol.toArray();
-		int aciertos = 0;
+		int fallos = numSoluciones;
 		for(int i = 0; i < numSoluciones; i++){
 			ArrayList<String> f = convFuncion(func, i);
 			int res = evaluar(f, 0);
-			if(res == soluciones[i][6]) aciertos++;
+			if(res == soluciones[i][6]) fallos--;
 		}
-		return aciertos;
+		fitness_bruto = fallos;
+		fitness = fallos;
+		return fallos;
 	}
 
 	public Cromosoma copia() {

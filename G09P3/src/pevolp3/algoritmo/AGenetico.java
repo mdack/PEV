@@ -2,9 +2,11 @@ package pevolp3.algoritmo;
 import java.util.Random;
 import java.util.Stack;
 
+import pevolp3.algoritmo.arbol.Arbol;
 import pevolp3.algoritmo.cromosoma.Cromosoma;
 import pevolp3.algoritmo.cruce.Cruce;
 import pevolp3.algoritmo.mutacion.Mutacion;
+import pevolp3.algoritmo.mutacion.Permutacion;
 import pevolp3.algoritmo.seleccion.Estocastico;
 import pevolp3.algoritmo.seleccion.Ruleta;
 import pevolp3.algoritmo.seleccion.Torneo;
@@ -106,6 +108,8 @@ public class AGenetico {
 		double sumaAdap;
 		sumaAdap = revisar_adaptacion_minimizar();
 		double media;
+		double mediaTam;
+		double tamAcum = 0;
 		
 		double fitnessBrutoAcum = 0; // Para calcular la media mas tarde.
 		double bestFitness = Double.MAX_VALUE;
@@ -125,6 +129,7 @@ public class AGenetico {
 			}
 			poblacion[i].setPunt(poblacion[i].getFitness_bruto()/sumaAdap);
 			puntAcum += poblacion[i].getFitness_bruto()/sumaAdap;
+			tamAcum += poblacion[i].getArbol().getNumNodos();
 			poblacion[i].setPuntAcum(puntAcum);
 		}
 		this.elMejor = this.poblacion[posMejor].copia();
@@ -139,6 +144,8 @@ public class AGenetico {
 		}
 		
 		media = fitnessBrutoAcum/tamPob;
+		mediaTam = tamAcum/tamPob;
+		bloatingControl(media, mediaTam, 0, 3);
 		sumaMedias += media;
 		VistaPrincipal.addData(mejorAbs, elMejor.getFitness_bruto(), fitnessBrutoAcum/tamPob);
 		
@@ -181,19 +188,7 @@ public class AGenetico {
 		}
 		case 2:
 		{
-//			m = new Inversion(probMut);
-			numMutaciones = m.mutar(poblacion);
-			break;
-		}
-		case 3:
-		{
-//			m = new Heuristica(probMut);
-			numMutaciones = m.mutar(poblacion);
-			break;
-		}
-		case 4:
-		{
-//			m = new MutPropia(probMut);
+			m = new Permutacion(probMut);
 			numMutaciones = m.mutar(poblacion);
 			break;
 		}
@@ -323,6 +318,52 @@ public class AGenetico {
 	private void cruce(Cromosoma padre1, Cromosoma padre2, Cromosoma hijo1, Cromosoma hijo2, int tipo)
 	{
 		Cruce c = null;
+	}
+	
+	private void bloatingControl(double media, double mediaTam, int tipo, int n){
+		if(tipo == 0)
+		{
+			tarpeianBloating(mediaTam, n);
+		}
+		else
+			penaltyBloating(media, mediaTam);
+	}
+	
+	private void penaltyBloating(double media, double mediaTam){
+		double var = 0;
+		double cov = 0;
+		double k = 0;
+		for(int i = 0; i < tamPob; i++)
+		{
+			Cromosoma c = poblacion[i];
+			cov += (c.getFitness_bruto() - media) * (c.getArbol().getNumNodos() - mediaTam);
+			var += (c.getArbol().getNumNodos() - mediaTam);
+		}
+		var = var / tamPob;
+		cov = cov / tamPob;
+		k = cov / var;
+		for(int i = 0; i < tamPob; i++)
+		{
+			Cromosoma c = poblacion[i];
+			double fitness = c.getFitness_bruto() + k * c.getArbol().getNumNodos();
+			c.setFitness(fitness);
+		}
+	}
+	
+	private void tarpeianBloating(double media, int n){
+		double prob = 1 / n;
+		Random rnd = new Random();
+		for(int i = 0; i < tamPob; i++){
+			Arbol a = poblacion[i].getArbol();
+			if(a.getNumNodos() > media)
+			{
+				double p = rnd.nextDouble();
+				if(p < prob)
+				{
+					poblacion[i] = new Cromosoma(PROFUNDIDAD, tipoCreacion, useIF, tipoMultiplexor);
+				}
+			}
+		}
 	}
 	
 //	public void operadorEspecial(){
