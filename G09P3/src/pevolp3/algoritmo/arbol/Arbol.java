@@ -80,6 +80,21 @@ public class Arbol{
 		else
 			hijos.set(index, a);
 	}
+	
+	public Arbol at(int index){
+		return at(this, 0, index);
+	}
+	
+	private Arbol at(Arbol a, int pos, int index){
+		Arbol s = null;
+		if(pos >= index) s = a;
+		else if(a.getNumHijos() > 0)
+		{
+			for(int i = 0; i < a.getNumHijos(); i++)
+				if(s == null) s = at(a.getHijos().get(i), pos+i+1, index);
+		}
+		return s;
+	}
 
 	private void toArray(ArrayList<String> array, Arbol a){
 		array.add(a.valor);
