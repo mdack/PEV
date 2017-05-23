@@ -65,9 +65,9 @@ public class AGenetico {
 		this.poblacion = new Cromosoma[tamPob];
 		
 		if(tipoCreacion != 2){
-			poblacion[0] = new Cromosoma(PROFUNDIDAD, tipoCreacion, useIF);
+			poblacion[0] = new Cromosoma(PROFUNDIDAD, tipoCreacion, useIF, tipoMultiplexor);
 	    	for(int k = 1; k < tamPob; k++){
-	    		Cromosoma c = new Cromosoma(PROFUNDIDAD, tipoCreacion, useIF);   		
+	    		Cromosoma c = new Cromosoma(PROFUNDIDAD, tipoCreacion, useIF, tipoMultiplexor);   		
 	    		poblacion[k] = c.copia();
 	    		
 	    	}
@@ -85,11 +85,11 @@ public class AGenetico {
 				mitadGrupo = tamGrupo / 2 + primGrupo;
 				while(k < ultGrupo){
 					if(k <= mitadGrupo){
-						Cromosoma c = new Cromosoma(prof, 0, useIF);
+						Cromosoma c = new Cromosoma(prof, 0, useIF, tipoMultiplexor);
 						poblacion[k] = c.copia();
 					}
 					else{
-						Cromosoma c = new Cromosoma(prof, 1, useIF);
+						Cromosoma c = new Cromosoma(prof, 1, useIF, tipoMultiplexor);
 						poblacion[k] = c.copia();
 					}
 					k++;
@@ -288,8 +288,8 @@ public class AGenetico {
 		
 		int numSelCruce = 0;
 		double prob;
-		Cromosoma hijo1 = new Cromosoma(PROFUNDIDAD, tipoCreacion, useIF);
-		Cromosoma hijo2 = new Cromosoma(PROFUNDIDAD, tipoCreacion, useIF);
+		Cromosoma hijo1 = new Cromosoma(PROFUNDIDAD, tipoCreacion, useIF, tipoMultiplexor);
+		Cromosoma hijo2 = new Cromosoma(PROFUNDIDAD, tipoCreacion, useIF, tipoMultiplexor);
 		Random rnd = new Random();
 		
 		for(int i = 0; i < tamPob; i++){
