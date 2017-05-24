@@ -275,16 +275,19 @@ public class Arbol{
 		return p;
 	}
 	
-	public void insertFuncion(ArrayList<Arbol> list_hijos, Arbol terminal, int index, int pos){
-		for(int i = 0; i < list_hijos.size(); i++){
-			if(list_hijos.get(i).esRaiz && (pos == index)){
+	public int insertFuncion(ArrayList<Arbol> list_hijos, Arbol terminal, int index, int pos){
+		int p = pos;
+		for(int i = 0; i < list_hijos.size() && p != -1; i++){
+			if(list_hijos.get(i).esRaiz && (p == index)){
 				terminal.padre = list_hijos.get(i).padre;
 				list_hijos.set(i, terminal);
-			}else if(list_hijos.get(i).esRaiz && (pos != index)){
-				pos++;
-				insertFuncion(list_hijos.get(i).hijos, terminal, index, pos);
+				p = -1;
+			}else if(list_hijos.get(i).esRaiz && (p != index)){
+				p++;
+				p = insertFuncion(list_hijos.get(i).hijos, terminal, index, p);
 			}
 		}
+		return p;
 	}
 	
 	/**
@@ -330,6 +333,10 @@ public class Arbol{
 	@Override
 	public String toString() {
 		return "[" + valor + " -> hijos:" + hijos.toString() + "]";
+	}
+	
+	public Arbol clone(){
+		return this;
 	}
 
 	
