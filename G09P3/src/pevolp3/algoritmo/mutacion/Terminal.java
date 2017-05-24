@@ -30,8 +30,14 @@ public class Terminal extends Mutacion {
 				int selecc_terminal = rnd.nextInt(terminales.size());
 				
 				int nueva_terminal = rnd.nextInt(Cromosoma.terminales.length);
+				String val = Cromosoma.terminales[nueva_terminal];
 				
-				terminales.get(selecc_terminal).setValor(Cromosoma.terminales[nueva_terminal]);
+				while(terminales.get(selecc_terminal).getValor().equals(val)){
+					nueva_terminal = rnd.nextInt(Cromosoma.terminales.length);
+					val = Cromosoma.terminales[nueva_terminal];
+				}
+				
+				terminales.get(selecc_terminal).setValor(val);
 				
 				a.insertTerminal(a.getHijos(), terminales.get(selecc_terminal), selecc_terminal, 0);
 				

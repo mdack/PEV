@@ -258,20 +258,21 @@ public class Arbol{
 		}
 	}
 	
-	public boolean insertTerminal(ArrayList<Arbol> list_hijos, Arbol terminal, int index, int pos){
-		boolean fin = false;
-		for(int i = 0; i < list_hijos.size() && !fin; i++){
-			if(list_hijos.get(i).isEsHoja() && (pos == index)){
+	public int insertTerminal(ArrayList<Arbol> list_hijos, Arbol terminal, int index, int pos){
+		int p = pos;
+		for(int i = 0; i < list_hijos.size() && p != -1; i++){
+			if(list_hijos.get(i).isEsHoja() && (p == index)){
 				terminal.padre = list_hijos.get(i).padre;
 				list_hijos.set(i, terminal);
-				fin = true;
-			}else if(list_hijos.get(i).esHoja && (pos != index)){
-				pos++;	
+				p = -1;
+			}else if(list_hijos.get(i).esHoja && (p != index)){
+				p++;	
 			}else{
-				fin = insertTerminal(list_hijos.get(i).hijos,terminal, index, pos);
+				p = insertTerminal(list_hijos.get(i).hijos,terminal, index, p);
 			}
 		}
-		return fin;
+		
+		return p;
 	}
 	
 	public void insertFuncion(ArrayList<Arbol> list_hijos, Arbol terminal, int index, int pos){
