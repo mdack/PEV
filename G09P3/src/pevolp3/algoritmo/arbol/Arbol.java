@@ -12,6 +12,7 @@ public class Arbol{
 	private ArrayList<Arbol> hijos;
 	private int numHijos;
 	private int numNodos;
+	private int max_prof;
 	private int profundidad;
 	private boolean useIF;
 	private boolean esHoja;
@@ -41,7 +42,8 @@ public class Arbol{
 		valor = "";
 		hijos = new ArrayList<Arbol>();
 		numHijos = 0;
-		profundidad = p;
+		max_prof = p;
+		setProfundidad(0);
 		useIF = useIf;
 	}
 	
@@ -106,7 +108,8 @@ public class Arbol{
 	public int inicializacionCompleta(int p, int nodos){
 	int n = nodos;
 	int nHijos = 2;
-	if(p < profundidad){
+	if(p < max_prof){
+		setProfundidad(p);
 		Random rnd = new Random();
 		int func = 0;
 		
@@ -122,7 +125,7 @@ public class Arbol{
 		if(valor.equals("NOT")) nHijos = 1;
 		
 		for(int i = 0; i < nHijos; i++){
-			Arbol hijo = new Arbol(profundidad, useIF);
+			Arbol hijo = new Arbol(max_prof, useIF);
 			hijo.setPadre(this);
 			esRaiz = true;
 			n++;
@@ -132,6 +135,7 @@ public class Arbol{
 		}
 	}
 	else{
+		setProfundidad(p);
 		Random rnd = new Random();
 		int terminal;
 		this.setEsHoja(true);
@@ -149,7 +153,8 @@ public class Arbol{
 	public void inicializacionCreciente(int p){
 		int n = 0;
 		
-		if(p < profundidad){
+		if(p < max_prof){
+			setProfundidad(p);
 			Random rnd = new Random();
 			int func = 0;
 			
@@ -163,6 +168,7 @@ public class Arbol{
 			esRaiz = true;
 			n = creaHijos(p, n);
 		}else{
+			setProfundidad(p);
 			Random rnd = new Random();
 			int terminal;
 			terminal = rnd.nextInt(Cromosoma.terminales.length);
@@ -176,7 +182,8 @@ public class Arbol{
 	private int inicializacionCrecienteAux(int p, int nodos){
 		int n = nodos;		
 		
-		if(p < profundidad){
+		if(p < max_prof){
+			setProfundidad(p);
 			Random rnd = new Random();
 			int rango;
 			
@@ -213,6 +220,7 @@ public class Arbol{
 			}
 		}
 		else{
+			setProfundidad(p);
 			Random rnd = new Random();
 			int terminal;
 			terminal = rnd.nextInt(Cromosoma.terminales.length);
@@ -232,7 +240,7 @@ public class Arbol{
 		if(valor.equals("NOT")) nHijos = 1;
 		
 		for(int i = 0; i < nHijos; i++){
-			Arbol hijo = new Arbol(profundidad, useIF);
+			Arbol hijo = new Arbol(max_prof, useIF);
 			hijo.setPadre(this);
 			n++;
 			n = hijo.inicializacionCrecienteAux(p+1, n);
@@ -339,6 +347,29 @@ public class Arbol{
 		return this;
 	}
 
+	public int getProfundidad() {
+		return profundidad;
+	}
+
+	public void setProfundidad(int profundidad) {
+		this.profundidad = profundidad;
+	}
+
+	public int getMax_prof() {
+		return max_prof;
+	}
+
+	public void setMax_prof(int max_prof) {
+		this.max_prof = max_prof;
+	}
+	
+	public boolean isUseIF() {
+		return useIF;
+	}
+
+	public void setUseIF(boolean useIF) {
+		this.useIF = useIF;
+	}
 	
 //	private void inicializar(Arbol a, int termRestantes){
 //		Random rnd = new Random();
