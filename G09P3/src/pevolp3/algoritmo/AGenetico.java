@@ -60,6 +60,8 @@ public class AGenetico {
 		totalInversiones = 0;
 		useIF = useIf;
 		PROFUNDIDAD = profundidad;
+		if(tipoMultiplexor == 0) Cromosoma.terminales = Cromosoma.terminales6.clone();
+		else Cromosoma.terminales = Cromosoma.terminales11.clone();
 	}
 	
 	public void inicializar() {

@@ -13,7 +13,9 @@ public class Cromosoma {
 	private int soluciones[][];
 	private int numSoluciones;
 	
-	public static final String terminales[] = { "A0", "A1", "D0", "D1", "D2", "D3" };
+	public static String terminales[];
+	public static final String terminales6[] = { "A0", "A1", "D0", "D1", "D2", "D3" };
+	public static final String terminales11[] = { "A0", "A1", "A2", "D0", "D1", "D2", "D3", "D4", "D5", "D6", "D7" };
 	public static final String funciones[] = { "AND", "OR", "NOT", "IF" };
 	
 	private Arbol arbol;
@@ -94,7 +96,12 @@ public class Cromosoma {
 		for(int i = 0; i < numSoluciones; i++){
 			ArrayList<String> f = convFuncion(func, i);
 			int res = evaluar(f, 0);
-			if(res == soluciones[i][6]) fallos--;
+			if(numSoluciones == 64){
+				if(res == soluciones[i][6]) fallos--;
+			}
+			else if(numSoluciones == 2048){
+				if(res == soluciones[i][11]) fallos--;
+			}		
 		}
 		fitness_bruto = fallos;
 		fitness = fallos;
@@ -151,6 +158,67 @@ public class Cromosoma {
 					case "D3":
 					{
 						funcConvertida.add(Integer.toString(soluciones[sol][5]));
+						break;
+					}
+					}
+				}
+				else if(numSoluciones == 2048)
+				{
+					switch(n)
+					{
+					case "A0":
+					{
+						funcConvertida.add(Integer.toString(soluciones[sol][0]));
+						break;
+					}
+					case "A1":
+					{
+						funcConvertida.add(Integer.toString(soluciones[sol][1]));
+						break;
+					}
+					case "A2":
+					{
+						funcConvertida.add(Integer.toString(soluciones[sol][2]));
+						break;
+					}
+					case "D0":
+					{
+						funcConvertida.add(Integer.toString(soluciones[sol][3]));
+						break;
+					}
+					case "D1":
+					{
+						funcConvertida.add(Integer.toString(soluciones[sol][4]));
+						break;
+					}
+					case "D2":
+					{
+						funcConvertida.add(Integer.toString(soluciones[sol][5]));
+						break;
+					}
+					case "D3":
+					{
+						funcConvertida.add(Integer.toString(soluciones[sol][6]));
+						break;
+					}
+					case "D4":
+					{
+						funcConvertida.add(Integer.toString(soluciones[sol][7]));
+						break;
+					}
+					case "D5":
+					{
+						funcConvertida.add(Integer.toString(soluciones[sol][8]));
+						break;
+					}
+					case "D6":
+					{
+						funcConvertida.add(Integer.toString(soluciones[sol][9]));
+						break;
+					}
+					case "D7":
+					{
+						funcConvertida.add(Integer.toString(soluciones[sol][10]));
 						break;
 					}
 					}
