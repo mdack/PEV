@@ -34,7 +34,8 @@ public class Cruce {
 		corte(hijo1, temp2, puntoCruce1, temp1.isEsRaiz());
 		corte(hijo2, temp1, puntoCruce2, temp2.isEsRaiz());
 
-		
+		hijo1.getArbol().setNumNodos(hijo1.getArbol().calculaNodos(0));
+		hijo2.getArbol().setNumNodos(hijo1.getArbol().calculaNodos(0));
 		
 //		hijo1.evalua();
 //		hijo2.evalua();
