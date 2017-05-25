@@ -44,6 +44,7 @@ public class Arbol{
 		numHijos = 0;
 		max_prof = p;
 		setProfundidad(0);
+		numNodos = 0;
 		useIF = useIf;
 	}
 	
@@ -59,6 +60,20 @@ public class Arbol{
 		ArrayList<String> array = new ArrayList<String>();
 		toArray(array, this);
 		return array;
+	}
+	
+	public int calculaNodos(int n){
+		
+		for(int i = 0; i < hijos.size(); i++){
+			Arbol h = hijos.get(i);
+			n++;
+			
+			if(h.esRaiz){
+				n = h.calculaNodos(n); 
+			}
+		}
+		
+		return n;
 	}
 	
 	// Insertar un valor en el arbol (nodo simple)
@@ -174,7 +189,6 @@ public class Arbol{
 			terminal = rnd.nextInt(Cromosoma.terminales.length);
 			valor = Cromosoma.terminales[terminal];
 			esHoja = true;
-			numHijos = 0;
 		}
 		setNumNodos(n);
 	}
@@ -226,7 +240,6 @@ public class Arbol{
 			terminal = rnd.nextInt(Cromosoma.terminales.length);
 			valor = Cromosoma.terminales[terminal];
 			esHoja = true;
-			numHijos = 0;
 		}
 		setNumNodos(n);
 		return n;

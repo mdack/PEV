@@ -24,28 +24,67 @@ public class XArbol extends Mutacion {
 			{
 				Cromosoma c = poblacion[i];
 				Arbol a = c.getArbol();
+				boolean muta = false;
+				boolean func = false;
 				ArrayList<Arbol> funciones = new ArrayList<Arbol>();
 				a.getFunciones(a.getHijos(), funciones);
 				
-				int selecc_funcion = rnd.nextInt(funciones.size());
+				if(funciones.size() == 0){
+					a.getTerminales(a.getHijos(), funciones);
+					muta = existeTerminalAMutar(funciones , a.getMax_prof());
+				}else{
+					muta = true;
+					func = true;
+				}
 				
-				Arbol nuevo_ar = new Arbol(a.getMax_prof(), a.isUseIF());
-				nuevo_ar.inicializacionCreciente(funciones.get(selecc_funcion).getProfundidad());
-									
-				a.insertFuncion(a.getHijos(), nuevo_ar, selecc_funcion, 0);
-				
-				int nodos = (a.getNumNodos() - funciones.get(selecc_funcion).getNumNodos()) + nuevo_ar.getNumNodos();
-				a.setNumNodos(nodos);
-				c.setArbol(a);
+				if(muta){
+					int selecc_funcion = rnd.nextInt(funciones.size());
 					
-				//c.evalua();
+					Arbol nuevo_ar = new Arbol(a.getMax_prof(), a.isUseIF());
+					nuevo_ar.inicializacionCreciente(funciones.get(selecc_funcion).getProfundidad());
+										
+					if(func)
+						a.insertFuncion(a.getHijos(), nuevo_ar, selecc_funcion, 0);
+					else
+						a.insertTerminal(a.getHijos(), nuevo_ar, selecc_funcion, 0);
+						
+					int antiguos_nodos =  funciones.get(selecc_funcion).calculaNodos(0);
+					int nuevos_nodos = nuevo_ar.getNumNodos();
 					
-				poblacion[i] = c.copia();
-				mutaciones++;
+					int nodos = (a.getNumNodos() - antiguos_nodos) + nuevos_nodos;
+					a.setNumNodos(nodos);
+					c.setArbol(a);
+						
+					//c.evalua();
+						
+					poblacion[i] = c.copia();
+					mutaciones++;
+				}
 				}
 			}
 		
 		return mutaciones;
+	}
+
+	private boolean existeTerminalAMutar(ArrayList<Arbol> funciones, int max_prof) {
+		boolean muta = false;
+		ArrayList<Arbol> aux = new ArrayList<Arbol>();
+		
+		for(Arbol a : funciones){
+			if(a.getProfundidad() != max_prof){
+				aux.add(a);
+			}
+		}
+		
+		if(aux.size() > 0){
+			muta = true;
+			funciones.clear();
+			for(Arbol a : aux){
+				funciones.add(a);
+			}
+		}
+		
+		return muta;
 	}
 
 }
