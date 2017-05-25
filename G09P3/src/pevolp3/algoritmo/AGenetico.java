@@ -1,12 +1,13 @@
 package pevolp3.algoritmo;
 import java.util.Random;
-import java.util.Stack;
-
 import pevolp3.algoritmo.arbol.Arbol;
 import pevolp3.algoritmo.cromosoma.Cromosoma;
 import pevolp3.algoritmo.cruce.Cruce;
+import pevolp3.algoritmo.mutacion.Funcional;
 import pevolp3.algoritmo.mutacion.Mutacion;
 import pevolp3.algoritmo.mutacion.Permutacion;
+import pevolp3.algoritmo.mutacion.Terminal;
+import pevolp3.algoritmo.mutacion.XArbol;
 import pevolp3.algoritmo.seleccion.Estocastico;
 import pevolp3.algoritmo.seleccion.Ruleta;
 import pevolp3.algoritmo.seleccion.Torneo;
@@ -178,17 +179,23 @@ public class AGenetico {
 		switch(tipo){
 		case 0:
 		{
-//			m = new Insercion(probMut);
+			m = new Funcional(probMut);
 			numMutaciones = m.mutar(poblacion);
 			break;
 		}
 		case 1:
 		{
-//			m = new Intercambio(probMut);
+			m = new Terminal(probMut);
 			numMutaciones = m.mutar(poblacion);
 			break;
 		}
 		case 2:
+		{
+			m = new XArbol(probMut);
+			numMutaciones = m.mutar(poblacion);
+			break;
+		}
+		case 3:
 		{
 			m = new Permutacion(probMut);
 			numMutaciones = m.mutar(poblacion);
@@ -303,7 +310,7 @@ public class AGenetico {
 		{
 			int padre1 = selCruce[i];
 			int padre2 = selCruce[i+1];
-			//cruce(poblacion[padre1], poblacion[padre2], hijo1, hijo2, tipoCruce);
+			new Cruce().cruzar(poblacion[padre1], poblacion[padre2], hijo1, hijo2);
 			nuevaPob[padre1] = hijo1.copia();
 			nuevaPob[padre2] = hijo2.copia();
 			this.totalCruces++;
@@ -316,11 +323,6 @@ public class AGenetico {
 			poblacion[i] = nuevaPob[i].copia();
 	}
 		
-
-	private void cruce(Cromosoma padre1, Cromosoma padre2, Cromosoma hijo1, Cromosoma hijo2, int tipo)
-	{
-		Cruce c = null;
-	}
 	
 	private void bloatingControl(double media, double mediaTam, int tipo, int n){
 		if(tipo == 0)
@@ -368,32 +370,4 @@ public class AGenetico {
 		}
 	}
 	
-//	public void operadorEspecial(){
-//		Random rnd = new Random();
-//		for(int i = 0; i < poblacion.length; i++)
-//		{
-//			double p = rnd.nextDouble();
-//			if(p < probOperador)
-//			{
-//				totalInversiones++;
-//				Cromosoma c = poblacion[i];
-//				int puntoA = rnd.nextInt(c.getNGenes());
-//				int puntoB = rnd.nextInt(c.getNGenes() - puntoA);
-//				puntoB += puntoA+1;
-//				Stack<Integer> s = new Stack<Integer>();
-//				for(int j = puntoA; j < puntoB; j++)
-//				{
-////					s.push(c.getGenes()[j].getAlelo());
-//				}
-//				for(int j = puntoA; j < puntoB; j++)
-//				{
-//					c.getGenes()[j].setAlelo(s.pop());
-//				}
-//				c.setFitness_bruto(c.evalua());
-//				if(c.getFitness_bruto() < poblacion[i].getFitness_bruto())
-//					poblacion[i] = c.copia();
-//			}
-//		}
-//	}
-
 }

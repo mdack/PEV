@@ -140,6 +140,7 @@ public class VistaPrincipal extends JFrame{
 		cmutacion = new JComboBox<String>();
 		cmutacion.addItem("Funcional");
 		cmutacion.addItem("Terminal");
+		cmutacion.addItem("Árbol");
 		cmutacion.addItem("Permutación");
 				
 		cif = new JComboBox<String>();
