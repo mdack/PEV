@@ -16,7 +16,7 @@ import pevolp3.presentacion.VistaPrincipal;
 public class AGenetico {
 	
 	private static int PROFUNDIDAD;
-	//h
+	
 	private Cromosoma[] poblacion, elite; // Poblacion
 	private int tamPob; // Tamaño de la poblacion
 	private int numMaxGen; // Numero maximo de generaciones
@@ -28,13 +28,11 @@ public class AGenetico {
 	private int posPeor;
 	private double probCruce; // Probabilidad de cruce
 	private double probMut; // Probabilidad de mutacion
-	private double probOperador; // Probabilidad de efecto de operador especial
 	private double mejorAbs; // Fitness mejor absoluto.
 	private double peorAbs;
 	private int tamElite;
 	private int tipoCreacion;
 	private int tipoMultiplexor;
-	private boolean maximizar;
 	private boolean useIF;
 	private double sumaMedias;
 	private int totalCruces;
@@ -46,7 +44,6 @@ public class AGenetico {
 		numMaxGen = generaciones;
 		probCruce = porcCruces;
 		probMut = porcMutacion;
-		maximizar = false;
 		mejorAbs = Double.MAX_VALUE;
 		tipoCreacion = tinicializacion;
 		tipoMultiplexor = multiplexor;

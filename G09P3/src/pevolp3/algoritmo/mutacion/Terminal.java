@@ -43,7 +43,7 @@ public class Terminal extends Mutacion {
 				
 				c.setArbol(a);
 				
-				//c.evalua();
+				c.evalua();
 				
 				poblacion[i] = c.copia();
 				mutaciones++;

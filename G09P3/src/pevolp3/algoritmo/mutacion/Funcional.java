@@ -42,7 +42,7 @@ public class Funcional extends Mutacion {
 					
 					c.setArbol(a);
 					
-					//c.evalua();
+					c.evalua();
 					
 					poblacion[i] = c.copia();
 					mutaciones++;

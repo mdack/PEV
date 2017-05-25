@@ -25,8 +25,8 @@ public class Cruce {
 		int puntoCruce1 = rnd.nextInt(nodos_selec1.size());
 		int puntoCruce2 = rnd.nextInt(nodos_selec2.size());
 		
-		hijo1.setArbol(padre1.getArbol());
-		hijo2.setArbol(padre2.getArbol());
+		hijo1.setArbol(padre1.getArbol().clone());
+		hijo2.setArbol(padre2.getArbol().clone());
 		
 		Arbol temp1 = nodos_selec1.get(puntoCruce1);
 		Arbol temp2 = nodos_selec2.get(puntoCruce2);
@@ -35,10 +35,10 @@ public class Cruce {
 		corte(hijo2, temp1, puntoCruce2, temp2.isEsRaiz());
 
 		hijo1.getArbol().setNumNodos(hijo1.getArbol().calculaNodos(0));
-		hijo2.getArbol().setNumNodos(hijo1.getArbol().calculaNodos(0));
+		hijo2.getArbol().setNumNodos(hijo2.getArbol().calculaNodos(0));
 		
-//		hijo1.evalua();
-//		hijo2.evalua();
+		hijo1.evalua();
+		hijo2.evalua();
 	}
 	
 	private void corte(Cromosoma hijo, Arbol temp, int puntoCruce, boolean esRaiz) {

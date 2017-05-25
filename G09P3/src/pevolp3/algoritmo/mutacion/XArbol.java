@@ -55,7 +55,7 @@ public class XArbol extends Mutacion {
 					a.setNumNodos(nodos);
 					c.setArbol(a);
 						
-					//c.evalua();
+					c.evalua();
 						
 					poblacion[i] = c.copia();
 					mutaciones++;
