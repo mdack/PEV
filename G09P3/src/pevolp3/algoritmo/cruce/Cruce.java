@@ -28,14 +28,14 @@ public class Cruce {
 		hijo1.setArbol(padre1.getArbol().clone());
 		hijo2.setArbol(padre2.getArbol().clone());
 		
-		Arbol temp1 = nodos_selec1.get(puntoCruce1);
-		Arbol temp2 = nodos_selec2.get(puntoCruce2);
+		Arbol temp1 = nodos_selec1.get(puntoCruce1).clone();
+		Arbol temp2 = nodos_selec2.get(puntoCruce2).clone();
 		
 		corte(hijo1, temp2, puntoCruce1, temp1.isEsRaiz());
 		corte(hijo2, temp1, puntoCruce2, temp2.isEsRaiz());
 
-		hijo1.getArbol().setNumNodos(hijo1.getArbol().calculaNodos(0));
-		hijo2.getArbol().setNumNodos(hijo2.getArbol().calculaNodos(0));
+//		hijo1.getArbol().setNumNodos(hijo1.getArbol().obtieneNodos(hijo1.getArbol(), 0));
+//		hijo2.getArbol().setNumNodos(hijo2.getArbol().toArray().size()-1);
 		
 		hijo1.evalua();
 		hijo2.evalua();

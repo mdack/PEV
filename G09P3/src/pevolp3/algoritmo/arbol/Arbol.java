@@ -61,21 +61,7 @@ public class Arbol{
 		toArray(array, this);
 		return array;
 	}
-	
-	public int calculaNodos(int n){
 		
-		for(int i = 0; i < hijos.size(); i++){
-			Arbol h = hijos.get(i);
-			n++;
-			
-			if(h.esRaiz){
-				n = h.calculaNodos(n); 
-			}
-		}
-		
-		return n;
-	}
-	
 	// Insertar un valor en el arbol (nodo simple)
 	public Arbol insert(String v, int index){
 		Arbol a = new Arbol(v);
@@ -357,7 +343,18 @@ public class Arbol{
 	}
 	
 	public Arbol clone(){
-		return this;
+		Arbol copia = new Arbol(this.max_prof, this.useIF);
+		
+		copia.setEsHoja(this.esHoja);
+		copia.setEsRaiz(this.esRaiz);
+		copia.setNumHijos(this.numHijos);
+		copia.setNumNodos(this.numNodos);
+		copia.setPadre(this.padre);
+		copia.setProfundidad(this.profundidad);
+		copia.setValor(this.valor);
+		copia.setHijos(this.hijos);
+		
+		return copia;
 	}
 
 	public int getProfundidad() {
@@ -382,6 +379,10 @@ public class Arbol{
 
 	public void setUseIF(boolean useIF) {
 		this.useIF = useIF;
+	}
+	
+	public void setHijos(ArrayList<Arbol> hijos) {
+		this.hijos = hijos;
 	}
 	
 //	private void inicializar(Arbol a, int termRestantes){
