@@ -341,11 +341,14 @@ public class Arbol{
 		copia.setNumHijos(this.numHijos);
 		copia.setNumNodos(this.numNodos);
 		Arbol p = new Arbol();
-		p = this.padre.copia();
+		if(this.padre != null)
+			p = this.padre.copia();
 		copia.setPadre(p);
 		copia.setProfundidad(this.profundidad);
 		copia.setValor(this.valor);
-		copia.setHijos(this.hijos);
+		ArrayList<Arbol> aux = new ArrayList<Arbol>();
+		aux = this.hijos;
+		copia.setHijos(aux);
 		
 		return copia;
 	}

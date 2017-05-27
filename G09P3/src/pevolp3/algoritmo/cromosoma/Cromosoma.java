@@ -114,6 +114,7 @@ public class Cromosoma {
 	public Cromosoma copia() {
 		Cromosoma c = new Cromosoma();
 		Arbol a = new Arbol();
+		a = this.arbol.copia();
 		
 		c.setArbol(a);
 		c.setFitness(this.fitness);
