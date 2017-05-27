@@ -22,15 +22,21 @@ public class Funcional extends Mutacion {
 			double prob = rnd.nextDouble();
 			if(prob < prob_mutacion)
 			{
-				Cromosoma c = poblacion[i];
+				Cromosoma c = poblacion[i].copia();
 				Arbol a = c.getArbol().copia();
+				
+				//Se obtienen las funciones del árbol
 				ArrayList<Arbol> funciones = new ArrayList<Arbol>();
 				a.getFunciones(a.getHijos(), funciones);
 				
+				//Se comprueba que se pueda mutar, es decir, que sean AND u OR
+				//ya que si se intenta mutar IF se volvería a poner IF, al igual que con NOT
 				if(existenFuncionesAMutar(funciones)){
+					//Selecciona una función al azar de la lista
 					int selecc_funcion = rnd.nextInt(funciones.size());
 					String val = "";
 					
+					//Cambia el valor de la función seleccionada
 					if(funciones.get(selecc_funcion).getValor().equals("OR"))
 						val = "AND";
 					else
@@ -38,6 +44,7 @@ public class Funcional extends Mutacion {
 					
 					funciones.get(selecc_funcion).setValor(val);
 					
+					//Inserta la nueva función en el árbol
 					a.insertFuncion(a.getHijos(), funciones.get(selecc_funcion), selecc_funcion, 0);
 					
 					c.setArbol(a.copia());
@@ -52,13 +59,15 @@ public class Funcional extends Mutacion {
 		return mutaciones;
 	}
 
+	//Se encarga de encontrar funciones que se puedan mutar
+	//dejando así una lista solo de esas funciones
 	private boolean existenFuncionesAMutar(ArrayList<Arbol> funciones) {
 		boolean existe = false;
 		ArrayList<Arbol> copia = new ArrayList<Arbol>();
 		
 		for(Arbol a : funciones){
 			if(a.getValor().equals("OR") || a.getValor().equals("AND")){
-				copia.add(a);
+				copia.add(a.copia());
 				existe = true;
 			}
 		}

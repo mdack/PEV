@@ -22,13 +22,17 @@ public class Terminal extends Mutacion {
 			double prob = rnd.nextDouble();
 			if(prob < prob_mutacion)
 			{
-				Cromosoma c = poblacion[i];
+				Cromosoma c = poblacion[i].copia();
 				Arbol a = c.getArbol().copia();
+				
+				//Selecciona los terminales del árbol
 				ArrayList<Arbol> terminales = new ArrayList<Arbol>();
 				a.getTerminales(a.getHijos(), terminales);
 				
+				//Selecciona un terminal de la lista al azar
 				int selecc_terminal = rnd.nextInt(terminales.size());
 				
+				//Obtiene un nuevo terminal generado al azar
 				int nueva_terminal = rnd.nextInt(Cromosoma.terminales.length);
 				String val = Cromosoma.terminales[nueva_terminal];
 				
@@ -37,10 +41,13 @@ public class Terminal extends Mutacion {
 					val = Cromosoma.terminales[nueva_terminal];
 				}
 				
+				//Fija el nuevo valor del terminal
 				terminales.get(selecc_terminal).setValor(val);
 				
+				//Inserta el nuevo terminal
 				a.insertTerminal(a.getHijos(), terminales.get(selecc_terminal), selecc_terminal, 0);
 				
+				//Inserta el nuevo árbol
 				c.setArbol(a.copia());
 				
 				c.evalua();
