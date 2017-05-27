@@ -249,7 +249,7 @@ public class Arbol{
 		
 		for(int i = 0; i < hijos.size(); i++){
 			if(hijos.get(i).isEsHoja()){
-				nodos.add(hijos.get(i));
+				nodos.add(hijos.get(i).copia());
 			}else{
 				getTerminales(hijos.get(i).getHijos(), nodos);
 			}
@@ -261,7 +261,7 @@ public class Arbol{
 		for(int i = 0; i < list_hijos.size() && p != -1; i++){
 			if(list_hijos.get(i).isEsHoja() && (p == index)){
 				//terminal.padre = list_hijos.get(i).padre;
-				list_hijos.set(i, terminal);
+				list_hijos.set(i, terminal.copia());
 				p = -1;
 			}else if(list_hijos.get(i).esHoja && (p != index)){
 				p++;	
@@ -278,7 +278,7 @@ public class Arbol{
 		for(int i = 0; i < list_hijos.size() && p != -1; i++){
 			if(list_hijos.get(i).esRaiz && (p == index)){
 				//terminal.padre = list_hijos.get(i).padre;
-				list_hijos.set(i, terminal);
+				list_hijos.set(i, terminal.copia());
 				p = -1;
 			}else if(list_hijos.get(i).esRaiz && (p != index)){
 				p++;
@@ -297,7 +297,7 @@ public class Arbol{
 		
 		for(int i = 0; i < hijos.size(); i++){
 			if(hijos.get(i).isEsRaiz()){
-				nodos.add(hijos.get(i));
+				nodos.add(hijos.get(i).copia());
 				getFunciones(hijos.get(i).hijos, nodos);
 			}
 		}
