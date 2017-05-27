@@ -69,7 +69,7 @@ public class AGenetico {
 		if(tipoCreacion != 2){
 			poblacion[0] = new Cromosoma(PROFUNDIDAD, tipoCreacion, useIF, tipoMultiplexor);
 	    	for(int k = 1; k < tamPob; k++){
-	    		Cromosoma c = new Cromosoma(PROFUNDIDAD, tipoCreacion, useIF, tipoMultiplexor);   		
+	    		Cromosoma c = new Cromosoma(PROFUNDIDAD, tipoCreacion, useIF, tipoMultiplexor);   
 	    		poblacion[k] = c.copia();
 	    		
 	    	}

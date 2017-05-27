@@ -113,10 +113,8 @@ public class Cromosoma {
 
 	public Cromosoma copia() {
 		Cromosoma c = new Cromosoma();
-		Arbol a = new Arbol();
-		a = this.arbol.copia();
-		
-		c.setArbol(a);
+	
+		c.setArbol(this.arbol.copia());
 		c.setFitness(this.fitness);
 		c.setFitness_bruto(this.fitness_bruto);
 		c.setPunt(this.punt);

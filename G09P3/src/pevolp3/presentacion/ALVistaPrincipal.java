@@ -76,10 +76,6 @@ public class ALVistaPrincipal{
 		aG.evaluar();
 		for(int i = 0; i < aG.getNumMaxGen(); i++)
 		{	
-//			cadena += "--------------------------------------------------------------\n";
-//			cadena += ("* Generación " + (i+1) + "\n");
-//			cadena += "--------------------------------------------------------------\n";
-//			cadena += aG.toString();
 			if(elitismo){
 				aG.seleccionaElite();
 			}

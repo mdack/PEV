@@ -17,17 +17,17 @@ public class Arbol{
 	private boolean useIF;
 	private boolean esHoja;
 	private boolean esRaiz;
-	private Arbol padre;
-	
-	public Arbol getPadre() {
-		return padre;
-	}
-
-	public void setPadre(Arbol padre) {
-		this.padre = padre;
-	}
-
-	public Arbol(){}
+//	private Arbol padre;
+//	
+//	public Arbol getPadre() {
+//		return padre;
+//	}
+//
+//	public void setPadre(Arbol padre) {
+//		this.padre = padre;
+//	}
+//
+//	public Arbol(){}
 	
 	public Arbol(int p, boolean useIf){
 		valor = "";
@@ -49,7 +49,7 @@ public class Arbol{
 	// Devuelve el arbol en forma de array
 	public ArrayList<String> toArray(){
 		ArrayList<String> array = new ArrayList<String>();
-		toArray(array, this);
+		toArrayAux(array, this);
 		return array;
 	}
 		
@@ -90,10 +90,10 @@ public class Arbol{
 		return s;
 	}
 
-	private void toArray(ArrayList<String> array, Arbol a){
+	private void toArrayAux(ArrayList<String> array, Arbol a){
 		array.add(a.valor);
 		for(int i = 0; i < a.hijos.size(); i++){
-			toArray(array, a.hijos.get(i));
+			toArrayAux(array, a.hijos.get(i));
 		}
 	}
 	
@@ -118,7 +118,7 @@ public class Arbol{
 		
 		for(int i = 0; i < nHijos; i++){
 			Arbol hijo = new Arbol(max_prof, useIF);
-			hijo.setPadre(this);
+			//hijo.setPadre(this);
 			esRaiz = true;
 			n++;
 			n = hijo.inicializacionCompleta(p+1, n);
@@ -231,7 +231,7 @@ public class Arbol{
 		
 		for(int i = 0; i < nHijos; i++){
 			Arbol hijo = new Arbol(max_prof, useIF);
-			hijo.setPadre(this);
+			//hijo.setPadre(this);
 			n++;
 			n = hijo.inicializacionCrecienteAux(p+1, n);
 			hijos.add(hijo);
@@ -260,7 +260,7 @@ public class Arbol{
 		int p = pos;
 		for(int i = 0; i < list_hijos.size() && p != -1; i++){
 			if(list_hijos.get(i).isEsHoja() && (p == index)){
-				terminal.padre = list_hijos.get(i).padre;
+				//terminal.padre = list_hijos.get(i).padre;
 				list_hijos.set(i, terminal);
 				p = -1;
 			}else if(list_hijos.get(i).esHoja && (p != index)){
@@ -277,7 +277,7 @@ public class Arbol{
 		int p = pos;
 		for(int i = 0; i < list_hijos.size() && p != -1; i++){
 			if(list_hijos.get(i).esRaiz && (p == index)){
-				terminal.padre = list_hijos.get(i).padre;
+				//terminal.padre = list_hijos.get(i).padre;
 				list_hijos.set(i, terminal);
 				p = -1;
 			}else if(list_hijos.get(i).esRaiz && (p != index)){
@@ -340,17 +340,23 @@ public class Arbol{
 		copia.setEsRaiz(this.esRaiz);
 		copia.setNumHijos(this.numHijos);
 		copia.setNumNodos(this.numNodos);
-		Arbol p = new Arbol();
-		if(this.padre != null)
-			p = this.padre.copia();
-		copia.setPadre(p);
 		copia.setProfundidad(this.profundidad);
 		copia.setValor(this.valor);
 		ArrayList<Arbol> aux = new ArrayList<Arbol>();
-		aux = this.hijos;
+		aux = copiaHijos();
 		copia.setHijos(aux);
 		
 		return copia;
+	}
+
+	private ArrayList<Arbol> copiaHijos() {
+		ArrayList<Arbol> array = new ArrayList<Arbol>();
+		
+		for(int i = 0; i < this.hijos.size(); i++){
+			array.add(this.hijos.get(i).copia());
+		}
+		
+		return array;
 	}
 
 	public int getProfundidad() {
