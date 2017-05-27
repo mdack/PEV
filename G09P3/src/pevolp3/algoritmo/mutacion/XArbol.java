@@ -23,7 +23,7 @@ public class XArbol extends Mutacion {
 			if(prob < prob_mutacion)
 			{
 				Cromosoma c = poblacion[i];
-				Arbol a = c.getArbol();
+				Arbol a = c.getArbol().copia();
 				boolean muta = false;
 				boolean func = false;
 				ArrayList<Arbol> funciones = new ArrayList<Arbol>();
@@ -48,12 +48,7 @@ public class XArbol extends Mutacion {
 					else
 						a.insertTerminal(a.getHijos(), nuevo_ar, selecc_funcion, 0);
 						
-//					int antiguos_nodos =  funciones.get(selecc_funcion).toArray().size() - 1;
-//					int nuevos_nodos = nuevo_ar.getNumNodos();
-//					
-//					int nodos = (a.getNumNodos() - antiguos_nodos) + nuevos_nodos;
-//					a.setNumNodos(nodos);
-					c.setArbol(a);
+					c.setArbol(a.copia());
 						
 					c.evalua();
 						

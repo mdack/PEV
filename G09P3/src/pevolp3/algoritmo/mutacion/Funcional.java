@@ -23,7 +23,7 @@ public class Funcional extends Mutacion {
 			if(prob < prob_mutacion)
 			{
 				Cromosoma c = poblacion[i];
-				Arbol a = c.getArbol();
+				Arbol a = c.getArbol().copia();
 				ArrayList<Arbol> funciones = new ArrayList<Arbol>();
 				a.getFunciones(a.getHijos(), funciones);
 				
@@ -40,7 +40,7 @@ public class Funcional extends Mutacion {
 					
 					a.insertFuncion(a.getHijos(), funciones.get(selecc_funcion), selecc_funcion, 0);
 					
-					c.setArbol(a);
+					c.setArbol(a.copia());
 					
 					c.evalua();
 					
@@ -66,7 +66,7 @@ public class Funcional extends Mutacion {
 		funciones.clear();
 
 		for(Arbol a : copia)
-			funciones.add(a.clone());
+			funciones.add(a.copia());
 		
 		return existe;
 	}

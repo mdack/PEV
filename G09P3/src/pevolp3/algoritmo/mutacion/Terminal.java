@@ -23,7 +23,7 @@ public class Terminal extends Mutacion {
 			if(prob < prob_mutacion)
 			{
 				Cromosoma c = poblacion[i];
-				Arbol a = c.getArbol();
+				Arbol a = c.getArbol().copia();
 				ArrayList<Arbol> terminales = new ArrayList<Arbol>();
 				a.getTerminales(a.getHijos(), terminales);
 				
@@ -41,7 +41,7 @@ public class Terminal extends Mutacion {
 				
 				a.insertTerminal(a.getHijos(), terminales.get(selecc_terminal), selecc_terminal, 0);
 				
-				c.setArbol(a);
+				c.setArbol(a.copia());
 				
 				c.evalua();
 				

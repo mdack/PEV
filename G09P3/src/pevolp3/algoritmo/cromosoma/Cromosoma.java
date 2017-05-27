@@ -47,6 +47,9 @@ public class Cromosoma {
 		evalua();
 		fenotipo();
 	}
+	public Cromosoma() {
+		// TODO Auto-generated constructor stub
+	}
 	public double getFitness() {
 		return fitness;
 	}
@@ -75,7 +78,7 @@ public class Cromosoma {
 
 	public String fenotipo() {
 		String s = this.toString();
-		fenotipo = s;
+		setFenotipo(s);
 		return s;
 	}
 	
@@ -86,7 +89,7 @@ public class Cromosoma {
 			s += func.get(i);
 			if(i < func.size()-1) s += " ";
 		}
-		this.fenotipo = s;
+		this.setFenotipo(s);
 		return s;
 	}
 
@@ -109,7 +112,16 @@ public class Cromosoma {
 	}
 
 	public Cromosoma copia() {
-		return this;
+		Cromosoma c = new Cromosoma();
+		Arbol a = new Arbol();
+		
+		c.setArbol(a);
+		c.setFitness(this.fitness);
+		c.setFitness_bruto(this.fitness_bruto);
+		c.setPunt(this.punt);
+		c.setPuntAcum(this.puntAcum);
+		
+		return c;
 	}
 	
 	public Arbol getArbol() {
@@ -325,5 +337,11 @@ public class Cromosoma {
 		      }
 		}
 		}
+	}
+	public String getFenotipo() {
+		return fenotipo;
+	}
+	public void setFenotipo(String fenotipo) {
+		this.fenotipo = fenotipo;
 	}
 }

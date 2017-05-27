@@ -11,39 +11,43 @@ public class Cruce {
 	private static final double PROB_FUNC = 0.9;
 
 	public Cruce() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void cruzar(Cromosoma padre1, Cromosoma padre2, Cromosoma hijo1, Cromosoma hijo2){
 		ArrayList<Arbol> nodos_selec1 = new ArrayList<Arbol>();
 		ArrayList<Arbol> nodos_selec2 = new ArrayList<Arbol>();
 		
-		nodos_selec1 = obtieneNodos(padre1.getArbol());
-		nodos_selec2 = obtieneNodos(padre2.getArbol());
+		//Seleccionamos los nodos más relevante según la probabilidad
+		//0.9 se cruzará en una función
+		//resto se cruzará en un terminal
+		nodos_selec1 = obtieneNodos(padre1.getArbol().copia());
+		nodos_selec2 = obtieneNodos(padre2.getArbol().copia());
 		
+		//obtenemos los puntos de cruce a partir de los nodos seleccionados
 		Random rnd = new Random();
 		int puntoCruce1 = rnd.nextInt(nodos_selec1.size());
 		int puntoCruce2 = rnd.nextInt(nodos_selec2.size());
 		
-		hijo1.setArbol(padre1.getArbol().clone());
-		hijo2.setArbol(padre2.getArbol().clone());
+		//copiamos los cromosomas padre en los hijos
+		hijo1 = padre1.copia();
+		hijo2 = padre2.copia();
 		
-		Arbol temp1 = nodos_selec1.get(puntoCruce1).clone();
-		Arbol temp2 = nodos_selec2.get(puntoCruce2).clone();
+		//Cogemos los nodos de cruce seleccionados
+		Arbol temp1 = nodos_selec1.get(puntoCruce1).copia();
+		Arbol temp2 = nodos_selec2.get(puntoCruce2).copia();
 		
+		//realizamos el corte sobre los arboles de los hijos
 		corte(hijo1, temp2, puntoCruce1, temp1.isEsRaiz());
 		corte(hijo2, temp1, puntoCruce2, temp2.isEsRaiz());
 
-//		hijo1.getArbol().setNumNodos(hijo1.getArbol().obtieneNodos(hijo1.getArbol(), 0));
-//		hijo2.getArbol().setNumNodos(hijo2.getArbol().toArray().size()-1);
-		
+		//Finalmente se evalúan
 		hijo1.evalua();
 		hijo2.evalua();
 	}
 	
 	private void corte(Cromosoma hijo, Arbol temp, int puntoCruce, boolean esRaiz) {
 		
-		if(!esRaiz){
+		if(!esRaiz){ //dependiendo de qué tipo era el nodo que ya no va a estar, se inserta el nuevo
 			hijo.getArbol().insertTerminal(hijo.getArbol().getHijos(), temp, puntoCruce, 0);
 		}else{
 			hijo.getArbol().insertFuncion(hijo.getArbol().getHijos(), temp, puntoCruce, 0);
@@ -54,18 +58,19 @@ public class Cruce {
 	private ArrayList<Arbol> obtieneNodos(Arbol arbol) {
 		ArrayList<Arbol> nodos = new ArrayList<Arbol>();
 		
-		if(seleccionaFunciones()){
+		//Obtenemos una porbabilidad al azar
+		if(seleccionaFunciones()){//Si devuelve true, el corte se hará en una función
 			arbol.getFunciones(arbol.getHijos(), nodos);
-			if(nodos.size() == 0){
+			if(nodos.size() == 0){//Si no existen funciones, se seleccionan los terminales
 				arbol.getTerminales(arbol.getHijos(), nodos);
 			}
-		}else{
+		}else{//Si devuelve false, el corte se hará por un terminal
 			arbol.getTerminales(arbol.getHijos(), nodos);
 		}
 		
 		return nodos;
 	}
-
+	
 	private boolean seleccionaFunciones(){
 		double prob = Math.random();
 		

@@ -27,16 +27,7 @@ public class Arbol{
 		this.padre = padre;
 	}
 
-	public Arbol(){
-//		Random rnd = new Random();
-//		int termRestantes;
-//		int func = rnd.nextInt(Cromosoma.funciones.length);
-//		valor = Cromosoma.funciones[func];
-//		if(Cromosoma.funciones[func].equals("IF")) termRestantes = 3;
-//		else if(Cromosoma.funciones[func].equals("NOT")) termRestantes = 1;
-//		else termRestantes = 2;
-//		inicializar(this, termRestantes);
-	}
+	public Arbol(){}
 	
 	public Arbol(int p, boolean useIf){
 		valor = "";
@@ -342,14 +333,16 @@ public class Arbol{
 		return "[" + valor + " -> hijos:" + hijos.toString() + "]";
 	}
 	
-	public Arbol clone(){
+	public Arbol copia(){
 		Arbol copia = new Arbol(this.max_prof, this.useIF);
 		
 		copia.setEsHoja(this.esHoja);
 		copia.setEsRaiz(this.esRaiz);
 		copia.setNumHijos(this.numHijos);
 		copia.setNumNodos(this.numNodos);
-		copia.setPadre(this.padre);
+		Arbol p = new Arbol();
+		p = this.padre.copia();
+		copia.setPadre(p);
 		copia.setProfundidad(this.profundidad);
 		copia.setValor(this.valor);
 		copia.setHijos(this.hijos);
@@ -384,29 +377,4 @@ public class Arbol{
 	public void setHijos(ArrayList<Arbol> hijos) {
 		this.hijos = hijos;
 	}
-	
-//	private void inicializar(Arbol a, int termRestantes){
-//		Random rnd = new Random();
-//		for(int i = 0; i < termRestantes; i++)
-//		{
-//			int ch = rnd.nextInt(2);
-//			if(ch == 0)
-//			{
-//				int func = rnd.nextInt(Cromosoma.terminales.length);
-//				a.insert(Cromosoma.terminales[func], -1);
-//				termRestantes--;
-//			}
-//			else if(ch == 1)
-//			{
-//				int func = rnd.nextInt(Cromosoma.funciones.length);
-//				Arbol aux = a.insert(Cromosoma.funciones[func], -1);
-//				int newTerm = 0;
-//				if(Cromosoma.funciones[func].equals("IF")) newTerm += 3;
-//				else if(Cromosoma.funciones[func].equals("NOT")) newTerm += 1;
-//				else newTerm += 2;
-//				inicializar(aux, newTerm);
-//				termRestantes--;
-//			}
-//		}
-//	}
 }

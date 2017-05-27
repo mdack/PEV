@@ -307,7 +307,7 @@ public class AGenetico {
 		{
 			int padre1 = selCruce[i];
 			int padre2 = selCruce[i+1];
-			new Cruce().cruzar(poblacion[padre1], poblacion[padre2], hijo1, hijo2);
+			new Cruce().cruzar(poblacion[padre1].copia(), poblacion[padre2].copia(), hijo1, hijo2);
 			nuevaPob[padre1] = hijo1.copia();
 			nuevaPob[padre2] = hijo2.copia();
 			this.totalCruces++;
