@@ -76,7 +76,7 @@ public class AGenetico {
 		}else{
 			int grupos = PROFUNDIDAD - 1;
 			int prof = 2;
-			int tamGrupo = tamPob/grupos;
+			int tamGrupo = tamPob/grupos + 1;
 			int primGrupo = 0;
 			int ultGrupo = 0;
 			int mitadGrupo = 0;
@@ -85,7 +85,7 @@ public class AGenetico {
 				primGrupo = k;
 				ultGrupo = tamGrupo * (i+1);
 				mitadGrupo = tamGrupo / 2 + primGrupo;
-				while(k <= ultGrupo){
+				while(k <= ultGrupo && k < tamPob){
 					if(k <= mitadGrupo){
 						Cromosoma c = new Cromosoma(prof, 0, useIF, tipoMultiplexor);
 						poblacion[k] = c.copia();
@@ -127,8 +127,8 @@ public class AGenetico {
 				worstFitness = fit;
 				this.posPeor = i;
 			}
-			poblacion[i].setPunt(poblacion[i].getFitness_bruto()/sumaAdap);
-			puntAcum += poblacion[i].getFitness_bruto()/sumaAdap;
+			poblacion[i].setPunt(poblacion[i].getFitness()/sumaAdap);
+			puntAcum += poblacion[i].getFitness()/sumaAdap;
 			tamAcum += poblacion[i].getArbol().getNumNodos();
 			poblacion[i].setPuntAcum(puntAcum);
 		}
