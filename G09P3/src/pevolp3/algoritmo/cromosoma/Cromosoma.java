@@ -6,7 +6,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import pevolp3.algoritmo.arbol.Arbol;
-
+//hola
 public class Cromosoma {
 	
 	private final static String arch6 = "data/mult6.txt";
