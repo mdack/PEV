@@ -44,11 +44,13 @@ public class Cromosoma {
 
 		if(tipoMultiplexor == 0){
 			numSoluciones = 64;
-			leerArch(6);
+			if(soluciones == null || soluciones.length != 64)
+				leerArch(6);
 		}
 		else if(tipoMultiplexor == 1){
 			numSoluciones = 2048;
-			leerArch(11);
+			if(soluciones == null || soluciones.length != 2048)
+				leerArch(11);
 		}
 		evalua();
 		fenotipo();
