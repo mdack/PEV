@@ -98,7 +98,8 @@ public class Cromosoma {
 			if(i < func.size()-1) s += " ";
 		}
 		this.setFenotipo(s);
-		return s;
+		
+		return arbol.toString();
 	}
 
 	public double evalua() {

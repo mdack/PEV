@@ -212,14 +212,14 @@ public class AGenetico {
 		String cadena = " ";
 		
 		cadena += "* Mejor absoluto: \n";
-		cadena += "  - Permutación: ";
+		cadena += "  - Árbol: ";
 		cadena += elMejorAbs.toString() + "\n";
 		cadena += "  - Coste óptimo: ";
 		cadena += this.mejorAbs + "\n";
 		cadena += "\n";
 		
 		cadena += "* Peor absoluto: \n";
-		cadena += "  - Permutación: ";
+		cadena += "  - Árbol: ";
 		cadena += elPeorAbs.toString() + "\n";
 		cadena += "  - Coste óptimo: ";
 		cadena += this.peorAbs + "\n";

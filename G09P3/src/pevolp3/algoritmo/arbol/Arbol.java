@@ -17,17 +17,6 @@ public class Arbol{
 	private boolean useIF;
 	private boolean esHoja;
 	private boolean esRaiz;
-//	private Arbol padre;
-//	
-//	public Arbol getPadre() {
-//		return padre;
-//	}
-//
-//	public void setPadre(Arbol padre) {
-//		this.padre = padre;
-//	}
-//
-//	public Arbol(){}
 	
 	public Arbol(int p, boolean useIf){
 		valor = "";
@@ -330,9 +319,29 @@ public class Arbol{
 	
 	@Override
 	public String toString() {
-		return "(" + valor + " " + hijos.toString() + ")";
+		String s =  "(" + valor + " ";
+		
+		s = s + hijosToString(hijos);
+		s += ")";
+		
+		return s;
 	}
 	
+	private String hijosToString(ArrayList<Arbol> h) {
+		String cad = "";
+		
+		for(int i  = 0; i < h.size(); i++){
+			if(h.get(i).esRaiz){
+				cad += "(" + h.get(i).valor + " " + hijosToString(h.get(i).hijos);
+				cad += ")";
+			}
+			else{
+				cad += h.get(i).valor + " ";
+			}
+		}
+		return cad;
+	}
+
 	public Arbol copia(){
 		Arbol copia = new Arbol(this.max_prof, this.useIF);
 		
