@@ -52,6 +52,7 @@ public class Funcional extends Mutacion {
 					c.evalua();
 					
 					poblacion[i] = c.copia();
+					poblacion[i].evalua();
 					mutaciones++;
 				}
 			}

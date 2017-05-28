@@ -20,7 +20,7 @@ public class Ruleta extends Seleccion {
 		{
 			pos_super = 0;
 			prob = rnd.nextDouble();
-			while(prob > poblacion[pos_super].getPuntAcum() && pos_super < tamPob) pos_super++;
+			while(pos_super < tamPob && prob > poblacion[pos_super].getPuntAcum()) pos_super++;
 			sel_super[i] = pos_super;
 		}
 		

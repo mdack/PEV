@@ -42,6 +42,7 @@ public class Permutacion extends Mutacion {
 						aMutar.getHijos().set(pos2, aux);
 					}
 				}
+				poblacion[i].evalua();
 				mutaciones++;
 			}
 		}

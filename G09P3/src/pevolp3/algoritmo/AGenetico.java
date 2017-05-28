@@ -85,7 +85,7 @@ public class AGenetico {
 				primGrupo = k;
 				ultGrupo = tamGrupo * (i+1);
 				mitadGrupo = tamGrupo / 2 + primGrupo;
-				while(k < ultGrupo){
+				while(k <= ultGrupo){
 					if(k <= mitadGrupo){
 						Cromosoma c = new Cromosoma(prof, 0, useIF, tipoMultiplexor);
 						poblacion[k] = c.copia();

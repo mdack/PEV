@@ -2,6 +2,7 @@ package pevolp3.algoritmo.cromosoma;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 import pevolp3.algoritmo.arbol.Arbol;
@@ -10,8 +11,8 @@ public class Cromosoma {
 	
 	private final static String arch6 = "data/mult6.txt";
 	private final static String arch11 = "data/mult11.txt";
-	private int soluciones[][];
-	private int numSoluciones;
+	private static int soluciones[][];
+	private static int numSoluciones;
 	
 	public static String terminales[];
 	public static final String terminales6[] = { "A0", "A1", "D0", "D1", "D2", "D3" };
@@ -33,6 +34,11 @@ public class Cromosoma {
 			break;
 		case 1:
 			arbol.inicializacionCompleta(0,0);
+			break;
+		case 2:
+			int ini = new Random().nextInt(2);
+			if(ini == 0) arbol.inicializacionCreciente(0);
+			else arbol.inicializacionCompleta(0,0);
 			break;
 		}
 

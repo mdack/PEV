@@ -60,6 +60,7 @@ public class XArbol extends Mutacion {
 					c.evalua();
 						
 					poblacion[i] = c.copia();
+					poblacion[i].evalua();
 					mutaciones++;
 				}
 				}
