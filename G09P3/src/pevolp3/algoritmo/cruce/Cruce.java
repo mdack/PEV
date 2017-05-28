@@ -48,6 +48,14 @@ public class Cruce {
 		//Finalmente se evalúan
 		hijo1.evalua();
 		hijo2.evalua();
+		
+		if(hijo1.getFitness_bruto() > padre1.getFitness_bruto()){
+			hijo1 = padre1.copia();
+		}
+		if(hijo2.getFitness_bruto() > padre2.getFitness_bruto()){
+			hijo2 = padre2.copia();
+		}
+
 	}
 	
 	private void corte(Cromosoma hijo, Arbol temp, int puntoCruce, boolean esRaiz) {
