@@ -39,7 +39,12 @@ public class Cruce {
 		//realizamos el corte sobre los arboles de los hijos
 		corte(hijo1, temp2, puntoCruce1, temp1.isEsRaiz());
 		corte(hijo2, temp1, puntoCruce2, temp2.isEsRaiz());
-
+		
+		int nodos = hijo1.getArbol().obtieneNodos(hijo1.getArbol().copia(), 0);
+		hijo1.getArbol().setNumNodos(nodos);
+		nodos = hijo2.getArbol().obtieneNodos(hijo2.getArbol().copia(), 0);
+		hijo2.getArbol().setNumNodos(nodos);
+		
 		//Finalmente se evalúan
 		hijo1.evalua();
 		hijo2.evalua();

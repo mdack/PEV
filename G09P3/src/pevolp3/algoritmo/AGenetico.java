@@ -37,7 +37,6 @@ public class AGenetico {
 	private double sumaMedias;
 	private int totalCruces;
 	private int totalMutaciones;
-	private int totalInversiones;
 	
 	public AGenetico(int poblacion, int generaciones, double porcCruces, double porcMutacion, boolean elitismo, int multiplexor, int tmutacion,int tinicializacion, boolean useIf, int profundidad){
 		tamPob = poblacion;
@@ -55,7 +54,6 @@ public class AGenetico {
 		sumaMedias = 0;
 		totalCruces = 0;
 		totalMutaciones = 0;
-		totalInversiones = 0;
 		useIF = useIf;
 		PROFUNDIDAD = profundidad;
 		if(tipoMultiplexor == 0) Cromosoma.terminales = Cromosoma.terminales6.clone();
@@ -133,7 +131,7 @@ public class AGenetico {
 			poblacion[i].setPuntAcum(puntAcum);
 		}
 		this.elMejor = this.poblacion[posMejor].copia();
-		this.elPeor = this.poblacion[posMejor].copia();
+		this.setElPeor(this.poblacion[posMejor].copia());
 		if(bestFitness < this.mejorAbs) {
 			this.mejorAbs = bestFitness;
 			elMejorAbs = poblacion[posMejor].copia();
@@ -235,9 +233,6 @@ public class AGenetico {
 		
 		cadena += "Numero total de mutaciones: \n";
 		cadena += this.totalMutaciones + "\n\n";
-		
-		cadena += "Numero total de inversiones: \n";
-		cadena += this.totalInversiones + "\n\n";
 		
 		return cadena;
 	}
@@ -365,6 +360,14 @@ public class AGenetico {
 				}
 			}
 		}
+	}
+
+	public Cromosoma getElPeor() {
+		return elPeor;
+	}
+
+	public void setElPeor(Cromosoma elPeor) {
+		this.elPeor = elPeor;
 	}
 	
 }

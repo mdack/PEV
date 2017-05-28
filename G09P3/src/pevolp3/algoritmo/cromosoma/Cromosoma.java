@@ -256,7 +256,7 @@ public class Cromosoma {
 			int hijo1 = evaluar(func, index+1);
 			int hijo2 = evaluar(func, index+2);
 			int hijo3 = evaluar(func, index+3);
-			if(hijo1 == 0) resul = hijo2;
+			if(hijo1 == 1) resul = hijo2;
 			else resul = hijo3;
 		}
 		else if(funcion.equals("AND")){

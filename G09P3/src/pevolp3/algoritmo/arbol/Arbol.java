@@ -330,7 +330,7 @@ public class Arbol{
 	
 	@Override
 	public String toString() {
-		return "[" + valor + " -> hijos:" + hijos.toString() + "]";
+		return "(" + valor + " " + hijos.toString() + ")";
 	}
 	
 	public Arbol copia(){
@@ -385,5 +385,22 @@ public class Arbol{
 	
 	public void setHijos(ArrayList<Arbol> hijos) {
 		this.hijos = hijos;
+	}
+	
+	public int obtieneNodos(Arbol nodo, int n){
+		if(nodo.esHoja)
+			return n;
+		
+		if(nodo.valor.equals("IF")){
+			n = obtieneNodos(nodo.hijos.get(0), n+1);
+			n = obtieneNodos(nodo.hijos.get(1), n+1);
+			n = obtieneNodos(nodo.hijos.get(2), n+1);
+		}else if(nodo.valor.equals("AND") || nodo.valor.equals("OR")){
+			n = obtieneNodos(nodo.hijos.get(0), n+1);
+			n = obtieneNodos(nodo.hijos.get(1), n+1);
+		}else{
+			n = obtieneNodos(nodo.hijos.get(0), n+1);
+		}
+		return n;
 	}
 }

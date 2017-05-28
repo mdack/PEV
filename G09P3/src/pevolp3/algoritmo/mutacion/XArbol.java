@@ -55,6 +55,9 @@ public class XArbol extends Mutacion {
 					else
 						a.insertTerminal(a.getHijos(), nuevo_ar, selecc_funcion, 0);
 					
+					int nodos = a.obtieneNodos(a.copia(), 0);
+					a.setNumNodos(nodos);
+					
 					c.setArbol(a.copia());
 						
 					c.evalua();
