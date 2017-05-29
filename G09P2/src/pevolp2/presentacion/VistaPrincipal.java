@@ -127,7 +127,7 @@ public class VistaPrincipal extends JFrame{
 		cFuncion.addItem("Datos 30");
 
 		
-	
+		
 		cseleccion = new JComboBox<String>();
 		cseleccion.addItem("Ruleta");
 		cseleccion.addItem("Estocástico");
