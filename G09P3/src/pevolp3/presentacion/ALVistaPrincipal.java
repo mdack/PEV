@@ -16,8 +16,9 @@ public class ALVistaPrincipal{
 	boolean elitismo = true;
 	boolean funIf = true;
 	int profundidad;
-	//h
-	public ALVistaPrincipal(JTextField tprofundidad, JTextField tnGen, JTextField ttamPob, JTextField tproCruce, JTextField tproMutacion, JComboBox<String> cif, JComboBox<String> cseleccion,JComboBox<String> celitismo,   JComboBox<String> cfuncion, JComboBox<String> cmutacion, JComboBox<String> ccreacion) {
+	int tbloating;
+	
+	public ALVistaPrincipal(JTextField tprofundidad, JTextField tnGen, JTextField ttamPob, JTextField tproCruce, JTextField tproMutacion, JComboBox<String> cif, JComboBox<String> cseleccion,JComboBox<String> celitismo,   JComboBox<String> cfuncion, JComboBox<String> cmutacion, JComboBox<String> ccreacion, JComboBox<String> cbloating) {
 		try{
 			nGeneracion = Integer.parseInt(tnGen.getText());
 			tamPoblacion = Integer.parseInt(ttamPob.getText());
@@ -39,6 +40,7 @@ public class ALVistaPrincipal{
 					funcion = cfuncion.getSelectedIndex();
 					tmutacion = cmutacion.getSelectedIndex();
 					tCreacion = ccreacion.getSelectedIndex();
+					tbloating = cbloating.getSelectedIndex();
 					
 				}else{
 					JOptionPane.showMessageDialog(new JFrame(),

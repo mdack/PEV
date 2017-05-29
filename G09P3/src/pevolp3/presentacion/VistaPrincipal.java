@@ -13,9 +13,9 @@ public class VistaPrincipal extends JFrame{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JLabel lnGen, ltamPob, lproCruce, lproMutacion, lfuncion, lelitismo, lseleccion, ltipoMut, lif, ltipoCreacion, lprofundidad;
+	private JLabel lnGen, ltamPob, lproCruce, lproMutacion, lfuncion, lelitismo, lseleccion, ltipoMut, lif, ltipoCreacion, lprofundidad, lbloating;
 	private JTextField tnGen, ttamPob, tproCruce, tproMutacion, tProfundidad;
-	private JComboBox<String> cFuncion, cseleccion, celitismo, cmutacion, cif, ccreacion;
+	private JComboBox<String> cFuncion, cseleccion, celitismo, cmutacion, cif, ccreacion, cbloating;
 	private JButton button;
 	private static JTextArea area;
 	private JScrollPane scroll;
@@ -107,7 +107,8 @@ public class VistaPrincipal extends JFrame{
 		lif = new JLabel("¿Función IF?: ");
 		ltipoCreacion = new JLabel("Creación de árboles:");
 		lprofundidad = new JLabel("Máxima Profundidad: ");
-	
+		lbloating = new JLabel("Tipo de bloating: ");
+		
 		//texto
 		tnGen = new JTextField();
 		tnGen.setText("100");
@@ -152,6 +153,10 @@ public class VistaPrincipal extends JFrame{
 		ccreacion.addItem("Completa");
 		ccreacion.addItem("Ramped H&H");
 		
+		cbloating = new JComboBox<String>();
+		cbloating.addItem("Tarpeian");
+		cbloating.addItem("Penalización");
+		
 		//Grafica
 		plot = new Plot2DPanel();
 		
@@ -171,7 +176,7 @@ public class VistaPrincipal extends JFrame{
 				mejoresAbs = null;
 				mejoresGen = null;
 				mediasGen = null;
-				new ALVistaPrincipal(tProfundidad, tnGen, ttamPob, tproCruce, tproMutacion, cif, cseleccion, celitismo, cFuncion, cmutacion, ccreacion).action();
+				new ALVistaPrincipal(tProfundidad, tnGen, ttamPob, tproCruce, tproMutacion, cif, cseleccion, celitismo, cFuncion, cmutacion, ccreacion, cbloating).action();
 				plot.setFixedBounds(0, 0, Integer.parseInt(tnGen.getText()));
 			}
 		});
@@ -191,7 +196,7 @@ public class VistaPrincipal extends JFrame{
 	}
 
 	private void addWest() {
-		panelW.setLayout(new GridLayout(11, 2, 25, 25));
+		panelW.setLayout(new GridLayout(12, 2, 20, 20));
 		panelW.setBorder(BorderFactory.createTitledBorder("Parámetros"));
 		
 		panelW.add(lnGen);
@@ -226,6 +231,9 @@ public class VistaPrincipal extends JFrame{
 		
 		panelW.add(lelitismo);
 		panelW.add(celitismo);
+		
+		panelW.add(lbloating);
+		panelW.add(cbloating);
 		
 		window.add(panelW, BorderLayout.WEST);
 	}
