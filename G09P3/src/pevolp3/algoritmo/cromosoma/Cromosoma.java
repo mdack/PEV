@@ -56,7 +56,7 @@ public class Cromosoma {
 		fenotipo();
 	}
 	public Cromosoma() {
-		// TODO Auto-generated constructor stub
+		this.arbol = new Arbol();
 	}
 	public double getFitness() {
 		return fitness;

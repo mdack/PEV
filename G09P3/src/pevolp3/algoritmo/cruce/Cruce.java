@@ -13,7 +13,11 @@ public class Cruce {
 	public Cruce() {
 	}
 	
-	public void cruzar(Cromosoma padre1, Cromosoma padre2, Cromosoma hijo1, Cromosoma hijo2){
+	public Cromosoma[] cruzar(Cromosoma padre1, Cromosoma padre2){
+		Cromosoma hijos[] = new Cromosoma[2];
+		Cromosoma hijo1 = new Cromosoma();
+		Cromosoma hijo2 = new Cromosoma();
+		
 		ArrayList<Arbol> nodos_selec1 = new ArrayList<Arbol>();
 		ArrayList<Arbol> nodos_selec2 = new ArrayList<Arbol>();
 		
@@ -55,7 +59,11 @@ public class Cruce {
 		if(hijo2.getFitness_bruto() > padre2.getFitness_bruto()){
 			hijo2 = padre2.copia();
 		}
-
+	
+		hijos[0] = hijo1.copia();
+		hijos[1] = hijo2.copia();
+		System.out.println("Cruce " + hijo1.toString() + "\n" + hijo2.toString());
+		return hijos;
 	}
 	
 	private void corte(Cromosoma hijo, Arbol temp, int puntoCruce, boolean esRaiz) {

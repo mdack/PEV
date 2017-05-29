@@ -18,6 +18,13 @@ public class Arbol{
 	private boolean esHoja;
 	private boolean esRaiz;
 	
+	public Arbol(){
+		hijos = new ArrayList<Arbol>();
+		valor = "";
+		numHijos = 0;
+		numNodos = 0;
+	}
+	
 	public Arbol(int p, boolean useIf){
 		valor = "";
 		hijos = new ArrayList<Arbol>();

@@ -87,6 +87,7 @@ public class ALVistaPrincipal{
 				aG.insertaElite();
 			}
 			aG.evaluar();
+			System.out.println("Generacion " + i);
 		}
 		cadena += aG.toString();
 		VistaPrincipal.addText(cadena);

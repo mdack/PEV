@@ -284,8 +284,7 @@ public class AGenetico {
 		
 		int numSelCruce = 0;
 		double prob;
-		Cromosoma hijo1 = new Cromosoma(PROFUNDIDAD, tipoCreacion, useIF, tipoMultiplexor);
-		Cromosoma hijo2 = new Cromosoma(PROFUNDIDAD, tipoCreacion, useIF, tipoMultiplexor);
+
 		Random rnd = new Random();
 		
 		for(int i = 0; i < tamPob; i++){
@@ -299,12 +298,15 @@ public class AGenetico {
 		Cromosoma[] nuevaPob = new Cromosoma[tamPob];
 		
 		for(int i = 0; i < numSelCruce; i += 2)
-		{
+		{	
+			Cromosoma hijo1 = new Cromosoma();
+			Cromosoma hijo2 = new Cromosoma();
 			int padre1 = selCruce[i];
 			int padre2 = selCruce[i+1];
-			new Cruce().cruzar(poblacion[padre1], poblacion[padre2], hijo1, hijo2);
-			nuevaPob[padre1] = hijo1.copia();
-			nuevaPob[padre2] = hijo2.copia();
+			Cruce c = new Cruce();
+			Cromosoma[] hijos = c.cruzar(poblacion[padre1], poblacion[padre2]);
+			nuevaPob[padre1] = hijos[0].copia();
+			nuevaPob[padre2] = hijos[1].copia();
 			this.totalCruces++;
 		}
 		for(int i = 0; i < tamPob; i++)
