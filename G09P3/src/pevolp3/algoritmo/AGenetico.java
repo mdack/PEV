@@ -144,6 +144,7 @@ public class AGenetico {
 		media = fitnessBrutoAcum/tamPob;
 		mediaTam = tamAcum/tamPob;
 		sumaMedias += media;
+		System.out.println(mediaTam);
 		VistaPrincipal.addData(mejorAbs, elMejor.getFitness_bruto(), fitnessBrutoAcum/tamPob);
 		
 		return media;
@@ -179,13 +180,13 @@ public class AGenetico {
 		
 		for(int i = 0; i < tamPob; i++)
 		{
-			double fit = poblacion[i].getFitness_bruto();
+			double fit = poblacion[i].getFitness();
 			if(fit > cmax) cmax = fit;
 		}
 		double sumaAdap = 0;
 		for(int i = 0; i < tamPob; i++)
 		{
-			double adapFit = cmax - poblacion[i].getFitness_bruto();
+			double adapFit = cmax - poblacion[i].getFitness();
 			sumaAdap += adapFit;
 			poblacion[i].setFitness(adapFit);
 		}
@@ -357,15 +358,16 @@ public class AGenetico {
 		{
 			Cromosoma c = poblacion[i];
 			cov += (c.getFitness_bruto() - media) * (c.getArbol().getNumNodos() - mediaTam);
-			var += (c.getArbol().getNumNodos() - mediaTam);
+			var += (c.getArbol().getNumNodos() - mediaTam)*(c.getArbol().getNumNodos() - mediaTam);
 		}
 		var = var / tamPob;
 		cov = cov / tamPob;
-		k = cov / var;
+		if(var != 0)
+			k = cov / var;
 		for(int i = 0; i < tamPob; i++)
 		{
 			Cromosoma c = poblacion[i];
-			double fitness = c.getFitness_bruto() + k * c.getArbol().getNumNodos();
+			double fitness = c.getFitness_bruto() - k * c.getArbol().getNumNodos();
 			c.setFitness(fitness);
 		}
 	}

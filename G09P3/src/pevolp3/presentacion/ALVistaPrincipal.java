@@ -75,6 +75,7 @@ public class ALVistaPrincipal{
 		cadena += "***************** Archivo " + funcion + " *********************\n";
 		
 		aG.inicializar();
+		aG.Bloating(tbloating);
 		aG.evaluar();
 		for(int i = 0; i < aG.getNumMaxGen(); i++)
 		{	
@@ -89,6 +90,7 @@ public class ALVistaPrincipal{
 				aG.insertaElite();
 			}
 			aG.Bloating(tbloating);
+			System.out.println("Generacion " + i);
 			aG.evaluar();
 		}
 		cadena += aG.toString();

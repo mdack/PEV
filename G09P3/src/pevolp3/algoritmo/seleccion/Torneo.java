@@ -49,7 +49,7 @@ public class Torneo extends Seleccion {
 	}
 	
 	private Cromosoma getMenorSubpoblacion(Cromosoma[] subpoblacion) {
-		if(subpoblacion[0].getFitness_bruto() > subpoblacion[1].getFitness_bruto()){
+		if(subpoblacion[0].getPunt() < subpoblacion[1].getPunt()){
 			return subpoblacion[0];
 		}
 		else{
@@ -58,7 +58,7 @@ public class Torneo extends Seleccion {
 	}
 
 	private Cromosoma getMejorSubpoblacion(Cromosoma[] subpoblacion) {
-		if(subpoblacion[0].getFitness_bruto() < subpoblacion[1].getFitness_bruto()){
+		if(subpoblacion[0].getPunt() > subpoblacion[1].getPunt()){
 			return subpoblacion[0];
 		}
 		else{
