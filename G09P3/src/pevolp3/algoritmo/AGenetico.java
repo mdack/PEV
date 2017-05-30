@@ -143,11 +143,35 @@ public class AGenetico {
 		
 		media = fitnessBrutoAcum/tamPob;
 		mediaTam = tamAcum/tamPob;
-		bloatingControl(media, mediaTam, 0, 3);
 		sumaMedias += media;
 		VistaPrincipal.addData(mejorAbs, elMejor.getFitness_bruto(), fitnessBrutoAcum/tamPob);
 		
 		return media;
+	}
+	
+	public void Bloating(int tipo){
+		 double media = media();
+		 double mediaTam = mediaTam();
+		 
+		 bloatingControl(media, mediaTam, tipo, 2);
+	}
+	
+	private double media(){
+		double sum = 0;
+		
+		for(int i = 0; i < tamPob; i++)
+			sum += poblacion[i].getFitness_bruto();
+		
+		return (sum / tamPob);
+	}
+	
+	private double mediaTam(){
+		double sum = 0;
+		
+		for(int i = 0; i < tamPob; i++)
+			sum += poblacion[i].getArbol().getNumNodos();
+		
+		return (sum / tamPob);
 	}
 	
 	public double revisar_adaptacion_minimizar(){
@@ -299,8 +323,6 @@ public class AGenetico {
 		
 		for(int i = 0; i < numSelCruce; i += 2)
 		{	
-			Cromosoma hijo1 = new Cromosoma();
-			Cromosoma hijo2 = new Cromosoma();
 			int padre1 = selCruce[i];
 			int padre2 = selCruce[i+1];
 			Cruce c = new Cruce();
@@ -311,10 +333,10 @@ public class AGenetico {
 		}
 		for(int i = 0; i < tamPob; i++)
 		{
-			if(nuevaPob[i] == null) nuevaPob[i] = poblacion[i].copia();
+			if(nuevaPob[i] == null) nuevaPob[i] = poblacion[i];
 		}
 		for(int i = 0; i < tamPob; i++)
-			poblacion[i] = nuevaPob[i].copia();
+			poblacion[i] = nuevaPob[i];
 	}
 		
 	

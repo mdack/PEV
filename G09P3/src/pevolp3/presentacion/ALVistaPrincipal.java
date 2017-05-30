@@ -88,8 +88,8 @@ public class ALVistaPrincipal{
 			if(elitismo){
 				aG.insertaElite();
 			}
+			aG.Bloating(tbloating);
 			aG.evaluar();
-			System.out.println("Generacion " + i);
 		}
 		cadena += aG.toString();
 		VistaPrincipal.addText(cadena);

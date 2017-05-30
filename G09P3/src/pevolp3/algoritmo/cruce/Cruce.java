@@ -44,25 +44,25 @@ public class Cruce {
 		corte(hijo1, temp2, puntoCruce1, temp1.isEsRaiz());
 		corte(hijo2, temp1, puntoCruce2, temp2.isEsRaiz());
 		
-		int nodos = hijo1.getArbol().obtieneNodos(hijo1.getArbol().copia(), 0);
+		int nodos = hijo1.getArbol().obtieneNodos(hijo1.getArbol(), 0);
 		hijo1.getArbol().setNumNodos(nodos);
-		nodos = hijo2.getArbol().obtieneNodos(hijo2.getArbol().copia(), 0);
+		nodos = hijo2.getArbol().obtieneNodos(hijo2.getArbol(), 0);
 		hijo2.getArbol().setNumNodos(nodos);
 		
 		//Finalmente se evalúan
 		hijo1.evalua();
 		hijo2.evalua();
 		
-		if(hijo1.getFitness_bruto() > padre1.getFitness_bruto()){
-			hijo1 = padre1.copia();
-		}
-		if(hijo2.getFitness_bruto() > padre2.getFitness_bruto()){
-			hijo2 = padre2.copia();
-		}
+//		if(hijo1.getFitness_bruto() > padre1.getFitness_bruto()){
+//			hijo1 = padre1.copia();
+//		}
+//		if(hijo2.getFitness_bruto() > padre2.getFitness_bruto()){
+//			hijo2 = padre2.copia();
+//		}
 	
-		hijos[0] = hijo1.copia();
-		hijos[1] = hijo2.copia();
-		System.out.println("Cruce " + hijo1.toString() + "\n" + hijo2.toString());
+		hijos[0] = hijo1;
+		hijos[1] = hijo2;
+		//System.out.println("Cruce " + hijo1.toString() + "\n" + hijo2.toString());
 		return hijos;
 	}
 	

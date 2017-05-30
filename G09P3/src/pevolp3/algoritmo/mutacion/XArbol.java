@@ -47,7 +47,12 @@ public class XArbol extends Mutacion {
 					
 					//Genera un nuevo árbol
 					Arbol nuevo_ar = new Arbol(a.getMax_prof(), a.isUseIF());
-					nuevo_ar.inicializacionCreciente(funciones.get(selecc_funcion).getProfundidad());
+					double ini = Math.random();
+					
+					if(ini < 0.5)
+						nuevo_ar.inicializacionCreciente(funciones.get(selecc_funcion).getProfundidad());
+					else
+						nuevo_ar.inicializacionCompleta(funciones.get(selecc_funcion).getProfundidad(), 0);
 					
 					//Lo inserta donde se encontraba el nodo seleccionado
 					if(func)
