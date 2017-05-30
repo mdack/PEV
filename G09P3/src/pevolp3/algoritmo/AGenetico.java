@@ -362,8 +362,8 @@ public class AGenetico {
 		}
 		var = var / tamPob;
 		cov = cov / tamPob;
-		if(var != 0)
-			k = cov / var;
+		k = cov / var;
+		if(k != k) k = 0; // Comprobar que k es un numero (comprueba que k no tiene valor NaN).
 		for(int i = 0; i < tamPob; i++)
 		{
 			Cromosoma c = poblacion[i];
