@@ -82,7 +82,7 @@ public class VistaPrincipal extends JFrame{
 
 	private void initComponents() {
 		this.setTitle("Practica 3 - PEV");
-		this.setResizable(false);
+		this.setResizable(true);
 		this.setMinimumSize(new Dimension(1200,650));	
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);	
 		this.setLocationRelativeTo(null);
@@ -145,8 +145,8 @@ public class VistaPrincipal extends JFrame{
 		cmutacion.addItem("Permutación");
 				
 		cif = new JComboBox<String>();
-		cif.addItem("No");
 		cif.addItem("Si");
+		cif.addItem("No");
 		
 		ccreacion = new JComboBox<String>();
 		ccreacion.addItem("Creciente");
@@ -156,6 +156,7 @@ public class VistaPrincipal extends JFrame{
 		cbloating = new JComboBox<String>();
 		cbloating.addItem("Tarpeian");
 		cbloating.addItem("Penalización");
+		cbloating.addItem("Sin bloating");
 		
 		//Grafica
 		plot = new Plot2DPanel();

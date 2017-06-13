@@ -33,7 +33,7 @@ public class ALVistaPrincipal{
 					if(celitismo.getSelectedIndex() == 0){
 						elitismo = false;
 					}
-					if(cif.getSelectedIndex() == 0){
+					if(cif.getSelectedIndex() == 1){
 						funIf = false;
 					}
 					tipoSel = cseleccion.getSelectedIndex();

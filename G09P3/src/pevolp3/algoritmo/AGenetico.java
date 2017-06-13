@@ -151,10 +151,13 @@ public class AGenetico {
 	}
 	
 	public void Bloating(int tipo){
+		
+		if(tipo != 2){
 		 double media = media();
 		 double mediaTam = mediaTam();
 		 
 		 bloatingControl(media, mediaTam, tipo, 2);
+		}
 	}
 	
 	private double media(){
