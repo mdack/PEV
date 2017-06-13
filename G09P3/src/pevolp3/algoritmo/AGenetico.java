@@ -324,12 +324,12 @@ public class AGenetico {
 		}
 		if((numSelCruce % 2) == 1) numSelCruce--;
 		Cromosoma[] nuevaPob = new Cromosoma[tamPob];
+		Cruce c = new Cruce();
 		
 		for(int i = 0; i < numSelCruce; i += 2)
 		{	
 			int padre1 = selCruce[i];
 			int padre2 = selCruce[i+1];
-			Cruce c = new Cruce();
 			Cromosoma[] hijos = c.cruzar(poblacion[padre1], poblacion[padre2]);
 			nuevaPob[padre1] = hijos[0].copia();
 			nuevaPob[padre2] = hijos[1].copia();
@@ -340,7 +340,7 @@ public class AGenetico {
 			if(nuevaPob[i] == null) nuevaPob[i] = poblacion[i];
 		}
 		for(int i = 0; i < tamPob; i++)
-			poblacion[i] = nuevaPob[i];
+			poblacion[i] = nuevaPob[i].copia();
 	}
 		
 	
