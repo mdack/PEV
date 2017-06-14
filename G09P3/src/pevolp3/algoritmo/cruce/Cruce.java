@@ -1,7 +1,6 @@
 package pevolp3.algoritmo.cruce;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import pevolp3.algoritmo.arbol.Arbol;
 import pevolp3.algoritmo.cromosoma.Cromosoma;
@@ -28,10 +27,6 @@ public class Cruce {
 		nodos_selec2 = obtieneNodos(padre2.getArbol().copia());
 		
 		//obtenemos los puntos de cruce a partir de los nodos seleccionados
-//		Random rnd = new Random();
-//		int puntoCruce1 = rnd.nextInt(nodos_selec1.size());
-//		int puntoCruce2 = rnd.nextInt(nodos_selec2.size());
-		
 		int puntoCruce1 = (int) (Math.random()*nodos_selec1.size());
 		int puntoCruce2 = (int) (Math.random()*nodos_selec2.size());
 		
@@ -55,14 +50,7 @@ public class Cruce {
 		//Finalmente se evalúan
 		hijo1.evalua();
 		hijo2.evalua();
-		
-//		System.out.println(padre1.toString());
-//		System.out.println(padre2.toString());
-//		System.out.println(hijo1.toString());
-//		System.out.println(hijo2.toString());
-//		System.out.println("-----------------------------------------------------------------");
-		
-	
+			
 		hijos[0] = hijo1;
 		hijos[1] = hijo2;
 
